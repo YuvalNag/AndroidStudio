@@ -23,7 +23,7 @@ public class Main2Activity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         android.util.Log.d(ACTIVITY_LIFE_TAG , "onRestart()");
-        Toast.makeText(this, "onRestart()",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "onRestart2()",Toast.LENGTH_SHORT).show();
 
 
 
