@@ -37,22 +37,20 @@ public class ItemAdapter extends BaseAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View gridView;
+       // LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+       ;
         if (convertView == null) {
-            gridView = new View(context);
+
 // get layout from resources
-            gridView = inflater.inflate(R.layout.item, null);
+            convertView = View.inflate(context, R.layout.item, null);}
 // set image based on selected text
-            Button btn = (Button) gridView.findViewById(R.id.myButton);
+            Button btn = (Button) convertView.findViewById(R.id.myButton);
             btn.setText(content.get(position));
-            TextView textview = (TextView) gridView.findViewById(R.id.myText);
+            TextView textview = (TextView) convertView.findViewById(R.id.myText);
 
 
             textview.setText("Button " + position);
-        } else {
-            gridView = (View) convertView;
-        }
-        return gridView;
+
+        return convertView;
     }
 }
