@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TableLayout</string>
+    <string name="table_layout_4_open">table_layout_4_open</string>
+    <string name="table_layout_4_save_shortcut">table_layout_4_save_shortcut</string>
+    <string name="table_layout_4_save">table_layout_4_save</string>
+    <string name="table_layout_4_open_shortcut">table_layout_4_open_shortcut</string>
+</resources>
