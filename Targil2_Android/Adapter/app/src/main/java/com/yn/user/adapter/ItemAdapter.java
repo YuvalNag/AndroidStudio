@@ -40,16 +40,14 @@ public class ItemAdapter extends BaseAdapter {
        // LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
        ;
         if (convertView == null) {
-
-// get layout from resources
+            // get layout from resources
             convertView = View.inflate(context, R.layout.item, null);}
-// set image based on selected text
-            Button btn = (Button) convertView.findViewById(R.id.myButton);
-            btn.setText(content.get(position));
-            TextView textview = (TextView) convertView.findViewById(R.id.myText);
 
-
-            textview.setText("Button " + position);
+        // set image based on selected text
+        Button btn = (Button) convertView.findViewById(R.id.myButton);
+        btn.setText(content.get(position));
+        TextView textview = (TextView) convertView.findViewById(R.id.myText);
+        textview.setText("Button " + position);
 
         return convertView;
     }
