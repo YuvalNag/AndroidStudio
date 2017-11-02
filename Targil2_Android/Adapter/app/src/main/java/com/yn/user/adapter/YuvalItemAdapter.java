@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.List;
  * Created by USER on 02/11/2017.
  */
 
-public class YuvalItemAdapter extends BaseAdapter {
+public class YuvalItemAdapter extends BaseAdapter
+        {
     List<Flower> content;
     Context context;
     public YuvalItemAdapter(Context c, List<Flower> content) {
@@ -35,19 +37,40 @@ public class YuvalItemAdapter extends BaseAdapter {
         return 0;
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ;
         if (convertView == null) {
-
 // get layout from resources
-            convertView = View.inflate(context, R.layout.item, null);}
+            convertView = View.inflate(context, R.layout.yuvalitem, null);}
 // set image based on selected text
         ImageView imageView = (ImageView) convertView.findViewById(R.id.my_image);
-        imageView.setImageURI(Uri.parse(((Flower) content.get(position)).getImageSrc()));
+        int resId=(((Flower) content.get(position)).getImageId());
+        imageView.setImageResource(resId);
         TextView textview = (TextView) convertView.findViewById(R.id.Yn_text);
         textview.setText(((Flower) content.get(position)).getName());
+        RatingBar ratingBar=((RatingBar)convertView.findViewById(R.id.my_rating));
+        ratingBar.setRating((float)(((Flower) content.get(position)).getRating()));
+        final Button my_button =(Button) convertView.findViewById(R.id.my_button);
+        final int my_pos=position;
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            int pos=my_pos; Button m_button =my_button;
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+            content.get(pos).setRating((double)ratingBar.getRating());
+        //    m_button.setText( ratingBar.getRating());
+
+
+
+            }
+        });
+
+
+
 
         return convertView;
     }
-}
+
+
+        }

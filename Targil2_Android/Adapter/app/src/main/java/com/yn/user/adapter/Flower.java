@@ -6,18 +6,31 @@ package com.yn.user.adapter;
 
 public class Flower {
 
-    private  String Name , ImageSrc;
-    public Flower(String _name, String _imagePath)
-    {
-        Name = _name;
-        ImageSrc = _imagePath;
-    }
-    public String getImageSrc() {
-        return ImageSrc;
+    private  String Name ;
+    private int ImageId;
+
+    public double getRating() {
+        return Rating;
     }
 
-    public void setImageSrc(String imageSrc) {
-        ImageSrc = imageSrc;
+    public void setRating(double rating) {
+        Rating = rating;
+    }
+
+    private double Rating;
+
+    public Flower(String _name, int _imageId,double _rating)
+    {
+        Name = _name;
+        ImageId = _imageId;
+        Rating=_rating;
+    }
+    public int getImageId() {
+        return ImageId;
+    }
+
+    public void setImageId(int imageId) {
+        ImageId = imageId;
     }
 
     public String getName() {
