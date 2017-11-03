@@ -55,11 +55,10 @@ public class YuvalItemAdapter extends BaseAdapter
         final int my_pos=position;
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             int pos=my_pos; Button m_button =my_button;
-            public void onRatingChanged(RatingBar ratingBar, float rating,
-                                        boolean fromUser) {
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
             content.get(pos).setRating((double)ratingBar.getRating());
-        //    m_button.setText( ratingBar.getRating());
+            m_button.setText(Float.toString(ratingBar.getRating()));
 
 
 
