@@ -44,15 +44,20 @@ public class YuvalItemAdapter extends BaseAdapter
 // get layout from resources
             convertView = View.inflate(context, R.layout.yuvalitem, null);}
 // set image based on selected text
+
         ImageView imageView = (ImageView) convertView.findViewById(R.id.my_image);
         int resId=(((Flower) content.get(position)).getImageId());
         imageView.setImageResource(resId);
+
         TextView textview = (TextView) convertView.findViewById(R.id.Yn_text);
         textview.setText(((Flower) content.get(position)).getName());
+
         RatingBar ratingBar=((RatingBar)convertView.findViewById(R.id.my_rating));
         ratingBar.setRating((float)(((Flower) content.get(position)).getRating()));
+
         final Button my_button =(Button) convertView.findViewById(R.id.my_button);
         final int my_pos=position;
+
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             int pos=my_pos; Button m_button =my_button;
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
