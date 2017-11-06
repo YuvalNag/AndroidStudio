@@ -28,12 +28,14 @@ public class MainActivity extends AppCompatActivity {
 
         FloweraList.add(new Flower("Trifolium clypeatum", "C:\\Users\\USER\\Documents\\GitHub\\UWP\\targil_2\\GUI\\Assets\\Trifolium clypeatum.jpg"));
         FloweraList.add(new Flower("King Uzziae Iris", "C:\\Users\\USER\\Documents\\GitHub\\UWP\\targil_2\\GUI\\Assets\\King Uzziae Iris.jpg"));-*/
-        FloweraList.add(new Flower("Common Almond", R.drawable.common_almond,1));
-        FloweraList.add(new Flower("Grandiflora Rose",   R.drawable.grandif_iorarose,2));
-        FloweraList.add(new Flower("Hybrid Tea Rose",    R.drawable.hybridtearose,3));
-        FloweraList.add(new Flower("Trifolium clypeatum",R.drawable.trifolium_clypeatum, 3.5));
-        FloweraList.add(new Flower("King Uzziae Iris",   R.drawable.king_uzziaeiris,4));
-
+        for (int i=0 ; i<50 ;i++)
+        {
+            FloweraList.add(new Flower("Common Almond", R.drawable.common_almond, 1));
+            FloweraList.add(new Flower("Grandiflora Rose", R.drawable.grandif_iorarose, 2));
+            FloweraList.add(new Flower("Hybrid Tea Rose", R.drawable.hybridtearose, 3));
+            FloweraList.add(new Flower("Trifolium clypeatum", R.drawable.trifolium_clypeatum, 3.5));
+            FloweraList.add(new Flower("King Uzziae Iris", R.drawable.king_uzziaeiris, 4));
+        }
 
         //Spinner myspinner = (Spinner) findViewById(R.id.myspinner);
         //myspinner.setAdapter(new YuvalItemAdapter(this,FloweraList));
