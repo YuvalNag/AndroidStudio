@@ -8,12 +8,12 @@ import java.io.Serializable;
 
 public class Branch implements Serializable{
 
-    private  int branchID,
-                 numberOfParkingSpaces;
+    private  long branchID;
+    private  int numberOfParkingSpaces;
     private Address branchAddress;
     private android.location.Address addressBranch;
 
-    public Branch(int branchID, int numberOfParkingSpaces, Address branchAddress) {
+    public Branch(long branchID, int numberOfParkingSpaces, Address branchAddress) {
         this.branchID = branchID;
         this.numberOfParkingSpaces = numberOfParkingSpaces;
         this.branchAddress = branchAddress;
@@ -25,11 +25,11 @@ public class Branch implements Serializable{
         this.addressBranch = addressBranch;
     }
 
-    public int getBranchID() {
+    public long getBranchID() {
         return branchID;
     }
 
-    public void setBranchID(int branchID) {
+    public void setBranchID(long branchID) {
         this.branchID = branchID;
     }
 
