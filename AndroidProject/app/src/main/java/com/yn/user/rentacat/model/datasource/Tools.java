@@ -2,24 +2,21 @@ package com.yn.user.rentacat.model.datasource;
 
 import android.content.ContentValues;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 582bf8327f4045181299d000941bc30d619f9705
 import com.yn.user.rentacat.model.backend.AppContract;
 import com.yn.user.rentacat.model.entities.Address;
 import com.yn.user.rentacat.model.entities.Branch;
 import com.yn.user.rentacat.model.entities.Car;
 import com.yn.user.rentacat.model.entities.CarModel;
 import com.yn.user.rentacat.model.entities.Client;
-<<<<<<< HEAD
+
 import com.yn.user.rentacat.model.entities.Order;
-=======
+
 
 import com.yn.user.rentacat.model.entities.Client;
 import com.yn.user.rentacat.model.entities.Order;
 import com.yn.user.rentacat.model.entities.TransmissionType;
->>>>>>> 582bf8327f4045181299d000941bc30d619f9705
+
 
 
 /**
@@ -97,24 +94,47 @@ public class Tools {
     }
     public static Car ContentValuesToCar(ContentValues contentValues)
     {
-        return new Car(
-                contentValues.getAsLong(AppContract.Car.BRANCH_NUM),
-                contentValues.getAsLong(AppContract.Car.CAR_MODEL_ID),
-                contentValues.getAsLong(AppContract.Car.KILOMETRERS),
-                contentValues.getAsLong(AppContract.Car.ID_CAR_NUMBER)
 
+               Long branchnuum= contentValues.getAsLong(AppContract.Car.BRANCH_NUM);
+               Long carmodelId= contentValues.getAsLong(AppContract.Car.CAR_MODEL_ID);
+               Long kilo= contentValues.getAsLong(AppContract.Car.KILOMETRERS);
+               Long carNum= contentValues.getAsLong(AppContract.Car.ID_CAR_NUMBER);
+
+        if(branchnuum==null || branchnuum<0 ||
+                carmodelId==null || carmodelId<0 ||
+                kilo==null || kilo<0 ||
+                carNum==null || carNum<0)
+            throw new IllegalArgumentException();
+
+        return new Car(
+                branchnuum,
+                carmodelId,
+                kilo,
+                carNum
         );
+
     }
     public static CarModel ContentValuesToCarModel(ContentValues contentValues)
     {
-        return new CarModel(
-                contentValues.getAsLong(AppContract.CarModel.ID_CAR_MODEL),
-                contentValues.getAsString(AppContract.CarModel.COMPENY_NAME),
-                contentValues.getAsString(AppContract.CarModel.MODEL_NAME),
-                contentValues.getAsLong(AppContract.CarModel.ENGINE_COPACITY),
-                TransmissionType.valueOf(contentValues.getAsString(AppContract.CarModel.TRANSMISSION_TYPE)),
-                contentValues.getAsLong(AppContract.CarModel.NUM_OF_SEATS)
 
+              Long id=  contentValues.getAsLong(AppContract.CarModel.ID_CAR_MODEL);
+              String compenyName=  contentValues.getAsString(AppContract.CarModel.COMPENY_NAME);
+              String modalName=  contentValues.getAsString(AppContract.CarModel.MODEL_NAME);
+              Long engine=  contentValues.getAsLong(AppContract.CarModel.ENGINE_COPACITY);
+              TransmissionType transmissionType =  TransmissionType.valueOf(contentValues.getAsString(AppContract.CarModel.TRANSMISSION_TYPE));
+              Long numofseats=  contentValues.getAsLong(AppContract.CarModel.NUM_OF_SEATS);
+
+              if(id==null || id<0 ||
+                      numofseats==null || numofseats<0)
+                  throw new IllegalArgumentException();
+              
+              return new CarModel(
+                id,
+                compenyName,
+                modalName,
+                engine,
+                transmissionType,
+                numofseats
                 );
     }
     public static Client ContentValuesToClient(ContentValues contentValues)
