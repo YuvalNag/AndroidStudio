@@ -12,6 +12,7 @@ import com.yn.user.rentacat.model.entities.Client;
  */
 
 public interface DB_manager {
+
     boolean hasClient(Client client);
     long addClient(ContentValues values);
     long addModel(ContentValues values);;
