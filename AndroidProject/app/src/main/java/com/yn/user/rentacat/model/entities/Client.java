@@ -20,12 +20,17 @@ private ContactsContract.CommonDataKinds.Phone PhoneNumber;
     private ContactsContract.CommonDataKinds.StructuredName Name;
     private ContactsContract.CommonDataKinds.Identity ID;
 
-    public Client(String lastName, String firstName, String emailAdrs, int id, int phoneAnInt, int craditNumber, ContactsContract.CommonDataKinds.Email emailAdress, ContactsContract.CommonDataKinds.Phone phoneNumber, ContactsContract.CommonDataKinds.StructuredName name, ContactsContract.CommonDataKinds.Identity ID) {
+    public Client(String lastName, String firstName, String emailAdrs, int id, int phoneAnInt, int craditNumber) {
         LastName = lastName;
         FirstName = firstName;
         EmailAdrs = emailAdrs;
         Id = id;
         PhoneAnInt = phoneAnInt;
+        CraditNumber = craditNumber;
+
+    }
+    public Client(int craditNumber, ContactsContract.CommonDataKinds.Email emailAdress, ContactsContract.CommonDataKinds.Phone phoneNumber, ContactsContract.CommonDataKinds.StructuredName name, ContactsContract.CommonDataKinds.Identity ID) {
+
         CraditNumber = craditNumber;
         EmailAdress = emailAdress;
         PhoneNumber = phoneNumber;
