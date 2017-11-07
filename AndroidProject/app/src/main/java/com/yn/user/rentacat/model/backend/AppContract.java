@@ -44,6 +44,8 @@ public class AppContract {
         public static final String KILOMETRERS = "kilometers";
         public static final String CAR_MODEL_ID = "carModelID";
         public static final String BRANCH_NUM = "branchNum";
+        public static final String TRANSMISSION_TYPE = "transmissionType";
+        public static final String NUM_OF_SEATS = "numOfSeats";
 
         
         /**
