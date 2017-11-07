@@ -44,9 +44,8 @@ public class AppContract {
         public static final String KILOMETRERS = "kilometers";
         public static final String CAR_MODEL_ID = "carModelID";
         public static final String BRANCH_NUM = "branchNum";
+
         
-
-
         /**
          * The content:// style URI for this table
          */
