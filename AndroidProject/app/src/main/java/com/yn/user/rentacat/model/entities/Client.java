@@ -1,6 +1,8 @@
 package com.yn.user.rentacat.model.entities;
 
 import android.provider.ContactsContract;
+import android.telephony.PhoneNumberUtils;
+import android.util.Patterns;
 
 import java.io.Serializable;
 
@@ -15,7 +17,10 @@ import java.io.Serializable;
         private String emailAdrs;
 
         private long id;
-        private long phoneNum;
+
+
+        private String phoneNum;
+
         private long craditNumber;
 
      /*   private ContactsContract.CommonDataKinds.Email EmailAdress;
@@ -67,13 +72,13 @@ import java.io.Serializable;
         this.ID = ID;
     }
 */
-        public Client(String lastName, String firstName, String emailAdrs, long id, long phoneNum, long craditNumber) {
-            this.lastName = lastName;
-            this.firstName = firstName;
-            this.emailAdrs = emailAdrs;
-            this.id = id;
-            this.phoneNum = phoneNum;
-            this.craditNumber = craditNumber;
+        public Client(String lastName, String firstName, String emailAdrs, long id, String phoneNum, long craditNumber) {
+            setLastName(lastName);
+             setFirstName(firstName);
+             setEmailAdrs(emailAdrs);
+            setId(id);
+            setPhoneNum(phoneNum);
+            setCraditNumber(craditNumber);
             }
 
         public String getLastName() {
@@ -81,7 +86,13 @@ import java.io.Serializable;
         }
 
         public void setLastName(String lastName) {
-            this.lastName = lastName;
+            if(lastName.isEmpty())
+                this.lastName = lastName;
+            else
+                this.lastName = "";
+
+
+
         }
 
         public String getFirstName() {
@@ -89,7 +100,10 @@ import java.io.Serializable;
         }
 
         public void setFirstName(String firstName) {
+            if(firstName.isEmpty())
             this.firstName = firstName;
+            else
+                firstName="";
         }
 
         public String getEmailAdrs() {
@@ -97,7 +111,10 @@ import java.io.Serializable;
         }
 
         public void setEmailAdrs(String emailAdrs) {
-            this.emailAdrs = emailAdrs;
+            if(Patterns.EMAIL_ADDRESS.matcher(emailAdrs).matches())
+                this.emailAdrs = emailAdrs;
+            else
+                throw new IllegalArgumentException("email address");
         }
 
         public long getId() {
@@ -108,12 +125,16 @@ import java.io.Serializable;
             this.id = id;
         }
 
-        public long getPhoneNum() {
+        public String getPhoneNum() {
+
             return phoneNum;
         }
 
-        public void setPhoneNum(long phoneNum) {
-            this.phoneNum = phoneNum;
+        public void setPhoneNum(String phoneNum) {
+            if(Patterns.PHONE.matcher(phoneNum).matches())
+                    this.phoneNum = phoneNum;
+            else
+                throw new IllegalArgumentException("phone number");
         }
 
         public long getCraditNumber() {
@@ -121,7 +142,11 @@ import java.io.Serializable;
         }
 
         public void setCraditNumber(long craditNumber) {
-            this.craditNumber = craditNumber;
+            if(craditNumber>0)
+             this.craditNumber = craditNumber;
+            else
+                throw new IllegalArgumentException("Cradit card Number");
+
         }
 
 

@@ -138,7 +138,7 @@ public class Tools {
               if(id==null || id<0 ||
                       numofseats==null || numofseats<0)
                   throw new IllegalArgumentException();
-              
+
               return new CarModel(
                 id,
                 compenyName,
@@ -155,7 +155,7 @@ public class Tools {
                 contentValues.getAsString(AppContract.Client.FIRST_NAME),
                 contentValues.getAsString(AppContract.Client.EMAIL_ADDR),
                 contentValues.getAsLong(AppContract.Client.ID),
-                contentValues.getAsLong(AppContract.Client.PHONE_NUMBER),
+                contentValues.getAsString(AppContract.Client.PHONE_NUMBER),
                 contentValues.getAsLong(AppContract.Client.CRADIT_NUMBER)
 
                 );
