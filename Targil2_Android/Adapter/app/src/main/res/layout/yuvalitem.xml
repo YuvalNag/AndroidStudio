@@ -15,17 +15,17 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:layout_below="@id/my_image"
+
         android:gravity="center"
         android:hint="king"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <RatingBar
         android:id="@+id/my_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/Yn_text"
+
         android:layout_gravity="center"
         android:mirrorForRtl="false" />
     <Button

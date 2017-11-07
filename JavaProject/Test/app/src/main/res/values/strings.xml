@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Test</string>
+    <string name="cars.title">Cars Title</string>
+    <string name="cars.model.title">Cars Model</string>
+
+    <string name="settings.main.user.name">Enter User Name</string>
+    <string name="settings.main.user.password">Enter Password</string>
+    <string name="settings.main.button.ok">OK</string>
+    <string name="settings.main.button.cancel">Cancel</string>
+    <string name="settings.main.title">Login</string>
+
+    <string name="alerts.wrong.credentials">Wrong User name or Password</string>
+</resources>
