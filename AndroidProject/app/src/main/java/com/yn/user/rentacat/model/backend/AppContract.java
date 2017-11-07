@@ -29,15 +29,13 @@ public class AppContract {
     }
 
     public static class Address {
-
-        public static final String BRANCH_ID = "_id";
         public static final String CITY = "city";
         public static final String STREET = "street";
         public static final String NUMBER = "number";
         /**
          * The content:// style URI for this table
          */
-        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "address");
+        public static final Uri ADDRESS_URI = Uri.withAppendedPath(AUTHORITY_URI, "address");
     }
 
     public static class Car {
@@ -45,11 +43,11 @@ public class AppContract {
         public static final String ID_CAR_NUMBER = "_id";
         public static final String KILOMETRERS = "kilometers";
         public static final String CAR_MODEL_ID = "carModelID";
-        public static final String BRANCH_NUM = "branchNum";
+
         /**
          * The content:// style URI for this table
          */
-        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "Car");
+        public static final Uri CAR_URI = Uri.withAppendedPath(AUTHORITY_URI, "Car");
     }
 
     public static class CarModel {
@@ -61,7 +59,7 @@ public class AppContract {
         /**
          * The content:// style URI for this table
          */
-        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "CarModel");
+        public static final Uri CAR_MODEL_URI = Uri.withAppendedPath(AUTHORITY_URI, "CarModel");
     }
 
     public static class Client {
@@ -75,6 +73,6 @@ public class AppContract {
         /**
          * The content:// style URI for this table
          */
-        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "Client");
+        public static final Uri CLIENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "Client");
     }
 }
