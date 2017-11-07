@@ -10,13 +10,13 @@ import java.io.Serializable;
 
     public class Client implements Serializable {
 
-        private String LastName;
-        private String FirstName;
-        private String EmailAdrs;
+        private String lastName;
+        private String firstName;
+        private String emailAdrs;
 
-        private long Id;
-        private long PhoneNum;
-        private long CraditNumber;
+        private long id;
+        private long phoneNum;
+        private long craditNumber;
 
         private ContactsContract.CommonDataKinds.Email EmailAdress;
         private ContactsContract.CommonDataKinds.Phone PhoneNumber;
@@ -24,18 +24,18 @@ import java.io.Serializable;
         private ContactsContract.CommonDataKinds.Identity ID;
 
         public Client(String lastName, String firstName, String emailAdrs, long id, long phoneNum, long craditNumber) {
-            LastName = lastName;
-            FirstName = firstName;
-            EmailAdrs = emailAdrs;
-            Id = id;
-            PhoneNum = phoneNum;
-            CraditNumber = craditNumber;
+            this.lastName = lastName;
+            this.firstName = firstName;
+            this.emailAdrs = emailAdrs;
+            this.id = id;
+            this.phoneNum = phoneNum;
+            this.craditNumber = craditNumber;
             }
 
             public Client(long craditNumber, ContactsContract.CommonDataKinds.Email emailAdress, ContactsContract.CommonDataKinds.Phone phoneNumber,
                   ContactsContract.CommonDataKinds.StructuredName name, ContactsContract.CommonDataKinds.Identity ID) {
 
-                CraditNumber = craditNumber;
+                this.craditNumber = craditNumber;
                 EmailAdress = emailAdress;
                 PhoneNumber = phoneNumber;
                 Name = name;
@@ -43,51 +43,51 @@ import java.io.Serializable;
             }
 
         public String getLastName() {
-            return LastName;
+            return lastName;
         }
 
         public void setLastName(String lastName) {
-            LastName = lastName;
+            this.lastName = lastName;
         }
 
         public String getFirstName() {
-            return FirstName;
+            return firstName;
         }
 
         public void setFirstName(String firstName) {
-            FirstName = firstName;
+            this.firstName = firstName;
         }
 
         public String getEmailAdrs() {
-            return EmailAdrs;
+            return emailAdrs;
         }
 
         public void setEmailAdrs(String emailAdrs) {
-            EmailAdrs = emailAdrs;
+            this.emailAdrs = emailAdrs;
         }
 
         public long getId() {
-            return Id;
+            return id;
         }
 
         public void setId(long id) {
-            Id = id;
+            this.id = id;
         }
 
         public long getPhoneNum() {
-            return PhoneNum;
+            return phoneNum;
         }
 
         public void setPhoneNum(long phoneNum) {
-            PhoneNum = phoneNum;
+            this.phoneNum = phoneNum;
         }
 
         public long getCraditNumber() {
-            return CraditNumber;
+            return craditNumber;
         }
 
         public void setCraditNumber(long craditNumber) {
-            CraditNumber = craditNumber;
+            this.craditNumber = craditNumber;
         }
 
         public ContactsContract.CommonDataKinds.Email getEmailAdress() {

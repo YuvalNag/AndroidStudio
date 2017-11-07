@@ -8,26 +8,20 @@ import java.io.Serializable;
 
 public class Branch implements Serializable{
 
-<<<<<<< HEAD
+
     private  long branchID;
-    private  int numberOfParkingSpaces;
-=======
-
-    private  int branchID;
 
     private  int numberOfParkingSpaces;
 
->>>>>>> 7ea9ec26db3f917ae26d8c0404469455316316d8
+
+
     private Address branchAddress;
 
     private android.location.Address addressBranch;
 
-<<<<<<< HEAD
-    public Branch(long branchID, int numberOfParkingSpaces, Address branchAddress) {
-=======
 
-    public Branch(int branchID, int numberOfParkingSpaces, Address branchAddress) {
->>>>>>> 7ea9ec26db3f917ae26d8c0404469455316316d8
+    public Branch(long branchID, int numberOfParkingSpaces, Address branchAddress) {
+
         this.branchID = branchID;
         this.numberOfParkingSpaces = numberOfParkingSpaces;
         this.branchAddress = branchAddress;
