@@ -8,19 +8,19 @@ import java.io.Serializable;
 
 public class Car implements Serializable {
 
-    long branchNum;
+    private long branchNum;
 
-    CarModel carModel;
+    private CarModel carModel;
 
-    long kilometers;
+    private long kilometers;
 
-    long carNumber;
+   private long idCarNumber;
 
-    public Car(long branchNum, CarModel carModel, long kilometers, long carNumber) {
+    public Car(long branchNum, CarModel carModel, long kilometers, long idCarNumber) {
         this.branchNum = branchNum;
         this.carModel = carModel;
         this.kilometers = kilometers;
-        this.carNumber = carNumber;
+        this.idCarNumber = idCarNumber;
     }
 
     public long getBranchNum() {
@@ -47,11 +47,11 @@ public class Car implements Serializable {
         this.kilometers = kilometers;
     }
 
-    public long getCarNumber() {
-        return carNumber;
+    public long getIdCarNumber() {
+        return idCarNumber;
     }
 
-    public void setCarNumber(long carNumber) {
-        this.carNumber = carNumber;
+    public void setIdCarNumber(long idCarNumber) {
+        this.idCarNumber = idCarNumber;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Order implements Serializable{
 
-    private  long orderNum;
+    private  long idOrderNum;
 
     private  long clientId;
 
@@ -28,8 +28,8 @@ public class Order implements Serializable{
 
 
     private  long finalAmount;
-    public Order(long orderNum, long clientId, long carNumber, Date rentDate, Date returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, long amountOfFoul, long finalAmount) {
-        this.orderNum = orderNum;
+    public Order(long idOrderNum, long clientId, long carNumber, Date rentDate, Date returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, long amountOfFoul, long finalAmount) {
+        this.idOrderNum = idOrderNum;
         this.clientId = clientId;
         this.carNumber = carNumber;
         this.rentDate = rentDate;
@@ -42,12 +42,12 @@ public class Order implements Serializable{
     }
 
 
-    public long getOrderNum() {
-        return orderNum;
+    public long getIdOrderNum() {
+        return idOrderNum;
     }
 
-    public void setOrderNum(long orderNum) {
-        this.orderNum = orderNum;
+    public void setIdOrderNum(long idOrderNum) {
+        this.idOrderNum = idOrderNum;
     }
 
     public long getClientId() {

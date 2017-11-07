@@ -8,20 +8,20 @@ import java.io.Serializable;
 
 public class CarModel implements Serializable
 {
- long carModel;
+    private long idCarModel;
 
- String compenyName;
+    private String compenyName;
 
- String modelName;
+    private String modelName;
 
- long engineCapacity;
+    private long engineCapacity;
 
- TransmissionType transmissionType;
+    private TransmissionType transmissionType;
 
- long numOfSeats;
+    private long numOfSeats;
 
-    public CarModel(long carModel, String compenyName, String modelName, long engineCapacity, TransmissionType transmissionType, long numOfSeats) {
-        this.carModel = carModel;
+    public CarModel(long idCarModel, String compenyName, String modelName, long engineCapacity, TransmissionType transmissionType, long numOfSeats) {
+        this.idCarModel = idCarModel;
         this.compenyName = compenyName;
         this.modelName = modelName;
         this.engineCapacity = engineCapacity;
@@ -29,12 +29,12 @@ public class CarModel implements Serializable
         this.numOfSeats = numOfSeats;
     }
 
-    public long getCarModel() {
-        return carModel;
+    public long getIdCarModel() {
+        return idCarModel;
     }
 
-    public void setCarModel(long carModel) {
-        this.carModel = carModel;
+    public void setIdCarModel(long idCarModel) {
+        this.idCarModel = idCarModel;
     }
 
     public String getCompenyName() {
