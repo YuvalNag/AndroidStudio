@@ -2,53 +2,71 @@ package com.yn.user.rentacat.model.datasource;
 
 import android.content.ContentValues;
 
-<<<<<<< HEAD
+import com.yn.user.rentacat.model.backend.AppContract;
 import com.yn.user.rentacat.model.entities.Address;
 import com.yn.user.rentacat.model.entities.Branch;
 import com.yn.user.rentacat.model.entities.Car;
 import com.yn.user.rentacat.model.entities.CarModel;
 import com.yn.user.rentacat.model.entities.Client;
-=======
-import com.yn.user.rentacat.model.entities.Client;
 import com.yn.user.rentacat.model.entities.Order;
->>>>>>> 85890d309828869828abb15a8404fc54a398da18
+
 
 /**
  * Created by nissy34 on 07/11/2017.
  */
 
 public class Tools {
-    public static ContentValues AddressToContentValues(Address lecturer) {
+    public static ContentValues AddressToContentValues(Address address) {
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(AcademyContract.Lecturer.ID, lecturer.getId());
-        contentValues.put(AcademyContract.Lecturer.NAME, lecturer.getName());
-        contentValues.put(AcademyContract.Lecturer.PHONE, lecturer.getPhone());
-        contentValues.put(AcademyContract.Lecturer.SENIORITY, lecturer.getSeniority());
+        contentValues.put(AppContract.Address.CITY, address.getCity());
+        contentValues.put(AppContract.Address.STREET, address.getStreet());
+        contentValues.put(AppContract.Address.NUMBER, address.getNumber());
 
         return contentValues;
     }
 
-    public static ContentValues BranchToContentValues(Branch branch) {}
-    public static ContentValues CarToContentValues(Car car) {}
-    public static ContentValues CarModelToContentValues(Branch branch) {}
+    public static ContentValues BranchToContentValues(Branch branch) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(AppContract.Branch.BRANCH_ID,branch.getBranchID()) ;
+        contentValues.put(AppContract.Branch.NUMBER_OF_PARKING_SPACES, branch.getNumberOfParkingSpaces());
+        AddressToContentValues(branch.getBranchAddress());
+        return contentValues;
+    }
+    public static ContentValues CarToContentValues(Car car) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(AppContract.Car.ID_CAR_NUMBER, car.getIdCarNumber());
+        contentValues.put(AppContract.Car.CAR_MODEL_ID, car.getCarModelID());
+        contentValues.put(AppContract.Car.BRANCH_NUM, car.getBranchNum());
+        contentValues.put(AppContract.Car.KILOMETRERS, car.getKilometers());
+        return contentValues;
+    }
+
+    public static ContentValues CarModelToContentValues(CarModel carModel) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(AppContract.CarModel.ID_CAR_MODEL, carModel.getIdCarModel());
+        contentValues.put(AppContract.CarModel.COMPENY_NAME, carModel.getCompenyName());
+        contentValues.put(AppContract.CarModel.ENGINE_COPACITY, carModel.getEngineCapacity());
+        contentValues.put(AppContract.CarModel.MODEL_NAME, carModel.getModelName());
+        contentValues.put(AppContract.CarModel.TRANSMISSION_TYPE, carModel.getTransmissionType().toString());
+        contentValues.put(AppContract.CarModel.NUM_OF_SEATS, carModel.getNumOfSeats());
+
+        return contentValues;
+    }
+
     public static ContentValues ClientToContentValues(Client client) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(AcademyContract.Lecturer.ID, lecturer.getId());
-        contentValues.put(AcademyContract.Lecturer.NAME, lecturer.getName());
-        contentValues.put(AcademyContract.Lecturer.PHONE, lecturer.getPhone());
-        contentValues.put(AcademyContract.Lecturer.SENIORITY, lecturer.getSeniority());
+        contentValues.put(AppContract.Client.ID, client.getId());
+        contentValues.put(AppContract.Client.FIRST_NAME,   client.getFirstName());
+        contentValues.put(AppContract.Client.LAST_NAME,    client.getLastName());
+        contentValues.put(AppContract.Client.EMAIL_ADDR,   client.getEmailAdrs());
+        contentValues.put(AppContract.Client.PHONE_NUMBER, client.getPhoneNum());
+        contentValues.put(AppContract.Client.CRADIT_NUMBER,client.getCraditNumber());
+
         return contentValues;
     }
-    public static ContentValues OrderToContentValues(Order order) {}
+    //TODO public static ContentValues OrderToContentValues(Order order) {}
 
-
-
-    public static Address ContentValuesToAddress(ContentValues contentValues) {}
-    public static Branch ContentValuesToBranch(ContentValues contentValues) {}
-    public static Car ContentValuesToCar(ContentValues contentValues) {}
-    public static CarModel ContentValuesToCarModel(ContentValues contentValues) {}
-    public static Client ContentValuesToClient(ContentValues contentValues) {}
 
 }
 
