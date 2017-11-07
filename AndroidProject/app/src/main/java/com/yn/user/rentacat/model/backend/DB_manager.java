@@ -23,5 +23,5 @@ public interface DB_manager {
     Cursor getClients();
     Cursor getBranches();
     Cursor getCars();
-    
+
 }
