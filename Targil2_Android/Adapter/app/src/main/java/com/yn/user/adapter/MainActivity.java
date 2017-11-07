@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
         List<Flower> FloweraList = new ArrayList<Flower>();
 
-        FloweraList.add(new Flower("Common Almond", R.drawable.common_almond, 1));
-        FloweraList.add(new Flower("Grandiflora Rose", R.drawable.grandif_iorarose, 2));
-        FloweraList.add(new Flower("Hybrid Tea Rose", R.drawable.hybridtearose, 2.5));
-        FloweraList.add(new Flower("Trifolium clypeatum", R.drawable.trifolium_clypeatum, 3.5));
-        FloweraList.add(new Flower("King Uzziae Iris", R.drawable.king_uzziaeiris, 4));
+        FloweraList.add(new Flower("Common Almond", R.drawable.common_almond, 1,"Carmel, Samarian mountains, Judean mountains, Shefela"));
+        FloweraList.add(new Flower("Grandiflora Rose", R.drawable.grandif_iorarose, 2,"d"));
+        FloweraList.add(new Flower("Hybrid Tea Rose", R.drawable.hybridtearose, 2.5,"d"));
+        FloweraList.add(new Flower("Trifolium clypeatum", R.drawable.trifolium_clypeatum, 3.5,"d"));
+        FloweraList.add(new Flower("King Uzziae Iris", R.drawable.king_uzziaeiris, 4,"d"));
 
 
         //Spinner myspinner = (Spinner) findViewById(R.id.myspinner);
