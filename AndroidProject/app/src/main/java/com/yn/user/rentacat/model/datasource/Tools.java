@@ -2,7 +2,6 @@ package com.yn.user.rentacat.model.datasource;
 
 import android.content.ContentValues;
 
-
 import com.yn.user.rentacat.model.backend.AppContract;
 import com.yn.user.rentacat.model.entities.Address;
 import com.yn.user.rentacat.model.entities.Branch;
@@ -10,12 +9,18 @@ import com.yn.user.rentacat.model.entities.Car;
 import com.yn.user.rentacat.model.entities.CarModel;
 import com.yn.user.rentacat.model.entities.Client;
 
+
 import com.yn.user.rentacat.model.entities.Order;
 
 
 import com.yn.user.rentacat.model.entities.Client;
 import com.yn.user.rentacat.model.entities.Order;
 import com.yn.user.rentacat.model.entities.TransmissionType;
+
+
+import com.yn.user.rentacat.model.entities.TransmissionType;
+
+import java.util.concurrent.Phaser;
 
 
 
@@ -36,10 +41,13 @@ public class Tools {
 
     public static Address ContentValuesToAddress(ContentValues contentValues)
     {
-       return new Address(
+        Integer number = contentValues.getAsInteger(AppContract.Address.NUMBER);
+        if (number == null || number <= 0 )
+            throw new IllegalArgumentException();
+        return new Address(
                contentValues.getAsString(AppContract.Address.CITY),
                contentValues.getAsString(AppContract.Address.STREET),
-               contentValues.getAsInteger(AppContract.Address.NUMBER));
+               number);
     }
 
 
@@ -87,9 +95,12 @@ public class Tools {
 
     public static Branch ContentValuesToBranch(ContentValues contentValues)
     {
-        return new Branch(
-                          contentValues.getAsLong(AppContract.Branch.BRANCH_ID),
-                          contentValues.getAsInteger(AppContract.Branch.NUMBER_OF_PARKING_SPACES),
+        Long id = contentValues.getAsLong(AppContract.Branch.BRANCH_ID);
+        Integer numberOfParkingSpaces = contentValues.getAsInteger(AppContract.Branch.NUMBER_OF_PARKING_SPACES);
+        if(id <= 0 || id == null || numberOfParkingSpaces < 0 )
+            throw new IllegalArgumentException();
+
+        return new Branch(id, numberOfParkingSpaces.intValue(),//TODO check if null.intValue() == 0
                           ContentValuesToAddress(contentValues));
     }
     public static Car ContentValuesToCar(ContentValues contentValues)
