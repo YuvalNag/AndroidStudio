@@ -20,7 +20,8 @@ public class CarModel implements Serializable
 
     private long numOfSeats;
 
-    public CarModel(long idCarModel, String compenyName, String modelName, long engineCapacity, TransmissionType transmissionType, long numOfSeats) {
+    public CarModel(long idCarModel, String compenyName, String modelName,
+                    long engineCapacity, TransmissionType transmissionType, long numOfSeats) {
         this.idCarModel = idCarModel;
         this.compenyName = compenyName;
         this.modelName = modelName;
