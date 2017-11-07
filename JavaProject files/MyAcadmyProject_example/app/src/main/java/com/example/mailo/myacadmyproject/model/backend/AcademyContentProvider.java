@@ -21,7 +21,7 @@ import java.util.List;
 public class AcademyContentProvider extends ContentProvider {
 
     DB_manager manager = DBManagerFactory.getManager();
-    final String TAG = "academyContemt";
+    final String TAG = "academyContent";
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {

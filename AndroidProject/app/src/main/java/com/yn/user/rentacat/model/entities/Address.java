@@ -7,36 +7,36 @@ import java.io.Serializable;
  */
 
 public class Address implements Serializable {
-    private String City,Street;
-    private int Number;
+    private String city, street;
+    private int number;
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
     }
 
     public String getStreet() {
-        return Street;
+        return street;
     }
 
     public void setStreet(String street) {
-        Street = street;
+        this.street = street;
     }
 
     public int getNumber() {
-        return Number;
+        return number;
     }
 
     public void setNumber(int number) {
-        Number = number;
+        this.number = number;
     }
 
     public Address(String city, String street, int number) {
-        City = city;
-        Street = street;
-        Number = number;
+        this.city = city;
+        this.street = street;
+        this.number = number;
     }
 }

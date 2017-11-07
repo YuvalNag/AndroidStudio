@@ -29,7 +29,8 @@ private ContactsContract.CommonDataKinds.Phone PhoneNumber;
         CraditNumber = craditNumber;
 
     }
-    public Client(int craditNumber, ContactsContract.CommonDataKinds.Email emailAdress, ContactsContract.CommonDataKinds.Phone phoneNumber, ContactsContract.CommonDataKinds.StructuredName name, ContactsContract.CommonDataKinds.Identity ID) {
+    public Client(int craditNumber, ContactsContract.CommonDataKinds.Email emailAdress, ContactsContract.CommonDataKinds.Phone phoneNumber,
+                  ContactsContract.CommonDataKinds.StructuredName name, ContactsContract.CommonDataKinds.Identity ID) {
 
         CraditNumber = craditNumber;
         EmailAdress = emailAdress;

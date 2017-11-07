@@ -1,7 +1,5 @@
 package com.yn.user.rentacat.model.entities;
 
-import android.provider.Telephony;
-
 import java.io.Serializable;
 
 /**
@@ -10,52 +8,52 @@ import java.io.Serializable;
 
 public class Branch implements Serializable{
 
-    private  int BranchID,
-                 NumberOfParkingSpaces;
-    private Address BranchAddress;
-    private android.location.Address AddressBranch;
+    private  int branchID,
+                 numberOfParkingSpaces;
+    private Address branchAddress;
+    private android.location.Address addressBranch;
 
     public Branch(int branchID, int numberOfParkingSpaces, Address branchAddress) {
-        BranchID = branchID;
-        NumberOfParkingSpaces = numberOfParkingSpaces;
-        BranchAddress = branchAddress;
+        this.branchID = branchID;
+        this.numberOfParkingSpaces = numberOfParkingSpaces;
+        this.branchAddress = branchAddress;
     }
 
     public Branch(int branchID, int numberOfParkingSpaces, android.location.Address addressBranch) {
-        BranchID = branchID;
-        NumberOfParkingSpaces = numberOfParkingSpaces;
-        AddressBranch = addressBranch;
+        this.branchID = branchID;
+        this.numberOfParkingSpaces = numberOfParkingSpaces;
+        this.addressBranch = addressBranch;
     }
 
     public int getBranchID() {
-        return BranchID;
+        return branchID;
     }
 
     public void setBranchID(int branchID) {
-        BranchID = branchID;
+        this.branchID = branchID;
     }
 
     public int getNumberOfParkingSpaces() {
-        return NumberOfParkingSpaces;
+        return numberOfParkingSpaces;
     }
 
     public void setNumberOfParkingSpaces(int numberOfParkingSpaces) {
-        NumberOfParkingSpaces = numberOfParkingSpaces;
+        this.numberOfParkingSpaces = numberOfParkingSpaces;
     }
 
     public Address getBranchAddress() {
-        return BranchAddress;
+        return branchAddress;
     }
 
     public void setBranchAddress(Address branchAddress) {
-        BranchAddress = branchAddress;
+        this.branchAddress = branchAddress;
     }
 
     public android.location.Address getAddressBranch() {
-        return AddressBranch;
+        return addressBranch;
     }
 
     public void setAddressBranch(android.location.Address addressBranch) {
-        AddressBranch = addressBranch;
+        this.addressBranch = addressBranch;
     }
 }
