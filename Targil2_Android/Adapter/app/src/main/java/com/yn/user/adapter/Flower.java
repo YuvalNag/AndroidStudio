@@ -8,6 +8,15 @@ public class Flower {
 
     private  String Name ;
     private int ImageId;
+    private  String Description;
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
 
     public double getRating() {
         return Rating;
