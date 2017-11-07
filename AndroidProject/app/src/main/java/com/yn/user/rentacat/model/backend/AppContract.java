@@ -28,4 +28,53 @@ public class AppContract {
         public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "branch");
     }
 
+    public static class Address {
+
+        public static final String BRANCH_ID = "_id";
+        public static final String CITY = "city";
+        public static final String STREET = "street";
+        public static final String NUMBER = "number";
+        /**
+         * The content:// style URI for this table
+         */
+        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "address");
+    }
+
+    public static class Car {
+
+        public static final String ID_CAR_NUMBER = "_id";
+        public static final String KILOMETRERS = "kilometers";
+        public static final String CAR_MODEL_ID = "carModelID";
+        public static final String BRANCH_NUM = "branchNum";
+        /**
+         * The content:// style URI for this table
+         */
+        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "Car");
+    }
+
+    public static class CarModel {
+
+        public static final String ID_CAR_NUMBER = "_id";
+        public static final String COMPENY_NAME = "compenyName";
+        public static final String MODEL_NAME = "modelName";
+        public static final String ENGINE_COPACITY = "engineCapacity";
+        /**
+         * The content:// style URI for this table
+         */
+        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "CarModel");
+    }
+
+    public static class Client {
+
+        public static final String ID = "_id";
+        public static final String LAST_NAME = "lastName";
+        public static final String FIRST_NAME = "firstName";
+        public static final String EMAIL_ADDR = "emailAdrs";
+        public static final String PHONE_NUMBER = "phoneNum";
+        public static final String CRADIT_NUMBER = "engineCapacity";
+        /**
+         * The content:// style URI for this table
+         */
+        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "Client");
+    }
 }
