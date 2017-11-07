@@ -1,7 +1,7 @@
 package com.yn.user.adapter;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -57,13 +57,25 @@ public class YuvalItemAdapter extends BaseAdapter
 
         final Button my_button =(Button) convertView.findViewById(R.id.my_button);
         final int my_pos=position;
+        my_button.setOnClickListener(new Button.OnClickListener(){
+            Button m_button =my_button; int pos=my_pos;
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DescriptionActivity.class);
+                intent.putExtra("position",position);
+                intent.hasExtra("position");
+                context.startActivity(intent);
+
+            }
+        });
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            int pos=my_pos; Button m_button =my_button;
+            int pos=my_pos;
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
 
-            content.get(pos).setRating((double)ratingBar.getRating());
-            m_button.setText(Float.toString(ratingBar.getRating()));
+                if(fromUser) {
+                    Flower flower = (Flower) content.get(pos);
+                    flower.setRating((double) ratingBar.getRating());
+                }
 
 
 
