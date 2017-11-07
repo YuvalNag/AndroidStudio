@@ -13,17 +13,15 @@ import com.yn.user.rentacat.model.entities.Client;
 
 public interface DB_manager {
 
-    boolean hasClient(Client client);
+    boolean hasClient(long client_id);
+
     long addClient(ContentValues values);
-    long addModel(ContentValues values);;
-    long addCar(ContentValues values);;
+    long addCarModel(ContentValues values);
+    long addCar(ContentValues values);
 
-    long addCourse(ContentValues values);
-    boolean removeCourse(long id);
-    boolean updateCourse(long id, ContentValues values);
-    Cursor getCourses();
-
-    long addStudentCourse(ContentValues values);
-
-    boolean isUpdatet();
+    Cursor getCarModels();
+    Cursor getClients();
+    Cursor getBranches();
+    Cursor getCars();
+    
 }
