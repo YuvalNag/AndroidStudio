@@ -61,8 +61,9 @@ public class YuvalItemAdapter extends BaseAdapter
             Button m_button =my_button; int pos=my_pos;
             public void onClick(View view) {
                 Intent intent = new Intent(context, DescriptionActivity.class);
-                intent.putExtra("position",position);
-                intent.hasExtra("position");
+                Flower flower = (Flower) content.get(pos);
+                intent.putExtra("Flower",flower);
+
                 context.startActivity(intent);
 
             }

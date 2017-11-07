@@ -1,10 +1,12 @@
 package com.yn.user.adapter;
 
+import java.io.Serializable;
+
 /**
  * Created by USER on 02/11/2017.
  */
 
-public class Flower {
+public class Flower implements Serializable {
 
     private  String Name ;
     private int ImageId;
@@ -28,11 +30,13 @@ public class Flower {
 
     private double Rating;
 
-    public Flower(String _name, int _imageId,double _rating)
+    public Flower(String _name, int _imageId,double _rating,String _description)
     {
         Name = _name;
         ImageId = _imageId;
         Rating=_rating;
+        Description =_description;
+
     }
     public int getImageId() {
         return ImageId;
