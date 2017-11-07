@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
             text.add("This is the Button " + (i+1) );*/
 
         List<Flower> FloweraList = new ArrayList<Flower>();
+
         FloweraList.add(new Flower("Common Almond", R.drawable.common_almond, 1));
         FloweraList.add(new Flower("Grandiflora Rose", R.drawable.grandif_iorarose, 2));
         FloweraList.add(new Flower("Hybrid Tea Rose", R.drawable.hybridtearose, 2.5));
