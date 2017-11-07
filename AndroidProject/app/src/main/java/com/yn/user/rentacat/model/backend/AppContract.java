@@ -54,7 +54,7 @@ public class AppContract {
 
     public static class CarModel {
 
-        public static final String ID_CAR_NUMBER = "_id";
+        public static final String ID_CAR_MODEL = "_id";
         public static final String COMPENY_NAME = "compenyName";
         public static final String MODEL_NAME = "modelName";
         public static final String ENGINE_COPACITY = "engineCapacity";
