@@ -7,7 +7,9 @@ import java.io.Serializable;
  */
 
 public class Address implements Serializable {
+
     private String City,Street;
+
     private int Number;
 
     public String getCity() {

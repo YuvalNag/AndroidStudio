@@ -10,9 +10,12 @@ import java.io.Serializable;
 
 public class Branch implements Serializable{
 
-    private  int BranchID,
-                 NumberOfParkingSpaces;
+    private  int BranchID;
+
+    private  int NumberOfParkingSpaces;
+
     private Address BranchAddress;
+
     private android.location.Address AddressBranch;
 
     public Branch(int branchID, int numberOfParkingSpaces, Address branchAddress) {
