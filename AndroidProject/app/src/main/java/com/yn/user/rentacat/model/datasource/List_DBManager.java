@@ -2,6 +2,7 @@ package com.yn.user.rentacat.model.datasource;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.yn.user.rentacat.model.backend.DB_manager;
 import com.yn.user.rentacat.model.entities.Branch;
@@ -10,6 +11,7 @@ import com.yn.user.rentacat.model.entities.CarModel;
 import com.yn.user.rentacat.model.entities.Client;
 import com.yn.user.rentacat.model.entities.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,12 +19,21 @@ import java.util.List;
  */
 
 public class List_DBManager implements DB_manager{
+    final String TAG = "List_DBManager";
 
     static List<Car> cars;
     static List<CarModel> carModels;
     static List<Client> clients;
     static List<Order> orders;
     static List<Branch> branches;
+
+    static{
+        List<Car> cars=new ArrayList<>();
+        List<CarModel> carModels=new ArrayList<>();
+        List<Client> clients=new ArrayList<>();
+        List<Order> orders=new ArrayList<>();
+        List<Branch> branches=new ArrayList<>();
+    }
 
     @Override
     public boolean hasClient(long client_id) {
@@ -34,9 +45,20 @@ public class List_DBManager implements DB_manager{
 
     @Override
     public long addClient(ContentValues values){
-        Client client = Tools.ContentValuesToClient(values);
-        clients.add(client);
-        return client.getId();
+        try {
+            Client client = Tools.ContentValuesToClient(values);
+
+            if (hasClient(client.getId()))
+                return -1;
+            clients.add(client);
+            Log.d(TAG, "addClient: "+client.getId());
+            return client.getId();
+        }catch (IllegalArgumentException e)
+        {
+            Log.e(TAG, "addClient: "+e.getMessage());
+            return -1;
+
+        }
     }
 
     @Override
