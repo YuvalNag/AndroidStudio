@@ -45,7 +45,7 @@ public class AppContentProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
         Log.d(TAG, "delete " + uri.toString());
-
+/*
         String listName = uri.getLastPathSegment();
         long id = ContentUris.parseId(uri);
         switch (listName) {
@@ -64,6 +64,7 @@ public class AppContentProvider extends ContentProvider {
                     return 1;
                 break;
         }
+        */
         return 0;
     }
 
