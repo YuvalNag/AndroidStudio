@@ -1,6 +1,8 @@
 package com.yn.user.rentacat.model.datasource;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.MatrixCursor;
 
 import com.yn.user.rentacat.model.backend.AppContract;
 import com.yn.user.rentacat.model.entities.Address;
@@ -20,6 +22,7 @@ import com.yn.user.rentacat.model.entities.TransmissionType;
 
 import com.yn.user.rentacat.model.entities.TransmissionType;
 
+import java.util.List;
 import java.util.concurrent.Phaser;
 
 
@@ -39,23 +42,11 @@ public class Tools {
         return contentValues;
     }
 
-    public static Address ContentValuesToAddress(ContentValues contentValues)
-    {
-        Integer number = contentValues.getAsInteger(AppContract.Address.NUMBER);
-        if (number == null || number <= 0 )
-            throw new IllegalArgumentException();
-        return new Address(
-               contentValues.getAsString(AppContract.Address.CITY),
-               contentValues.getAsString(AppContract.Address.STREET),
-               number);
-    }
-
 
     public static ContentValues BranchToContentValues(Branch branch) {
-        ContentValues contentValues = new ContentValues();
+        ContentValues contentValues = AddressToContentValues(branch.getBranchAddress());;
         contentValues.put(AppContract.Branch.BRANCH_ID,branch.getBranchID()) ;
         contentValues.put(AppContract.Branch.NUMBER_OF_PARKING_SPACES, branch.getNumberOfParkingSpaces());
-        AddressToContentValues(branch.getBranchAddress());
         return contentValues;
     }
     public static ContentValues CarToContentValues(Car car) {
@@ -93,14 +84,25 @@ public class Tools {
     //TODO public static ContentValues OrderToContentValues(Order order) {}
 
 
+    public static Address ContentValuesToAddress(ContentValues contentValues)
+    {
+        Integer number = contentValues.getAsInteger(AppContract.Address.NUMBER);
+       // if (number == null || number <= 0 )
+       //     throw new IllegalArgumentException();
+        return new Address(
+                contentValues.getAsString(AppContract.Address.CITY),
+                contentValues.getAsString(AppContract.Address.STREET),
+                number);
+    }
+
     public static Branch ContentValuesToBranch(ContentValues contentValues)
     {
         Long id = contentValues.getAsLong(AppContract.Branch.BRANCH_ID);
         Integer numberOfParkingSpaces = contentValues.getAsInteger(AppContract.Branch.NUMBER_OF_PARKING_SPACES);
-        if(id <= 0 || id == null || numberOfParkingSpaces < 0 )
-            throw new IllegalArgumentException();
+      // if(id <= 0 || id == null || numberOfParkingSpaces < 0 )
+      //     throw new IllegalArgumentException();
 
-        return new Branch(id, numberOfParkingSpaces.intValue(),//TODO check if null.intValue() == 0
+        return new Branch(id, numberOfParkingSpaces,//TODO check if null.intValue() == 0
                           ContentValuesToAddress(contentValues));
     }
     public static Car ContentValuesToCar(ContentValues contentValues)
@@ -111,11 +113,11 @@ public class Tools {
                Long kilo= contentValues.getAsLong(AppContract.Car.KILOMETRERS);
                Long carNum= contentValues.getAsLong(AppContract.Car.ID_CAR_NUMBER);
 
-        if(branchnuum==null || branchnuum<0 ||
-                carmodelId==null || carmodelId<0 ||
-                kilo==null || kilo<0 ||
-                carNum==null || carNum<0)
-            throw new IllegalArgumentException();
+        //if(branchnuum==null || branchnuum<0 ||
+        //        carmodelId==null || carmodelId<0 ||
+        //        kilo==null || kilo<0 ||
+        //        carNum==null || carNum<0)
+        //    throw new IllegalArgumentException();
 
         return new Car(
                 branchnuum,
@@ -135,9 +137,9 @@ public class Tools {
               TransmissionType transmissionType =  TransmissionType.valueOf(contentValues.getAsString(AppContract.CarModel.TRANSMISSION_TYPE));
               Long numofseats=  contentValues.getAsLong(AppContract.CarModel.NUM_OF_SEATS);
 
-              if(id==null || id<0 ||
-                      numofseats==null || numofseats<0)
-                  throw new IllegalArgumentException();
+             // if(id==null || id<0 ||
+             //         numofseats==null || numofseats<0)
+             //     throw new IllegalArgumentException();
 
               return new CarModel(
                 id,
@@ -161,6 +163,139 @@ public class Tools {
                 );
     }
 
+
+    public static Cursor CarListToCursor(List<Car> cars) {
+        String[] columns = new String[]
+                {
+                        AppContract.Car.ID_CAR_NUMBER,
+                        AppContract.Car.CAR_MODEL_ID,
+                        AppContract.Car.BRANCH_NUM,
+                        AppContract.Car.KILOMETRERS,
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Car c : cars) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            c.getIdCarNumber(),
+                            c.getCarModelID(),
+                            c.getBranchNum(),
+                            c.getKilometers()
+                    });
+        }
+
+        return matrixCursor;
+    }
+
+    public static Cursor carModelsListToCursor(List<CarModel> carModels) {
+        String[] columns = new String[]
+                {
+                        AppContract.CarModel.ID_CAR_MODEL,
+                        AppContract.CarModel.COMPENY_NAME,
+                        AppContract.CarModel.ENGINE_COPACITY,
+                        AppContract.CarModel.MODEL_NAME,
+                        AppContract.CarModel.NUM_OF_SEATS,
+                        AppContract.CarModel.TRANSMISSION_TYPE
+
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (CarModel c : carModels) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            c.getIdCarModel(),
+                            c.getCompenyName(),
+                            c.getEngineCapacity(),
+                            c.getModelName(),
+                            c.getNumOfSeats(),
+                            c.getTransmissionType()
+                    });
+        }
+
+        return matrixCursor;
+    }
+
+    public static Cursor clientListToCursor(List<Client> clients) {
+        String[] columns = new String[]
+                {
+                        AppContract.Client.ID,
+                        AppContract.Client.CRADIT_NUMBER,
+                        AppContract.Client.EMAIL_ADDR,
+                        AppContract.Client.FIRST_NAME,
+                        AppContract.Client.LAST_NAME,
+                        AppContract.Client.PHONE_NUMBER
+
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Client c : clients) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            c.getId(),
+                            c.getCraditNumber(),
+                            c.getEmailAdrs(),
+                            c.getFirstName(),
+                            c.getLastName(),
+                            c.getPhoneNum()
+                    });
+        }
+
+        return matrixCursor;
+    }
+
+    public static Cursor branchListToCursor(List<Branch> branches) {
+        String[] columns = new String[]
+                {
+                        AppContract.Branch.BRANCH_ID,
+                        AppContract.Branch.ADDRESS,
+                        AppContract.Branch.NUMBER_OF_PARKING_SPACES
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Branch c : branches) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            c.getBranchID(),
+                            c.getBranchAddress(),
+                            c.getNumberOfParkingSpaces()
+
+                    });
+
+
+
+        }
+        return matrixCursor;
+    }
+
+
+    public static Cursor addressListToCursor(List<Address> addresses) {
+        String[] columns = new String[]
+                {
+                        AppContract.Address.CITY,
+                        AppContract.Address.NUMBER,
+                        AppContract.Address.STREET
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Address c : addresses) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            c.getCity(),
+                            c.getNumber(),
+                            c.getStreet()
+
+                    });
+
+
+
+        }
+        return matrixCursor;
+    }
 }
 
 

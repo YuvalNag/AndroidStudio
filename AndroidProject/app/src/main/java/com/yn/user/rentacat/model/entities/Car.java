@@ -17,10 +17,10 @@ public class Car implements Serializable {
     private long idCarNumber;
 
     public Car(long branchNum, long carModelID, long kilometers, long idCarNumber) {
-        this.branchNum = branchNum;
-        this.carModelID = carModelID;
-        this.kilometers = kilometers;
-        this.idCarNumber = idCarNumber;
+        setBranchNum(branchNum);
+        setCarModelID(carModelID);
+        setKilometers(kilometers);
+        setIdCarNumber(idCarNumber);
     }
 
     public long getBranchNum() {
@@ -44,7 +44,7 @@ public class Car implements Serializable {
     }
 
     public void setKilometers(long kilometers) {
-        this.kilometers = kilometers;
+        this.kilometers = Math.max(kilometers,0);
     }
 
     public long getIdCarNumber() {

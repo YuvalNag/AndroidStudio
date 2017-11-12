@@ -22,12 +22,12 @@ public class CarModel implements Serializable
 
     public CarModel(long idCarModel, String compenyName, String modelName,
                     long engineCapacity, TransmissionType transmissionType, long numOfSeats) {
-        this.idCarModel = idCarModel;
-        this.compenyName = compenyName;
-        this.modelName = modelName;
-        this.engineCapacity = engineCapacity;
-        this.transmissionType = transmissionType;
-        this.numOfSeats = numOfSeats;
+         setIdCarModel(idCarModel);
+         setCompenyName(compenyName);
+         setModelName( modelName);
+         setEngineCapacity(engineCapacity);
+         setTransmissionType(transmissionType);
+         setNumOfSeats(numOfSeats);
     }
 
     public long getIdCarModel() {
@@ -59,7 +59,7 @@ public class CarModel implements Serializable
     }
 
     public void setEngineCapacity(long engineCapacity) {
-        this.engineCapacity = engineCapacity;
+        this.engineCapacity = Math.max(engineCapacity,1);
     }
 
     public TransmissionType getTransmissionType() {
@@ -75,7 +75,7 @@ public class CarModel implements Serializable
     }
 
     public void setNumOfSeats(long numOfSeats) {
-        this.numOfSeats = numOfSeats;
+        this.numOfSeats = Math.max(numOfSeats,1);
     }
 }
 
