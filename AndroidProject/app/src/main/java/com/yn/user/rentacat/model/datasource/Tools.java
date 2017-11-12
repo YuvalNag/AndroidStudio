@@ -175,13 +175,13 @@ public class Tools {
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
-        for (Car c : cars) {
+        for (Car car : cars) {
             matrixCursor.addRow(new Object[]
                     {
-                            c.getIdCarNumber(),
-                            c.getCarModelID(),
-                            c.getBranchNum(),
-                            c.getKilometers()
+                            car.getIdCarNumber(),
+                            car.getCarModelID(),
+                            car.getBranchNum(),
+                            car.getKilometers()
                     });
         }
 
@@ -202,15 +202,15 @@ public class Tools {
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
-        for (CarModel c : carModels) {
+        for (CarModel carModel : carModels) {
             matrixCursor.addRow(new Object[]
                     {
-                            c.getIdCarModel(),
-                            c.getCompenyName(),
-                            c.getEngineCapacity(),
-                            c.getModelName(),
-                            c.getNumOfSeats(),
-                            c.getTransmissionType()
+                            carModel.getIdCarModel(),
+                            carModel.getCompenyName(),
+                            carModel.getEngineCapacity(),
+                            carModel.getModelName(),
+                            carModel.getNumOfSeats(),
+                            carModel.getTransmissionType()
                     });
         }
 
@@ -231,15 +231,15 @@ public class Tools {
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
-        for (Client c : clients) {
+        for (Client client : clients) {
             matrixCursor.addRow(new Object[]
                     {
-                            c.getId(),
-                            c.getCraditNumber(),
-                            c.getEmailAdrs(),
-                            c.getFirstName(),
-                            c.getLastName(),
-                            c.getPhoneNum()
+                            client.getId(),
+                            client.getCraditNumber(),
+                            client.getEmailAdrs(),
+                            client.getFirstName(),
+                            client.getLastName(),
+                            client.getPhoneNum()
                     });
         }
 
@@ -256,12 +256,12 @@ public class Tools {
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
-        for (Branch c : branches) {
+        for (Branch branch : branches) {
             matrixCursor.addRow(new Object[]
                     {
-                            c.getBranchID(),
-                            c.getBranchAddress(),
-                            c.getNumberOfParkingSpaces()
+                            branch.getBranchID(),
+                            branch.getBranchAddress(),
+                            branch.getNumberOfParkingSpaces()
 
                     });
 
@@ -282,12 +282,12 @@ public class Tools {
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
 
-        for (Address c : addresses) {
+        for (Address address : addresses) {
             matrixCursor.addRow(new Object[]
                     {
-                            c.getCity(),
-                            c.getNumber(),
-                            c.getStreet()
+                            address.getCity(),
+                            address.getNumber(),
+                            address.getStreet()
 
                     });
 
