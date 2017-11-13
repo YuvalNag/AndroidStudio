@@ -11,7 +11,7 @@ public class AppContract {
     /**
      * The authority for the contacts provider
      */
-    public static final String AUTHORITY = "com.Nissy_Yuval.App";
+    public static final String AUTHORITY = "com.yn.user.rentacat.model.backend.AppContentProvider";
     /**
      * A content:// style uri to the authority for the contacts provider
      */

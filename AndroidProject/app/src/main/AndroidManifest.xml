@@ -9,6 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:name=".model.backend.AppContentProvider"
+            android:authorities="com.yn.user.rentacat.model.backend.AppContentProvider"
+            android:enabled="true"
+            android:exported="true" />
+
+
+
         <activity android:name=".controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

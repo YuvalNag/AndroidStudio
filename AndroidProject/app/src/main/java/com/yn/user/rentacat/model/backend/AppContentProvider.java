@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import static com.yn.user.rentacat.model.backend.DBManagerFactory.getManager;
+
 /**
  * Created by USER on 07/11/2017.
  */
@@ -21,18 +23,39 @@ public class AppContentProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
+        Log.d(TAG, "onCreate");
+        manager=getManager();
         return false;
     }
 
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
+    public Cursor query(Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
+
+        Log.d(TAG, "query " + uri.toString());
+
+        String listName = uri.getLastPathSegment();
+        // String s = AcademyContract.Student.STUDENT_URI.getLastPathSegment();
+        switch (listName) {
+            case "Branch":
+                return manager.getBranches();//
+            case "Client":
+                return manager.getClients();//
+
+            case "Car":
+                return manager.getCars();//
+
+            case "CarModel":
+                return manager.getCarModels();//
+
+        }
         return null;
     }
-
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
+        Log.d(TAG, "getType " + uri.toString());
         return null;
     }
 
@@ -88,7 +111,30 @@ public class AppContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
+    public int update(Uri uri, ContentValues values, String selection,
+                      String[] selectionArgs) {
+        Log.d(TAG, "update " + uri.toString());
+/*
+        String listName = uri.getLastPathSegment();
+        long id = ContentUris.parseId(uri);
+        int indexToUpdate = -1;
+        switch (listName) {
+            case "students":
+                if (manager.updateStudent(id, values))
+                    return 1;
+                break;
+
+            case "lecturers":
+                if (manager.updateLecturer(id, values))
+                    return 1;
+                break;
+
+            case "courses":
+                if (manager.updateCourse(id, values))
+                    return 1;
+                break;
+        }
+*/
         return 0;
     }
 }

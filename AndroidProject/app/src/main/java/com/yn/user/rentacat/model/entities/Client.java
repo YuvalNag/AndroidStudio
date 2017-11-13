@@ -103,7 +103,7 @@ import java.io.Serializable;
             if(firstName.isEmpty())
             this.firstName = firstName;
             else
-                firstName="";
+                this.firstName="";
         }
 
         public String getEmailAdrs() {
