@@ -18,10 +18,22 @@ public interface DB_manager {
     long addClient(ContentValues values);
     long addCarModel(ContentValues values);
     long addCar(ContentValues values);
+    long addBranch(ContentValues values);
+    boolean removeClient(long id);
+    boolean removeCarModel(long id);
+    boolean removeCar(long id);
+    boolean removeBranch(long id);
+
+    boolean updateClient(long id, ContentValues values);
+    boolean updateCar(long id, ContentValues values);
+    boolean updateCarModel(long id, ContentValues values);
+    boolean updateBranch(long id, ContentValues values);
+
 
     Cursor getCarModels();
     Cursor getClients();
     Cursor getBranches();
     Cursor getCars();
+
 
 }

@@ -27,12 +27,12 @@ public class List_DBManager implements DB_manager{
     static List<Order> orders;
     static List<Branch> branches;
 
-    static{
-        List<Car> cars=new ArrayList<>();
-        List<CarModel> carModels=new ArrayList<>();
-        List<Client> clients=new ArrayList<>();
-        List<Order> orders=new ArrayList<>();
-        List<Branch> branches=new ArrayList<>();
+    static {
+         cars=new ArrayList<>();
+         carModels=new ArrayList<>();
+         clients=new ArrayList<>();
+         orders=new ArrayList<>();
+         branches=new ArrayList<>();
     }
 
     @Override
@@ -80,6 +80,7 @@ public class List_DBManager implements DB_manager{
 
     @Override
     public long addCarModel(ContentValues values) {
+
         //TODO add try and catch and check for uniq
         try {
             CarModel carModel = Tools.ContentValuesToCarModel(values);
@@ -95,7 +96,8 @@ public class List_DBManager implements DB_manager{
 
         }
 
-    }
+
+
 
     @Override
     public long addCar(ContentValues values) {
@@ -111,6 +113,51 @@ public class List_DBManager implements DB_manager{
                 return -1;
 
             }
+    }
+
+    @Override
+    public long addBranch(ContentValues values) {
+        return 0;
+    }
+
+    @Override
+    public boolean removeClient(long id) {
+        return false;
+    }
+
+    @Override
+    public boolean removeCarModel(long id) {
+        return false;
+    }
+
+    @Override
+    public boolean removeCar(long id) {
+        return false;
+    }
+
+    @Override
+    public boolean removeBranch(long id) {
+        return false;
+    }
+
+    @Override
+    public boolean updateClient(long id, ContentValues values) {
+        return false;
+    }
+
+    @Override
+    public boolean updateCar(long id, ContentValues values) {
+        return false;
+    }
+
+    @Override
+    public boolean updateCarModel(long id, ContentValues values) {
+        return false;
+    }
+
+    @Override
+    public boolean updateBranch(long id, ContentValues values) {
+        return false;
     }
 
     @Override
@@ -133,4 +180,5 @@ public class List_DBManager implements DB_manager{
     public Cursor getCars() {
         return Tools.CarListToCursor(cars);
     }
+
 }
