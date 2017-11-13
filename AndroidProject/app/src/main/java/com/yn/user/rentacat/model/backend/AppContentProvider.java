@@ -39,8 +39,27 @@ public class AppContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
+        Log.d(TAG, "insert " + uri.toString());
+
+        String listName = uri.getLastPathSegment();
+        long id = -1;
+        switch (listName) {
+            case "Client":
+                id = manager.addClient(contentValues);
+                return ContentUris.withAppendedId(uri, id);
+
+            case "Car":
+                id = manager.addCar(contentValues);
+                return ContentUris.withAppendedId(uri, id);
+
+            case "CarModel":
+                id = manager.addCarModel(contentValues);
+                return ContentUris.withAppendedId(uri, id);
+
+        }
         return null;
     }
+
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {

@@ -43,6 +43,22 @@ public class List_DBManager implements DB_manager{
         return false;
     }
 
+
+    public boolean hasCar(long car_id) {
+        for (Car car:cars)
+            if(car.getIdCarNumber()==car_id)
+                return true;
+        return false;
+    }
+
+
+    public boolean hasCarModel(long CarMOde_id) {
+        for (CarModel carMOde:carModels)
+            if(carMOde.getIdCarModel()==CarMOde_id)
+                return true;
+        return false;
+    }
+
     @Override
     public long addClient(ContentValues values){
         try {
@@ -53,16 +69,18 @@ public class List_DBManager implements DB_manager{
             clients.add(client);
             Log.d(TAG, "addClient: "+client.getId());
             return client.getId();
-        }catch (IllegalArgumentException e)
+        }catch (Exception e)
         {
             Log.e(TAG, "addClient: "+e.getMessage());
             return -1;
 
         }
+
     }
 
     @Override
     public long addCarModel(ContentValues values) {
+        //TODO add try and catch and check for uniq
         CarModel carModel = Tools.ContentValuesToCarModel(values);
         carModels.add(carModel);
         return carModel.getIdCarModel();
