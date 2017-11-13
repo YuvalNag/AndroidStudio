@@ -81,16 +81,36 @@ public class List_DBManager implements DB_manager{
     @Override
     public long addCarModel(ContentValues values) {
         //TODO add try and catch and check for uniq
-        CarModel carModel = Tools.ContentValuesToCarModel(values);
-        carModels.add(carModel);
-        return carModel.getIdCarModel();
+        try {
+            CarModel carModel = Tools.ContentValuesToCarModel(values);
+           if(hasCarModel(carModel.getIdCarModel()))
+               return -1;
+
+            carModels.add(carModel);
+            return carModel.getIdCarModel();
+        }catch (Exception e)
+        {
+            Log.e(TAG, "addCarModel: "+e.getMessage() );
+            return -1;
+
+        }
+
     }
 
     @Override
     public long addCar(ContentValues values) {
-        Car car = Tools.ContentValuesToCar(values);
-        cars.add(car);
-        return car.getIdCarNumber();
+        try {
+            Car car = Tools.ContentValuesToCar(values);
+            if (hasCar(car.getCarModelID()))
+                return -1;
+            cars.add(car);
+            return car.getIdCarNumber();
+        }catch (Exception e)
+            {
+                Log.e(TAG, "addCar: "+e.getMessage() );
+                return -1;
+
+            }
     }
 
     @Override
