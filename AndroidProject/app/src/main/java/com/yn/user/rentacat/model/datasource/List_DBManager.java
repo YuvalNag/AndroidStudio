@@ -90,7 +90,7 @@ public class List_DBManager implements DB_manager{
     @Override
     public long addCarModel(ContentValues values) {
 
-        //TODO add try and catch and check for uniq
+
         try {
             CarModel carModel = Tools.ContentValuesToCarModel(values);
             if (hasCarModel(carModel.getIdCarModel())) {

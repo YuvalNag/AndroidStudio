@@ -13,12 +13,14 @@ import com.yn.user.rentacat.model.entities.Client;
 
 public interface DB_manager {
 
+    //TODO why here?
     boolean hasClient(long client_id);
 
     long addClient(ContentValues values);
     long addCarModel(ContentValues values);
     long addCar(ContentValues values);
     long addBranch(ContentValues values);
+
     boolean removeClient(long id);
     boolean removeCarModel(long id);
     boolean removeCar(long id);
