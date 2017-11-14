@@ -42,7 +42,6 @@ public class AppContentProvider extends ContentProvider {
                 return manager.getBranches();//
             case "Client":
                 return manager.getClients();//
-
             case "Car":
                 return manager.getCars();//
 
@@ -79,6 +78,10 @@ public class AppContentProvider extends ContentProvider {
                 id = manager.addCarModel(contentValues);
                 return ContentUris.withAppendedId(uri, id);
 
+            case "Branch":
+                id = manager.addBranch(contentValues);
+                return ContentUris.withAppendedId(uri, id);
+
         }
         return null;
     }
@@ -87,26 +90,31 @@ public class AppContentProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
         Log.d(TAG, "delete " + uri.toString());
-/*
+
         String listName = uri.getLastPathSegment();
         long id = ContentUris.parseId(uri);
         switch (listName) {
-            case "students":   /// content://com.oshri.academy/students/23
-                if (manager.removeStudent(id))
+            case "Client":
+                if(manager.removeClient(id))
                     return 1;
                 break;
 
-            case "lecturers":
-                if (manager.removeLecturer(id))
+            case "Car":
+                if(manager.removeCar(id))
                     return 1;
                 break;
 
-            case "courses":
-                if (manager.removeCourse(id))
+            case "CarModel":
+                if(manager.removeCarModel(id))
+                    return 1;
+                break;
+
+            case "Branch":
+                if(manager.removeBranch(id))
                     return 1;
                 break;
         }
-        */
+
         return 0;
     }
 
@@ -114,27 +122,32 @@ public class AppContentProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
         Log.d(TAG, "update " + uri.toString());
-/*
+
         String listName = uri.getLastPathSegment();
         long id = ContentUris.parseId(uri);
-        int indexToUpdate = -1;
+
         switch (listName) {
-            case "students":
-                if (manager.updateStudent(id, values))
+            case "Client":
+                if(manager.updateClient(id,values))
                     return 1;
                 break;
 
-            case "lecturers":
-                if (manager.updateLecturer(id, values))
+            case "Car":
+                if(manager.updateCar(id,values))
                     return 1;
                 break;
 
-            case "courses":
-                if (manager.updateCourse(id, values))
+            case "CarModel":
+                if(manager.updateCarModel(id,values))
+                    return 1;
+                break;
+
+            case "Branch":
+                if(manager.updateBranch(id,values))
                     return 1;
                 break;
         }
-*/
+
         return 0;
     }
 }
