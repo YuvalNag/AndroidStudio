@@ -17,7 +17,7 @@ import static com.yn.user.rentacat.model.backend.DBManagerFactory.getManager;
 
 public class AppContentProvider extends ContentProvider {
 
-
+//fdgdsg
     DB_manager manager;
     final String TAG = "AppContentProvider";
 
@@ -64,7 +64,7 @@ public class AppContentProvider extends ContentProvider {
         Log.d(TAG, "insert " + uri.toString());
 
         String listName = uri.getLastPathSegment();
-        long id = -1;
+        long id=-1;
         switch (listName) {
             case "Client":
                 id = manager.addClient(contentValues);
