@@ -20,14 +20,32 @@ public class CarModel implements Serializable
 
     private long numOfSeats;
 
+    private char carClass;
+
+    private String imageCarPath;
+
     public CarModel(long idCarModel, String compenyName, String modelName,
-                    long engineCapacity, TransmissionType transmissionType, long numOfSeats) {
+                    long engineCapacity, TransmissionType transmissionType, long numOfSeats,char carClass, String imageCarPath) {
          setIdCarModel(idCarModel);
          setCompenyName(compenyName);
          setModelName( modelName);
          setEngineCapacity(engineCapacity);
          setTransmissionType(transmissionType);
          setNumOfSeats(numOfSeats);
+         setCarClass(carClass);
+         setImageCarPath(imageCarPath);
+
+    }
+    public String getImageCarPath() { return imageCarPath; }
+
+    public void setImageCarPath(String imageCarPath) { this.imageCarPath = imageCarPath; }
+
+    public char getCarClass() {
+        return carClass;
+    }
+
+    public void setCarClass(char carClass) {
+        this.carClass = carClass;
     }
 
     public long getIdCarModel() {

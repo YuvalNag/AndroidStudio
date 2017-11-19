@@ -21,6 +21,7 @@ public class Car implements Serializable {
         setCarModelID(carModelID);
         setKilometers(kilometers);
         setIdCarNumber(idCarNumber);
+
     }
 
     public long getBranchNum() {
@@ -54,4 +55,7 @@ public class Car implements Serializable {
     public void setIdCarNumber(long idCarNumber) {
         this.idCarNumber = idCarNumber;
     }
+
+
+
 }
