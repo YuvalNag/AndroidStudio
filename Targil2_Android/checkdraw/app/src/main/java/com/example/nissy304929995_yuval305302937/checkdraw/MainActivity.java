@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,BlankFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,BlankFragment.OnFragmentInteractionListener,main_order.OnFragmentInteractionListener {
 
     FragmentTransaction transaction;
 int i=0;
@@ -90,71 +90,6 @@ int i=0;
 
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-
-            BlankFragment blankFragment=(BlankFragment)getSupportFragmentManager().findFragmentByTag("cam");
-
-            boolean b=getSupportFragmentManager().popBackStackImmediate("cambs",0);
-            if(blankFragment==null&&!b) {
-                transaction=getSupportFragmentManager().beginTransaction();
-                blankFragment=BlankFragment.newInstance(String.valueOf(i),String.valueOf(i));
-
-                transaction.replace(R.id.f, blankFragment,"cam").addToBackStack("cambs");
-
-                transaction.commit();
-            }
-        } else if (id == R.id.nav_gallery) {
-            constrains blankFragment=(constrains)getSupportFragmentManager().findFragmentByTag("con");
-
-            boolean b=getSupportFragmentManager().popBackStackImmediate("con",0);
-            if(blankFragment==null&&!b) {
-                transaction=getSupportFragmentManager().beginTransaction();
-                blankFragment=constrains.newInstance(String.valueOf(i),String.valueOf(i));
-
-                transaction.replace(R.id.f, blankFragment,"con").addToBackStack("con");
-
-                transaction.commit();
-            }
-        } else if (id == R.id.nav_slideshow) {
-
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setTitle("dialog title"); //alertDialogBuilder.setMessage("dialog message ....");
-            alertDialogBuilder.setNeutralButton("Remind me later",onClickListener); alertDialogBuilder.setPositiveButton("Ok",onClickListener); alertDialogBuilder.setNegativeButton("Cancel ",onClickListener);
-            /*alertDialogBuilder.setAdapter(new ListAdapter() {
-            })*/
-
-            alertDialogBuilder.setAdapter(new ArrayAdapter<String>(this,
-                    R.layout.item, Arrays.asList(strings.CHEESES)), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-
-           // alertDialogBuilder.setView(R.layout.checkcons);
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     AlertDialog.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
 
         @Override
@@ -174,8 +109,83 @@ int i=0;
                     break;
             }
         }};
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
+        if (id == R.id.nav_camera) {
+
+            BlankFragment blankFragment = (BlankFragment) getSupportFragmentManager().findFragmentByTag("cam");
+
+            boolean b = getSupportFragmentManager().popBackStackImmediate("cambs", 0);
+            if (blankFragment == null && !b) {
+                transaction = getSupportFragmentManager().beginTransaction();
+                blankFragment = BlankFragment.newInstance(String.valueOf(i), String.valueOf(i));
+
+                transaction.replace(R.id.f, blankFragment, "cam").addToBackStack("cambs");
+
+                transaction.commit();
+            }
+        } else if (id == R.id.nav_gallery) {
+            constrains blankFragment = (constrains) getSupportFragmentManager().findFragmentByTag("con");
+
+            boolean b = getSupportFragmentManager().popBackStackImmediate("con", 0);
+            if (blankFragment == null && !b) {
+                transaction = getSupportFragmentManager().beginTransaction();
+                blankFragment = constrains.newInstance(String.valueOf(i), String.valueOf(i));
+
+                transaction.replace(R.id.f, blankFragment, "con").addToBackStack("con");
+
+                transaction.commit();
+            }
+        } else if (id == R.id.nav_slideshow) {
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("dialog title"); //alertDialogBuilder.setMessage("dialog message ....");
+            alertDialogBuilder.setNeutralButton("Remind me later", onClickListener);
+            alertDialogBuilder.setPositiveButton("Ok", onClickListener);
+            alertDialogBuilder.setNegativeButton("Cancel ", onClickListener);
+            /*alertDialogBuilder.setAdapter(new ListAdapter() {
+            })*/
+
+            alertDialogBuilder.setAdapter(new ArrayAdapter<String>(this,
+                    R.layout.item, Arrays.asList(strings.CHEESES)), new DialogInterface.OnClickListener() {
                 @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+
+            // alertDialogBuilder.setView(R.layout.checkcons);
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+
+        } else if (id == R.id.nav_manage) {
+
+            main_order blankFragment = (main_order) getSupportFragmentManager().findFragmentByTag("main");
+
+            boolean b = getSupportFragmentManager().popBackStackImmediate("main", 0);
+            if (blankFragment == null && !b) {
+                transaction = getSupportFragmentManager().beginTransaction();
+                blankFragment = main_order.newInstance(String.valueOf(i), String.valueOf(i));
+
+                transaction.replace(R.id.f, blankFragment, "main").addToBackStack("main");
+
+                transaction.commit();
+            }} else if (id == R.id.nav_share) {
+
+            } else if (id == R.id.nav_send) {
+
+            }
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
+    }
+        @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
