@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+
+    tools:context="com.example.nissy304929995_yuval305302937.checkdraw.BlankFragment"
+    android:id="@+id/frag"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <ListView
+        android:id="@+id/listfrag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="180dp"
+        android:scrollIndicators="start"
+        android:choiceMode="singleChoice"
+        android:listSelector="@drawable/list_item_selector"
+        />
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="180dp"
+        android:text="@string/hello_blank_fragment"
+        android:textColor="@android:color/background_light"
+        android:background="@android:color/black"/>
+
+
+</FrameLayout>
