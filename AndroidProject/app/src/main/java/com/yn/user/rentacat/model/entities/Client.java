@@ -1,10 +1,13 @@
 package com.yn.user.rentacat.model.entities;
 
-import android.provider.ContactsContract;
-import android.telephony.PhoneNumberUtils;
 import android.util.Patterns;
 
+import com.yn.user.rentacat.model.backend.SHA_256_Helper;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Created by USER on 07/11/2017.
@@ -17,75 +20,42 @@ import java.io.Serializable;
         private String emailAdrs;
 
         private long id;
-
+        private final long salt;
+        private String password;
 
         private String phoneNum;
 
         private long craditNumber;
 
-     /*   private ContactsContract.CommonDataKinds.Email EmailAdress;
-        private ContactsContract.CommonDataKinds.Phone PhoneNumber;
-        private ContactsContract.CommonDataKinds.StructuredName Name;
-        private ContactsContract.CommonDataKinds.Identity ID;
-
-
-            public Client(long craditNumber, ContactsContract.CommonDataKinds.Email emailAdress, ContactsContract.CommonDataKinds.Phone phoneNumber,
-                  ContactsContract.CommonDataKinds.StructuredName name, ContactsContract.CommonDataKinds.Identity ID) {
-
-                this.craditNumber = craditNumber;
-                EmailAdress = emailAdress;
-                PhoneNumber = phoneNumber;
-                Name = name;
-                this.ID = ID;
-            }
- public ContactsContract.CommonDataKinds.Email getEmailAdress() {
-            return EmailAdress;
-        }
-
-        public void setEmailAdress(ContactsContract.CommonDataKinds.Email emailAdress) {
-            EmailAdress = emailAdress;
-
-
-        }
-
-        public ContactsContract.CommonDataKinds.Phone getPhoneNumber() {
-            return PhoneNumber;
-        }
-
-        public void setPhoneNumber(ContactsContract.CommonDataKinds.Phone phoneNumber) {
-            PhoneNumber = phoneNumber;
-        }
-
-        public ContactsContract.CommonDataKinds.StructuredName getName() {
-            return Name;
-        }
-
-        public void setName(ContactsContract.CommonDataKinds.StructuredName name) {
-            Name = name;
-        }
-
-        public ContactsContract.CommonDataKinds.Identity getID() {
-            return ID;
-        }
-
-        public void setID(ContactsContract.CommonDataKinds.Identity ID) {
-        this.ID = ID;
-    }
-*/
-        public Client(String lastName, String firstName, String emailAdrs, long id, String phoneNum, long craditNumber) {
+        public Client(String lastName, String firstName, String emailAdrs, long id, String phoneNum, long craditNumber,String password) throws Exception {
+            Random random =new Random();
+            salt = random.nextLong();
             setLastName(lastName);
-             setFirstName(firstName);
-             setEmailAdrs(emailAdrs);
+            setFirstName(firstName);
+            setEmailAdrs(emailAdrs);
             setId(id);
             setPhoneNum(phoneNum);
             setCraditNumber(craditNumber);
-            }
+            setPassword(password);
+        }
 
         public String getLastName() {
             return lastName;
         }
 
-        public void setLastName(String lastName) {
+    public long getSalt() {
+        return salt;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) throws Exception {
+        this.password = SHA_256_Helper.getHash256String(password,salt);
+    }
+
+    public void setLastName(String lastName) {
             if(lastName.isEmpty())
                 this.lastName = lastName;
             else
