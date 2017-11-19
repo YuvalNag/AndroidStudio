@@ -71,7 +71,7 @@ public class AddStudentActivity extends Activity implements View.OnClickListener
 
     private void updateItemList(final Context context, final Uri uri) {
 
-        new AsyncTask<Void, Void, Cursor>() {
+        new  AsyncTask<Void, Void, Cursor>() {
 
             @Override
             protected void onPreExecute() {
@@ -88,7 +88,7 @@ public class AddStudentActivity extends Activity implements View.OnClickListener
             @Override
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
-                CursorAdapter adapter = new CursorAdapter(context, cursor) {
+                CursorAdapter adapter = new CursorAdapter(context, cursor,0) {
                     @Override
                     public View newView(Context context, Cursor cursor, ViewGroup parent) {
                         TextView tv = new TextView(context);
