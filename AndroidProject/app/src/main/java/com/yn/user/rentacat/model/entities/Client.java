@@ -52,11 +52,14 @@ import java.util.Random;
     }
 
     public void setPassword(String password) throws Exception {
+
+            if(password.isEmpty())
+                password="";
         this.password = SHA_256_Helper.getHash256String(password,salt);
     }
 
     public void setLastName(String lastName) {
-            if(lastName.isEmpty())
+            if(!lastName.isEmpty())
                 this.lastName = lastName;
             else
                 this.lastName = "";
@@ -70,7 +73,7 @@ import java.util.Random;
         }
 
         public void setFirstName(String firstName) {
-            if(firstName.isEmpty())
+            if(!firstName.isEmpty())
             this.firstName = firstName;
             else
                 this.firstName="";

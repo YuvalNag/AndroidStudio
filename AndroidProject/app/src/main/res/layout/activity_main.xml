@@ -28,8 +28,10 @@
             android:onClick="onClick"/>
 
     <Button
+        android:id="@+id/showallClientButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="show all clients" />
 
     <Button
@@ -39,8 +41,10 @@
         android:text="show all cars" />
 
     <Button
+        android:id="@+id/showAllCarModels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClick"
         android:text="show all car models" />
 
     <Button

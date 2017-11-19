@@ -2,6 +2,7 @@ package com.yn.user.rentacat.controller;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -34,10 +35,30 @@ public class MainActivity extends AppCompatActivity {
         }
     public void onClick(View view) {
 
-        addCarButton();
-        addCarModelButton();
-        addClientButton();
-        showCarList();
+        switch(view.getId())
+        {
+            case R.id.addClientButton:
+            {
+                Intent intent = new Intent(this, addClient.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.showallClientButton: {
+                Intent intent = new Intent(this, client_list.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.addCarModelButton:{
+                Intent intent = new Intent(this, addCarModel.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.showAllCarModels:{
+                Intent intent = new Intent(this, CarModelList.class);
+                startActivity(intent);
+                break;
+            }
+        }
 
 
 

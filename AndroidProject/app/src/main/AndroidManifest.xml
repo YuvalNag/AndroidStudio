@@ -22,6 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".controller.addClient" />
+        <activity android:name=".controller.client_list" />
+        <activity android:name=".controller.addCarModel" />
+        <activity android:name=".controller.CarModelList"></activity>
     </application>
 
 </manifest>

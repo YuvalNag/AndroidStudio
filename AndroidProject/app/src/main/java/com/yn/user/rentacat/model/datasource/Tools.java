@@ -8,6 +8,7 @@ import com.yn.user.rentacat.model.backend.AppContract;
 import com.yn.user.rentacat.model.entities.Address;
 import com.yn.user.rentacat.model.entities.Branch;
 import com.yn.user.rentacat.model.entities.Car;
+import com.yn.user.rentacat.model.entities.CarClass;
 import com.yn.user.rentacat.model.entities.CarModel;
 import com.yn.user.rentacat.model.entities.Client;
 
@@ -66,6 +67,8 @@ public class Tools {
         contentValues.put(AppContract.CarModel.MODEL_NAME, carModel.getModelName());
         contentValues.put(AppContract.CarModel.TRANSMISSION_TYPE, carModel.getTransmissionType().toString());
         contentValues.put(AppContract.CarModel.NUM_OF_SEATS, carModel.getNumOfSeats());
+        contentValues.put(AppContract.CarModel.PATH_OF_IMG, carModel.getImageCarPath());
+        contentValues.put(AppContract.CarModel.CLASS_OF_CAR, carModel.getCarClass().toString());
 
         return contentValues;
     }
@@ -78,6 +81,7 @@ public class Tools {
         contentValues.put(AppContract.Client.EMAIL_ADDR,   client.getEmailAdrs());
         contentValues.put(AppContract.Client.PHONE_NUMBER, client.getPhoneNum());
         contentValues.put(AppContract.Client.CRADIT_NUMBER,client.getCraditNumber());
+        contentValues.put(AppContract.Client.PASSWORD,client.getPassword());
 
         return contentValues;
     }
@@ -136,7 +140,8 @@ public class Tools {
               Long engine=  contentValues.getAsLong(AppContract.CarModel.ENGINE_COPACITY);
               TransmissionType transmissionType =  TransmissionType.valueOf(contentValues.getAsString(AppContract.CarModel.TRANSMISSION_TYPE));
               Long numofseats=  contentValues.getAsLong(AppContract.CarModel.NUM_OF_SEATS);
-
+              String path=contentValues.getAsString(AppContract.CarModel.PATH_OF_IMG);
+              CarClass classofcar= CarClass.valueOf(contentValues.getAsString(AppContract.CarModel.CLASS_OF_CAR));
              // if(id==null || id<0 ||
              //         numofseats==null || numofseats<0)
              //     throw new IllegalArgumentException();
@@ -147,18 +152,20 @@ public class Tools {
                 modalName,
                 engine,
                 transmissionType,
-                numofseats
+                numofseats,
+                      classofcar ,
+                      path
                 );
     }
-    public static Client ContentValuesToClient(ContentValues contentValues)
-    {
+    public static Client ContentValuesToClient(ContentValues contentValues) throws Exception {
         return  new Client(
                 contentValues.getAsString(AppContract.Client.LAST_NAME),
                 contentValues.getAsString(AppContract.Client.FIRST_NAME),
                 contentValues.getAsString(AppContract.Client.EMAIL_ADDR),
                 contentValues.getAsLong(AppContract.Client.ID),
                 contentValues.getAsString(AppContract.Client.PHONE_NUMBER),
-                contentValues.getAsLong(AppContract.Client.CRADIT_NUMBER)
+                contentValues.getAsLong(AppContract.Client.CRADIT_NUMBER),
+                contentValues.getAsString(AppContract.Client.PASSWORD)
 
                 );
     }
@@ -196,7 +203,9 @@ public class Tools {
                         AppContract.CarModel.ENGINE_COPACITY,
                         AppContract.CarModel.MODEL_NAME,
                         AppContract.CarModel.NUM_OF_SEATS,
-                        AppContract.CarModel.TRANSMISSION_TYPE
+                        AppContract.CarModel.TRANSMISSION_TYPE,
+                        AppContract.CarModel.CLASS_OF_CAR,
+                        AppContract.CarModel.PATH_OF_IMG
 
                 };
 
@@ -210,7 +219,9 @@ public class Tools {
                             carModel.getEngineCapacity(),
                             carModel.getModelName(),
                             carModel.getNumOfSeats(),
-                            carModel.getTransmissionType()
+                            carModel.getTransmissionType(),
+                            carModel.getCarClass(),
+                            carModel.getImageCarPath()
                     });
         }
 
@@ -225,7 +236,9 @@ public class Tools {
                         AppContract.Client.EMAIL_ADDR,
                         AppContract.Client.FIRST_NAME,
                         AppContract.Client.LAST_NAME,
-                        AppContract.Client.PHONE_NUMBER
+                        AppContract.Client.PHONE_NUMBER,
+                        AppContract.Client.PASSWORD
+
 
                 };
 
@@ -239,7 +252,8 @@ public class Tools {
                             client.getEmailAdrs(),
                             client.getFirstName(),
                             client.getLastName(),
-                            client.getPhoneNum()
+                            client.getPhoneNum(),
+                            client.getPassword()
                     });
         }
 
