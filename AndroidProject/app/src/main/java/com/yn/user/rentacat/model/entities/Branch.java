@@ -13,8 +13,6 @@ public class Branch implements Serializable{
 
     private  int numberOfParkingSpaces;
 
-
-
     private Address branchAddress;
 
     private android.location.Address addressBranch;

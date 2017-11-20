@@ -59,7 +59,7 @@ public class CarModelList extends AppCompatActivity {
                                 R.id.cars_engineCapacity,
                                 R.id.cars_carImage}
                 );
-*//*
+*/
        new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
@@ -97,10 +97,11 @@ public class CarModelList extends AppCompatActivity {
 
                 };
                 adapter.changeCursor(cursor);
+                        ((ListView)findViewById(R.id.model_listview)).setAdapter(adapter);
             }
-        }.execute();*/
+        }.execute();
 
-        Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
+        /*Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
         CursorAdapter adapter = new CursorAdapter(CarModelList.this, cursor,0) {
             @Override
             public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -127,7 +128,7 @@ public class CarModelList extends AppCompatActivity {
         };
         adapter.changeCursor(cursor);
 
-        ((ListView)findViewById(R.id.model_listview)).setAdapter(adapter);
+        ((ListView)findViewById(R.id.model_listview)).setAdapter(adapter);*/
     }
     }
 

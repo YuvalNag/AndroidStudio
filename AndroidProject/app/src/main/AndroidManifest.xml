@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yn.user.rentacat">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +27,8 @@
         <activity android:name=".controller.addClient" />
         <activity android:name=".controller.client_list" />
         <activity android:name=".controller.addCarModel" />
-        <activity android:name=".controller.CarModelList"></activity>
+        <activity android:name=".controller.CarModelList" />
+        <activity android:name=".controller.BranchList"></activity>
     </application>
 
 </manifest>
