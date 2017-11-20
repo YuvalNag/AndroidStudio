@@ -61,6 +61,8 @@ public class AppContract {
         public static final String ENGINE_COPACITY = "engineCapacity";
         public static final String TRANSMISSION_TYPE = "transmissionType";
         public static final String NUM_OF_SEATS = "numOfSeats";
+        public static final String IMG = "carPic";
+        public static final String CLASS_OF_CAR = "carClass";
         /**
          * The content:// style URI for this table
          */
@@ -75,6 +77,10 @@ public class AppContract {
         public static final String EMAIL_ADDR = "emailAdrs";
         public static final String PHONE_NUMBER = "phoneNum";
         public static final String CRADIT_NUMBER = "engineCapacity";
+        public static final String SALT = "salt";
+        public static final String PASSWORD = "password";
+
+
         /**
          * The content:// style URI for this table
          */

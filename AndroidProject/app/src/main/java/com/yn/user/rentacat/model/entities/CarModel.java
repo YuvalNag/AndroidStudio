@@ -1,5 +1,11 @@
 package com.yn.user.rentacat.model.entities;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.yn.user.rentacat.model.datasource.Tools;
+
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
 /**
@@ -16,16 +22,38 @@ public class CarModel implements Serializable
 
     private long engineCapacity;
 
+    private Bitmap carPic;
+
+       public Bitmap getCarPic() {
+        return carPic;
+    }
+
+    public void setCarPic(Bitmap carPic) {
+        this.carPic = carPic;
+    }
+
+
+    public byte[] getCarPicByteArray() {
+        return Tools.imageToByte(this.carPic);
+    }
+
+    public void setCarPic(byte[] carPic) {
+        this.carPic = Tools.byteToImage(carPic);
+    }
+
     private TransmissionType transmissionType;
 
     private long numOfSeats;
 
-    private char carClass;
+    private CarClass carClass;
 
-    private String imageCarPath;
+   /* private String imageCarPath;
+    public String getImageCarPath() { return imageCarPath; }
+
+    public void setImageCarPath(String imageCarPath) { this.imageCarPath = imageCarPath; }*/
 
     public CarModel(long idCarModel, String compenyName, String modelName,
-                    long engineCapacity, TransmissionType transmissionType, long numOfSeats,char carClass, String imageCarPath) {
+                    long engineCapacity, TransmissionType transmissionType, long numOfSeats,CarClass carClass, Bitmap image) {
          setIdCarModel(idCarModel);
          setCompenyName(compenyName);
          setModelName( modelName);
@@ -33,18 +61,15 @@ public class CarModel implements Serializable
          setTransmissionType(transmissionType);
          setNumOfSeats(numOfSeats);
          setCarClass(carClass);
-         setImageCarPath(imageCarPath);
-
+         setCarPic(image);
     }
-    public String getImageCarPath() { return imageCarPath; }
 
-    public void setImageCarPath(String imageCarPath) { this.imageCarPath = imageCarPath; }
 
-    public char getCarClass() {
+    public CarClass getCarClass() {
         return carClass;
     }
 
-    public void setCarClass(char carClass) {
+    public void setCarClass(CarClass carClass) {
         this.carClass = carClass;
     }
 
