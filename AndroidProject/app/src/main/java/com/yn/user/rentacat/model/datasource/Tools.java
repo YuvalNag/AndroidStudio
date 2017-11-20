@@ -3,6 +3,8 @@ package com.yn.user.rentacat.model.datasource;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.yn.user.rentacat.model.backend.AppContract;
 import com.yn.user.rentacat.model.entities.Address;
@@ -23,6 +25,7 @@ import com.yn.user.rentacat.model.entities.TransmissionType;
 
 import com.yn.user.rentacat.model.entities.TransmissionType;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.concurrent.Phaser;
 
@@ -67,7 +70,7 @@ public class Tools {
         contentValues.put(AppContract.CarModel.MODEL_NAME, carModel.getModelName());
         contentValues.put(AppContract.CarModel.TRANSMISSION_TYPE, carModel.getTransmissionType().toString());
         contentValues.put(AppContract.CarModel.NUM_OF_SEATS, carModel.getNumOfSeats());
-        contentValues.put(AppContract.CarModel.PATH_OF_IMG, carModel.getImageCarPath());
+        contentValues.put(AppContract.CarModel.IMG, carModel.getCarPicByteArray());
         contentValues.put(AppContract.CarModel.CLASS_OF_CAR, carModel.getCarClass().toString());
 
         return contentValues;
@@ -140,7 +143,7 @@ public class Tools {
               Long engine=  contentValues.getAsLong(AppContract.CarModel.ENGINE_COPACITY);
               TransmissionType transmissionType =  TransmissionType.valueOf(contentValues.getAsString(AppContract.CarModel.TRANSMISSION_TYPE));
               Long numofseats=  contentValues.getAsLong(AppContract.CarModel.NUM_OF_SEATS);
-              String path=contentValues.getAsString(AppContract.CarModel.PATH_OF_IMG);
+              Bitmap bitmap=byteToImage(contentValues.getAsByteArray(AppContract.CarModel.IMG));
               CarClass classofcar= CarClass.valueOf(contentValues.getAsString(AppContract.CarModel.CLASS_OF_CAR));
              // if(id==null || id<0 ||
              //         numofseats==null || numofseats<0)
@@ -154,7 +157,7 @@ public class Tools {
                 transmissionType,
                 numofseats,
                       classofcar ,
-                      path
+                      bitmap
                 );
     }
     public static Client ContentValuesToClient(ContentValues contentValues) throws Exception {
@@ -205,7 +208,7 @@ public class Tools {
                         AppContract.CarModel.NUM_OF_SEATS,
                         AppContract.CarModel.TRANSMISSION_TYPE,
                         AppContract.CarModel.CLASS_OF_CAR,
-                        AppContract.CarModel.PATH_OF_IMG
+                        AppContract.CarModel.IMG
 
                 };
 
@@ -221,7 +224,7 @@ public class Tools {
                             carModel.getNumOfSeats(),
                             carModel.getTransmissionType(),
                             carModel.getCarClass(),
-                            carModel.getImageCarPath()
+                            carModel.getCarPicByteArray()
                     });
         }
 
@@ -310,6 +313,18 @@ public class Tools {
         }
         return matrixCursor;
     }
+
+    public static byte[] imageToByte(Bitmap image) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
+    }
+
+    public static Bitmap byteToImage(byte[] imageArray) {
+      return  BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
+    }
+
 }
 
 

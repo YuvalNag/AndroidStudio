@@ -61,7 +61,7 @@ public class AppContract {
         public static final String ENGINE_COPACITY = "engineCapacity";
         public static final String TRANSMISSION_TYPE = "transmissionType";
         public static final String NUM_OF_SEATS = "numOfSeats";
-        public static final String PATH_OF_IMG = "imageCarPath";
+        public static final String IMG = "carPic";
         public static final String CLASS_OF_CAR = "carClass";
         /**
          * The content:// style URI for this table
