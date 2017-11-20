@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.yn.user.rentacat.R;
 import com.yn.user.rentacat.model.backend.AppContract;
+import com.yn.user.rentacat.model.entities.Branch;
 import com.yn.user.rentacat.model.entities.TransmissionType;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     Button addCarButton;
     Button addCarModelButton;
     Button addClientButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.showAllCarModels:{
                 Intent intent = new Intent(this, CarModelList.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.showAllBranches:{
+                Intent intent = new Intent(this, BranchList.class);
                 startActivity(intent);
                 break;
             }

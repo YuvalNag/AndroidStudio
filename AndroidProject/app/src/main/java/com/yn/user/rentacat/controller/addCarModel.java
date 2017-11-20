@@ -43,7 +43,7 @@ public class addCarModel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car_model);
-        Toast.makeText(getBaseContext(), "error insert car model id: " , Toast.LENGTH_LONG).show();
+       // Toast.makeText(getBaseContext(), "error insert car model id: " , Toast.LENGTH_LONG).show();
         /*Snackbar.make(findViewById(R.id.model_spin_class), "Replace with your own action", Snackbar.LENGTH_LONG).show();*/
         ((Spinner)findViewById(R.id.model_spin_class)).setAdapter(new ArrayAdapter<CarClass>(this, android.R.layout.simple_list_item_1, CarClass.values()));
         ((Spinner)findViewById(R.id.model_spin_trans)).setAdapter(new ArrayAdapter<TransmissionType>(this, android.R.layout.simple_list_item_1, TransmissionType.values()));
@@ -88,13 +88,16 @@ public class addCarModel extends AppCompatActivity {
                 InputStream inputStream = getContentResolver().openInputStream(uri);
 
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                ((ImageButton) findViewById(R.id.model_image)).setImageBitmap(bitmap);
+
+                ((ImageButton) findViewById(R.id.model_image)).setImageBitmap(Tools.scaleDown(bitmap,500,true));
 
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
 
 //TODO check permissions
 

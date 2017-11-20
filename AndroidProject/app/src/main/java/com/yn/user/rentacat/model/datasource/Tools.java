@@ -267,6 +267,60 @@ public class Tools {
         String[] columns = new String[]
                 {
                         AppContract.Branch.BRANCH_ID,
+                        AppContract.Branch.NUMBER_OF_PARKING_SPACES,
+                        AppContract.Address.CITY,
+                        AppContract.Address.NUMBER,
+                        AppContract.Address.STREET
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Branch branch : branches) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            branch.getBranchID(),
+                            branch.getNumberOfParkingSpaces(),
+                            branch.getBranchAddress().getCity(),
+                            branch.getBranchAddress().getNumber(),
+                            branch.getBranchAddress().getStreet()
+                    });
+
+
+
+        }
+        return matrixCursor;
+    }
+
+
+    public static Cursor addressListToCursor(List<Address> addresses) {
+        String[] columns = new String[]
+                {
+                        AppContract.Address.CITY,
+                        AppContract.Address.NUMBER,
+                        AppContract.Address.STREET
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Address address : addresses) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            address.getCity(),
+                            address.getNumber(),
+                            address.getStreet()
+                    });
+
+
+
+        }
+        return matrixCursor;
+    }
+
+/*
+    public static Cursor branchListToCursor(List<Branch> branches) {
+        String[] columns = new String[]
+                {
+                        AppContract.Branch.BRANCH_ID,
                         AppContract.Branch.ADDRESS,
                         AppContract.Branch.NUMBER_OF_PARKING_SPACES
                 };
@@ -305,7 +359,6 @@ public class Tools {
                             address.getCity(),
                             address.getNumber(),
                             address.getStreet()
-
                     });
 
 
@@ -313,10 +366,11 @@ public class Tools {
         }
         return matrixCursor;
     }
+*/
 
     public static byte[] imageToByte(Bitmap image) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        image.compress(Bitmap.CompressFormat.PNG, 50, stream);
         byte[] byteArray = stream.toByteArray();
         return byteArray;
     }
@@ -325,6 +379,18 @@ public class Tools {
       return  BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
     }
 
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
+    }
 }
 
 

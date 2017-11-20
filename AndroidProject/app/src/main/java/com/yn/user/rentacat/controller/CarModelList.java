@@ -60,7 +60,8 @@ public class CarModelList extends AppCompatActivity {
                                 R.id.cars_carImage}
                 );
 */
-       new AsyncTask<Void, Void, Cursor>() {
+
+        new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
@@ -70,7 +71,7 @@ public class CarModelList extends AppCompatActivity {
             @Override
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
-                CursorAdapter adapter = new CursorAdapter(CarModelList.this, cursor,0) {
+                CursorAdapter adapter = new CursorAdapter(CarModelList.this, cursor, 0) {
                     @Override
                     public View newView(Context context, Cursor cursor, ViewGroup parent) {
                         return LayoutInflater.from(context).inflate(R.layout.carmodel_item, parent, false);
@@ -78,16 +79,15 @@ public class CarModelList extends AppCompatActivity {
 
                     @Override
                     public void bindView(View view, Context context, Cursor cursor) {
-                    TextView trans=    (TextView)view.findViewById(R.id.cars_transmition);
-                    TextView description=    (TextView)view.findViewById(R.id.cars_name_description);
-                    TextView classa=    (TextView) view.findViewById(R.id.cars_class);
-                    TextView  engine=   (TextView)view.findViewById(R.id.cars_engineCapacity);
-                     ImageView imageView=  (ImageView)view.findViewById(R.id.cars_carImage);
+                        TextView trans = (TextView) view.findViewById(R.id.cars_transmition);
+                        TextView description = (TextView) view.findViewById(R.id.cars_name_description);
+                        TextView classa = (TextView) view.findViewById(R.id.cars_class);
+                        TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
+                        ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
 
 
-
-                     trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
-                        description.setText(cursor.getString(cursor.getColumnIndexOrThrow( AppContract.CarModel.MODEL_NAME)));
+                        trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
+                        description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
                         classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
                         engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
                         imageView.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
@@ -97,38 +97,11 @@ public class CarModelList extends AppCompatActivity {
 
                 };
                 adapter.changeCursor(cursor);
-                        ((ListView)findViewById(R.id.model_listview)).setAdapter(adapter);
+                ((ListView) findViewById(R.id.model_listview)).setAdapter(adapter);
             }
         }.execute();
 
-        /*Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
-        CursorAdapter adapter = new CursorAdapter(CarModelList.this, cursor,0) {
-            @Override
-            public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                return LayoutInflater.from(context).inflate(R.layout.carmodel_item, parent, false);
-            }
 
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                TextView trans = (TextView) view.findViewById(R.id.cars_transmition);
-                TextView description = (TextView) view.findViewById(R.id.cars_name_description);
-                TextView classa = (TextView) view.findViewById(R.id.cars_class);
-                TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
-                ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
-
-
-                trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
-                description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
-                classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
-                engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                imageView.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
-
-            }
-
-        };
-        adapter.changeCursor(cursor);
-
-        ((ListView)findViewById(R.id.model_listview)).setAdapter(adapter);*/
     }
-    }
+}
 

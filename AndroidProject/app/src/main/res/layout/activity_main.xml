@@ -48,9 +48,11 @@
         android:text="show all car models" />
 
     <Button
+        android:id="@+id/showAllBranches"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="show all brances" />
+        android:text="show all brances"
+        android:onClick="onClick"/>
 
 </LinearLayout>
 
