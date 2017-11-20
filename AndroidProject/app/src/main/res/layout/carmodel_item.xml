@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="125dp">
+    android:layout_height="125dp"
+    android:background="@color/cardview_dark_background">
 
     <ImageView
         android:id="@+id/cars_carImage"
@@ -43,7 +44,10 @@
                 android:id="@+id/cars_name_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textStyle="bold"
+                />
         </TableRow>
 
         <TableRow
@@ -53,6 +57,7 @@
 
             <ImageView
                 android:id="@+id/imageView4"
+                android:textColor="@color/cardview_light_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_menu_camera"
@@ -62,11 +67,14 @@
             <TextView
                 android:id="@+id/cars_transmition"
                 android:layout_width="wrap_content"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </TableRow>
 
         <TableRow
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center">
@@ -79,6 +87,8 @@
 
             <TextView
                 android:id="@+id/cars_class"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
@@ -97,6 +107,8 @@
 
             <TextView
                 android:id="@+id/cars_engineCapacity"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
