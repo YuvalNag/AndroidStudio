@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yn.user.rentacat.controller.client_list">
+    tools:context="com.yn.user.rentacar.controller.client_list">
 
     <ListView
         android:id="@+id/client_listview"

@@ -4,7 +4,7 @@
     android:id="@+id/mainfragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yn.user.rentacat.controller.main_fragment">
+    tools:context="com.yn.user.rentacar.controller.main_fragment">
 
     <!-- TODO: Update blank fragment layout -->
 
