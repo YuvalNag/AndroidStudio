@@ -25,7 +25,7 @@ public class AppContract {
         /**
          * The content:// style URI for this table
          */
-        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "branch");
+        public static final Uri BRANCH_URI = Uri.withAppendedPath(AUTHORITY_URI, "Branch");
     }
 
     public static class Address {
@@ -35,7 +35,7 @@ public class AppContract {
         /**
          * The content:// style URI for this table
          */
-        public static final Uri ADDRESS_URI = Uri.withAppendedPath(AUTHORITY_URI, "address");
+        public static final Uri ADDRESS_URI = Uri.withAppendedPath(AUTHORITY_URI, "Address");
     }
 
     public static class Car {

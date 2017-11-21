@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.yn.user.rentacat.model.backend.DB_manager;
+import com.yn.user.rentacat.model.entities.Address;
 import com.yn.user.rentacat.model.entities.Branch;
 import com.yn.user.rentacat.model.entities.Car;
 import com.yn.user.rentacat.model.entities.CarModel;
@@ -33,6 +34,14 @@ public class List_DBManager implements DB_manager{
          clients=new ArrayList<>();
          orders=new ArrayList<>();
          branches=new ArrayList<>();
+
+        branches.add(new Branch(0,5*100,new Address("H","",4)));
+        branches.add(new Branch(1,5*100,new Address("A","",4)));
+        branches.add(new Branch(2,5*100,new Address("T","",4)));
+        branches.add(new Branch(3,5*100,new Address("P","",4)));
+        branches.add(new Branch(4,5*100,new Address("N","",4)));
+
+
     }
 
     @Override

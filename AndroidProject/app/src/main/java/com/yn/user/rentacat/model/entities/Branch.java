@@ -25,11 +25,6 @@ public class Branch implements Serializable{
         this.branchAddress = branchAddress;
     }
 
-    public Branch(int branchID, int numberOfParkingSpaces, android.location.Address addressBranch) {
-        this.branchID = branchID;
-        this.numberOfParkingSpaces = numberOfParkingSpaces;
-        this.addressBranch = addressBranch;
-    }
 
     public long getBranchID() {
         return branchID;

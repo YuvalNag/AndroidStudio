@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViews();
     }
+
+
+
     void findViews(){
        addCarButton      = (Button) findViewById(R.id.addCarButton);
        addCarModelButton = (Button) findViewById(R.id.addCarModelButton);
