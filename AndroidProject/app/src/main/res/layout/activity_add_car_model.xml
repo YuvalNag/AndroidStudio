@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yn.user.rentacat.controller.addCarModel">
+    tools:context="com.yn.user.rentacar.controller.addCarModel">
 
     <TextView
         android:id="@+id/textView8"
@@ -239,9 +239,9 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:onClick="onClick"
         android:text="add car model"
         android:textAllCaps="true"
-        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

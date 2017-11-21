@@ -20,6 +20,8 @@
         android:orientation="horizontal">
 
         <!--<TextView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Adress:"
@@ -28,12 +30,14 @@
             />
 -->
         <TextView
-        android:id="@+id/branch_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Branch adress"
-        android:gravity="center"
-        android:textColor="@android:color/holo_orange_dark"/>
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:id="@+id/branch_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Branch adress"
+            android:gravity="center"
+            android:textColor="@android:color/holo_orange_dark"/>
         <ImageButton
             android:id="@+id/branch_button"
             android:layout_width="match_parent"
@@ -48,15 +52,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-   <!--     <TextView
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Number of parking spaces:"
             android:textColor="@android:color/holo_blue_dark"
             android:textStyle="bold"
-   -->         />
+           />
 
         <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
             android:id="@+id/branch_parking_spaces"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
