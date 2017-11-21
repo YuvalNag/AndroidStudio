@@ -1,5 +1,6 @@
 package com.yn.user.rentacar.controller;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.database.Cursor;
@@ -12,7 +13,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.yn.user.rentacar.MapsActivity;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 
@@ -47,27 +50,39 @@ public class BranchList extends AppCompatActivity {
                     public void bindView(View view, Context context, Cursor cursor) {
                         TextView address = (TextView) view.findViewById(R.id.branch_address);
                         TextView parking_spaces = (TextView) view.findViewById(R.id.branch_parking_spaces);
-                        //ImageButton  map_button=   (ImageButton) view.findViewById(R.id.branch_button);
+                        final ImageButton  map_button=   (ImageButton) view.findViewById(R.id.branch_button);
                         ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
-                        //view.setTag(5, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
+                        map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
+map_button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        if (view == map_button){
+            ImageButton imageButton=(ImageButton) view;
+            String adrdress =imageButton.getTag(R.id.branch_button).toString();
 
+            Intent intent =new Intent(BranchList.this, MapsActivity.class);
+            intent.putExtra("Address",adrdress);
+            startActivity(intent);
+        }
 
+    }
+});
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
                         switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
-                            case "H":
+                            case "Hadera":
                                 branch_imageView.setImageResource(R.drawable.hadera);
                                 break;
-                            case "A":
+                            case "Ashdod":
                                 branch_imageView.setImageResource(R.drawable.ashdod);
                                 break;
-                            case "T":
+                            case "Tel Aviv":
                                 branch_imageView.setImageResource(R.drawable.tel_aviv);
                                 break;
-                            case "P":
+                            case "Petah Tikva":
                                 branch_imageView.setImageResource(R.drawable.pt);
                                 break;
-                            case "N":
+                            case "Netanya":
                                 branch_imageView.setImageResource(R.drawable.netanya2);
                                 break;
                             default:
