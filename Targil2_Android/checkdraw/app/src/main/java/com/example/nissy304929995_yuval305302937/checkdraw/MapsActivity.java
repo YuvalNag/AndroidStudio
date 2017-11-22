@@ -1,7 +1,5 @@
-package com.yn.user.rentacar;
+package com.example.nissy304929995_yuval305302937.checkdraw;
 
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -11,9 +9,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.io.IOException;
-import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -41,25 +36,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        try {
-            mMap = googleMap;
-            String address =getIntent().getStringExtra("Address");
-            // Add a marker in Sydney and move the camera
-            LatLng sydney = new LatLng(31.7661667,35.1923196);
-            Geocoder geocoder=new Geocoder(this);
-            List<Address> addresses;
+        mMap = googleMap;
 
-            addresses =geocoder.getFromLocationName(address,1);
-            if(addresses.size()>0){
-                sydney = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
-
-            }
-
-
-
-            mMap.addMarker(new MarkerOptions().position(sydney).title(address));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }    }
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
 }

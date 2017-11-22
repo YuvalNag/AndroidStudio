@@ -38,7 +38,7 @@ public class List_DBManager implements DB_manager{
         branches.add(new Branch(1,5*100,new Address("Ashdod","",4)));
         branches.add(new Branch(2,5*100,new Address("Tel Aviv","",4)));
         branches.add(new Branch(3,5*100,new Address("Petah Tikva","",4)));
-        branches.add(new Branch(4,5*100,new Address("Netanya","",4)));
+        branches.add(new Branch(4,5*100,new Address("אגסי 6 ירושלים","",4)));
 
         try {
             clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",0,"052-4422258",3453435,"134"));

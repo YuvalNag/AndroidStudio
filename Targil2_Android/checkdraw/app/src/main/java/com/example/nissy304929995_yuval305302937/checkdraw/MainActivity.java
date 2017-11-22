@@ -1,6 +1,9 @@
 package com.example.nissy304929995_yuval305302937.checkdraw;
 
 import android.app.Dialog;
+import android.location.Address;
+import android.location.Geocoder;
+import android.support.v4.app.FragmentManager;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,12 +20,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener ,BlankFragment.OnFragmentInteractionListener,main_order.OnFragmentInteractionListener {
 
@@ -175,7 +190,39 @@ int i=0;
 
                 transaction.commit();
             }} else if (id == R.id.nav_share) {
+            Dialog dialog = new Dialog(this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            dialog.setContentView(R.layout.dialogmap);
+            dialog.show();
+            GoogleMap googleMap;
 
+
+            MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
+            MapsInitializer.initialize(this);
+
+            mMapView = (MapView) dialog.findViewById(R.id.mapView);
+            mMapView.onCreate(dialog.onSaveInstanceState());
+            mMapView.onResume();// needed to get the map to display immediately
+            mMapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(final GoogleMap googleMap) {
+                    try {
+                    Geocoder geocoder=new Geocoder(MainActivity.this);
+
+                     Address addresses= geocoder.getFromLocationName("אגסי 6 ירושלים",1).get(0);////your lat lng
+                        LatLng posisiabsen=new LatLng(addresses.getLatitude(),addresses.getLongitude());
+                    googleMap.addMarker(new MarkerOptions().position(posisiabsen).title("Yout title"));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
+                        googleMap.getUiSettings().setAllGesturesEnabled(true);
+                        googleMap.getUiSettings().setMapToolbarEnabled(true);
+                    googleMap.getUiSettings().setZoomControlsEnabled(true);
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posisiabsen,14), 1000, null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             } else if (id == R.id.nav_send) {
 
             }

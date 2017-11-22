@@ -203,9 +203,10 @@ public class BlankFragment extends Fragment {
                     }
                 });*/
 
-                View viewfodialog =getLayoutInflater().inflate(R.layout.item,null);
-                ((TextView)viewfodialog.findViewById(R.id.itemtext)).setText(((TextView)view.findViewById(R.id.itemtext)).getText());
-                 alertDialogBuilder.setView(viewfodialog);
+                View viewfodialog =getLayoutInflater().inflate(R.layout.activity_maps,null);
+//                ((TextView)viewfodialog.findViewById(R.id.itemtext)).setText(((TextView)view.findViewById(R.id.itemtext)).getText());
+
+                alertDialogBuilder.setView(viewfodialog);
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
 

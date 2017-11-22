@@ -1,6 +1,7 @@
 package com.yn.user.rentacar.controller;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.database.Cursor;
@@ -13,11 +14,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.yn.user.rentacar.MapsActivity;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
+import com.yn.user.rentacar.model.datasource.Tools;
 
 public class BranchList extends AppCompatActivity {
 
@@ -41,6 +41,11 @@ public class BranchList extends AppCompatActivity {
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
                 CursorAdapter adapter = new CursorAdapter(BranchList.this, cursor, 0) {
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        return super.getView(position, convertView, parent);
+                    }
+
                     @Override
                     public View newView(Context context, Cursor cursor, ViewGroup parent) {
                         return LayoutInflater.from(context).inflate(R.layout.branch_item, parent, false);
@@ -80,13 +85,19 @@ map_button.setOnClickListener(new View.OnClickListener() {
                                 branch_imageView.setImageResource(R.drawable.tel_aviv);
                                 break;
                             case "Petah Tikva":
+
+                               // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.pt),4096,true));
                                 branch_imageView.setImageResource(R.drawable.pt);
                                 break;
                             case "Netanya":
+                               // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
                                 branch_imageView.setImageResource(R.drawable.netanya2);
+
                                 break;
                             default:
+                              //  branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
                                 branch_imageView.setImageResource(R.drawable.netanya);
+
                                 break;
                         }
 
