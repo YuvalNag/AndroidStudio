@@ -15,6 +15,7 @@ import com.yn.user.rentacar.model.entities.CarModel;
 import com.yn.user.rentacar.model.entities.Client;
 
 
+import com.yn.user.rentacar.model.entities.Order;
 import com.yn.user.rentacar.model.entities.TransmissionType;
 
 
@@ -36,7 +37,32 @@ public class Tools {
         contentValues.put(AppContract.Address.NUMBER, address.getNumber());
         return contentValues;
     }
+    private  long idOrderNum;
+    private  long clientId;
+    private  long carNumber;
+    private  String rentDate;
+    private  String returnDate;
+    private  long kilometersAtRent;
+    private  long  kilometersAtReturn;
+    private  Boolean fouled;
+    private  long amountOfFoul;
+    private  long finalAmount;
 
+    public static ContentValues OrderToContentValues(Order order) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(AppContract.Order.ORDER_ID,             order.getIdOrderNum());
+        contentValues.put(AppContract.Order.CLIENT_ID,            order.getClientId()  );
+        contentValues.put(AppContract.Order.CAR_NUM,              order.getCarNumber() );
+        contentValues.put(AppContract.Order.RENT_DATE,            order.getRentDate());
+        contentValues.put(AppContract.Order.RETURN_DATE,          order.getReturnDate());
+        contentValues.put(AppContract.Order.KILOMETERS_AT_RENT,   order.getKilometersAtRent());
+        contentValues.put(AppContract.Order.KILOMETERS_AT_RETURN, order.getKilometersAtReturn());
+        contentValues.put(AppContract.Order.FOULED,               order.getFouled());
+        contentValues.put(AppContract.Order.AMOUNT_OF_FOUL,       order.getAmountOfFoul());
+        contentValues.put(AppContract.Order.FINAL_AMOUNT,         order.getFinalAmount());
+        return contentValues;
+    }
 
     public static ContentValues BranchToContentValues(Branch branch) {
         ContentValues contentValues = AddressToContentValues(branch.getBranchAddress());;
@@ -79,9 +105,22 @@ public class Tools {
 
         return contentValues;
     }
-    //TODO public static ContentValues OrderToContentValues(Order order) {}
 
-
+    public static Order ContentValuesToOrder(ContentValues contentValues)
+    {
+        return   new Order(
+                contentValues.getAsLong(AppContract.Order.ORDER_ID)                 ,
+                contentValues.getAsLong(AppContract.Order.CLIENT_ID           ),
+                contentValues.getAsLong(AppContract.Order.CAR_NUM            ),
+                contentValues.getAsString(AppContract.Order.RENT_DATE         ),
+                contentValues.getAsString(AppContract.Order.RETURN_DATE      ),
+                contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RENT  ),
+                contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RETURN),
+                contentValues.getAsBoolean(AppContract.Order.FOULED               ),
+                contentValues.getAsLong(AppContract.Order.AMOUNT_OF_FOUL   ),
+                contentValues.getAsLong(AppContract.Order.FINAL_AMOUNT      )
+        );
+    }
     public static Address ContentValuesToAddress(ContentValues contentValues)
     {
         Integer number = contentValues.getAsInteger(AppContract.Address.NUMBER);
@@ -188,6 +227,42 @@ public class Tools {
 
         return matrixCursor;
     }
+    public static Cursor ordresListToCursor(List<Order> orders) {
+        String[] columns = new String[]
+                {
+                        AppContract.Order.ORDER_ID,
+                        AppContract.Order.CLIENT_ID,
+                        AppContract.Order.CAR_NUM,
+                        AppContract.Order.RENT_DATE,
+                        AppContract.Order.RETURN_DATE,
+                        AppContract.Order.KILOMETERS_AT_RENT,
+                        AppContract.Order.KILOMETERS_AT_RETURN,
+                        AppContract.Order.FOULED,
+                        AppContract.Order.AMOUNT_OF_FOUL,
+                        AppContract.Order.FINAL_AMOUNT
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Order order : orders) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            order.getIdOrderNum(),
+                            order.getClientId()  ,
+                            order.getCarNumber() ,
+                            order.getRentDate(),
+                            order.getReturnDate(),
+                            order.getKilometersAtRent(),
+                            order.getKilometersAtReturn(),
+                            order.getFouled(),
+                            order.getAmountOfFoul(),
+                            order.getFinalAmount()
+                    });
+        }
+
+        return matrixCursor;
+    }
+
 
     public static Cursor carModelsListToCursor(List<CarModel> carModels) {
         String[] columns = new String[]
