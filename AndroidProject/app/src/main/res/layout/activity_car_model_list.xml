@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.yn.user.rentacar.controller.CarModelList">
 
-    <ListView
+    <GridView
+        android:numColumns="auto_fit"
+        android:verticalSpacing="3dip"
+        android:horizontalSpacing="3dip"
         android:id="@+id/model_listview"
         android:layout_width="0dp"
         android:layout_height="0dp"

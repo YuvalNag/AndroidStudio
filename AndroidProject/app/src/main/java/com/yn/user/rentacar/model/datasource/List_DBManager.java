@@ -33,14 +33,33 @@ public class List_DBManager implements DB_manager{
          clients=new ArrayList<>();
          orders=new ArrayList<>();
          branches=new ArrayList<>();
+        try {
 
+            cars.add(new Car(1,2,3232,2988768));
+            cars.add(new Car(1,2,3232,2988768));
+            cars.add(new Car(1,2,3232,2988768));
+            cars.add(new Car(1,2,3232,2988768));
+            cars.add(new Car(1,2,3232,2988768));
+            cars.add(new Car(1,2,3232,2988768));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
         branches.add(new Branch(0,5*100,new Address("Hadera","",4)));
         branches.add(new Branch(1,5*100,new Address("Ashdod","",4)));
         branches.add(new Branch(2,5*100,new Address("Tel Aviv","",4)));
         branches.add(new Branch(3,5*100,new Address("Petah Tikva","",4)));
         branches.add(new Branch(4,5*100,new Address("אגסי 6 ירושלים","",4)));
 
-        try {
+
             clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",0,"052-4422258",3453435,"134"));
             clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",1,"052-4422258",3453435,"134"));
             clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",2,"052-4422258",3453435,"134"));

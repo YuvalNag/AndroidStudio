@@ -115,7 +115,7 @@ public class CarModelList extends AppCompatActivity {
 
         };
         adapter.changeCursor(cursor);
-        ((ListView) findViewById(R.id.model_listview)).setAdapter(adapter);
+        ((GridView) findViewById(R.id.model_listview)).setAdapter(adapter);
     }
 }
 
