@@ -38,8 +38,8 @@ public class addCarActivity extends AppCompatActivity {
     ListView carModelListView;
     TextInputLayout idCar;
     TextInputLayout kilometers;
-    long branch_id;
-    long carModel_id;
+    String branch_id;
+    String carModel_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +68,8 @@ public class addCarActivity extends AppCompatActivity {
         carContentValues.put(AppContract.Car.ID_CAR_NUMBER,idCar.getEditText().getText().toString());
         carContentValues.put(AppContract.Car.KILOMETRERS,kilometers.getEditText().getText().toString());
         carContentValues.put(AppContract.Car.BRANCH_NUM,branch_id);
-
-        /*
-
-        carContentValues.put(AppContract.Car.MODEL_NAME,((EditText)findViewById(R.id.model_name)).getText().toString());
-        carContentValues.put(AppContract.Car.COMPENY_NAME,((EditText)findViewById(R.id.model_comname)).getText().toString());
-        carContentValues.put(AppContract.Car.ID_CAR_MODEL,((EditText)findViewById(R.id.model_id)).getText().toString());
-        carContentValues.put(AppContract.Car.NUM_OF_SEATS,((EditText)findViewById(R.id.model_numofseats)).getText().toString());
-        carContentValues.put(AppContract.Car.TRANSMISSION_TYPE,((Spinner)findViewById(R.id.model_spin_trans)).getSelectedItem().toString());
-*/
+        carContentValues.put(AppContract.Car.CAR_MODEL_ID,carModel_id);
+        
         new AsyncTask<Void, Void, Uri>() {
             @Override
             protected Uri doInBackground(Void... params) {
@@ -113,9 +106,21 @@ public class addCarActivity extends AppCompatActivity {
                 TextView classa = (TextView) view.findViewById(R.id.cars_class);
                 TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
                 TextView numseats = (TextView) view.findViewById(R.id.cars_numofseats);
-                ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
+                final ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
 
 
+
+                imageView.setTag(R.id.cars_carImage,cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(view == imageView ){
+                            ImageView image = (ImageView) view;
+                            carModel_id = image.getTag(R.id.cars_carImage).toString();
+                        }
+
+                    }
+                });
                 numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
                 trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
                 description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
@@ -160,17 +165,18 @@ public class addCarActivity extends AppCompatActivity {
                         TextView parking_spaces = (TextView) view.findViewById(R.id.branch_parking_spaces);
                         final ImageButton map_button = (ImageButton) view.findViewById(R.id.branch_button);
                         final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
+
+
                         map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
 
+                        branch_imageView.setTag(R.id.branch_image,cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
                         branch_imageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 if(view == branch_imageView ){
-                                     branch_id = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
-                                     long h=branch_id;
-
-
-                                }
+                                    ImageView image = (ImageView) view;
+                                    branch_id = image.getTag(R.id.branch_image).toString();
+                                 }
 
                             }
                         });
