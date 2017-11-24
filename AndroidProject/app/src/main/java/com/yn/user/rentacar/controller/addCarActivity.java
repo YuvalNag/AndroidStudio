@@ -89,10 +89,10 @@ public class addCarActivity extends AppCompatActivity {
 
                 long id = ContentUris.parseId(uriResult);
                 if (id > 0)
-                    Toast.makeText(getBaseContext(), "insert car model  id: " + id, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
 
                 else
-                    Toast.makeText(getBaseContext(), "error insert car model id: " + id, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
 
             }
         }.execute();
