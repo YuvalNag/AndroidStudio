@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context="com.yn.user.rentacar.controller.CarModelList">
 
     <ListView
@@ -15,8 +16,9 @@
         android:layout_marginStart="8dip"
         android:layout_marginTop="8dip"
 
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="3dip"
 
-        android:divider="@color/cardview_dark_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

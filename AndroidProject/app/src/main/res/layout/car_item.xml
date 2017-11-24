@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/car_kilom"
+        app:layout_constraintTop_toBottomOf="@+id/car_id"
         android:layout_marginRight="32dp" />
 
     <TextView
@@ -73,7 +73,7 @@
         android:text="Kilometores:"
         android:textColor="@android:color/holo_blue_dark"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/car_kilom"
+        app:layout_constraintEnd_toStartOf="@+id/car_id"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/car_kilo"
         app:layout_constraintTop_toBottomOf="@+id/include2"
@@ -100,7 +100,7 @@
         android:layout_marginLeft="8dp" />
 
     <TextView
-        android:id="@+id/car_kilom"
+        android:id="@+id/car_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

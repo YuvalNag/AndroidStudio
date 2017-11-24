@@ -69,6 +69,24 @@ public class AppContract {
         public static final Uri CAR_MODEL_URI = Uri.withAppendedPath(AUTHORITY_URI, "CarModel");
     }
 
+    public static class Order {
+
+        public static final String ORDER_ID="_id";
+        public static final String CLIENT_ID="Client_Id";
+        public static final String CAR_NUM="carNumber";
+        public static final String RENT_DATE="_id";
+        public static final String RETURN_DATE="_id";
+        public static final String KILOMETERS_AT_RENT="kilometersAtRent";
+        public static final String KILOMETERS_AT_RETURN="kilometersAtReturn";
+        public static final String FOULED="fouled";
+        public static final String AMOUNT_OF_FOUL="amountOfFoul";
+        public static final String FINAL_AMOUNT="finalAmount";
+
+        /**
+         * The content:// style URI for this table
+         */
+        public static final Uri CLIENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "Order");
+    }
     public static class Client {
 
         public static final String ID = "_id";

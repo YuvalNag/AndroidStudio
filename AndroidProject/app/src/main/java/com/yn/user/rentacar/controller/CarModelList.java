@@ -1,5 +1,6 @@
 package com.yn.user.rentacar.controller;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,30 +22,14 @@ import com.yn.user.rentacar.model.datasource.Tools;
 
 public class CarModelList extends AppCompatActivity {
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_model_list);
-       /* final SimpleCursorAdapter adapter = new SimpleCursorAdapter
-                (
-                        this,
-                        R.layout.carmodel_item,
-                        null,
-                        new String[]{AppContract.CarModel.MODEL_NAME,
-                                AppContract.CarModel.TRANSMISSION_TYPE,
-                                AppContract.CarModel.CLASS_OF_CAR,
-                                AppContract.CarModel.ENGINE_COPACITY,
-                                AppContract.CarModel.IMG},
 
-                        new int[]{R.id.cars_name_description,
-                                R.id.cars_transmition,
-                                R.id.cars_class,
-                                R.id.cars_engineCapacity,
-                                R.id.cars_carImage}
-                );
-*/
 
-  /*      new AsyncTask<Void, Void, Cursor>() {
+        new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
@@ -82,10 +67,10 @@ public class CarModelList extends AppCompatActivity {
 
                 };
                 adapter.changeCursor(cursor);
-                ((ListView) findViewById(R.id.model_listview)).setAdapter(adapter);
+                ((ListView)findViewById(R.id.model_listview)).setAdapter(adapter);
             }
-        }.execute();*/
-        Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
+        }.execute();
+        /*Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
 
         CursorAdapter adapter = new CursorAdapter(CarModelList.this, cursor, 0) {
             @Override
@@ -115,7 +100,8 @@ public class CarModelList extends AppCompatActivity {
 
         };
         adapter.changeCursor(cursor);
-        ((ListView) findViewById(R.id.model_listview)).setAdapter(adapter);
+        ((GridView) findViewById(R.id.model_listview)).setAdapter(adapter);
+    }*/
     }
 }
 

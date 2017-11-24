@@ -5,6 +5,7 @@ package com.yn.user.rentacar.model.entities;
  */
 import java.io.Serializable;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 public class Order implements Serializable{
 
@@ -14,9 +15,9 @@ public class Order implements Serializable{
 
     private  long carNumber;
 
-    private  Date rentDate;
+    private  String rentDate;
 
-    private  Date returnDate;
+    private  String returnDate;
 
     private  long kilometersAtRent;
 
@@ -26,9 +27,9 @@ public class Order implements Serializable{
 
     private  long amountOfFoul;
 
-
     private  long finalAmount;
-    public Order(long idOrderNum, long clientId, long carNumber, Date rentDate, Date returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, long amountOfFoul, long finalAmount) {
+
+    public Order(long idOrderNum, long clientId, long carNumber, String rentDate, String returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, long amountOfFoul, long finalAmount) {
         this.idOrderNum = idOrderNum;
         this.clientId = clientId;
         this.carNumber = carNumber;
@@ -66,19 +67,19 @@ public class Order implements Serializable{
         this.carNumber = carNumber;
     }
 
-    public Date getRentDate() {
+    public String getRentDate() {
         return rentDate;
     }
 
-    public void setRentDate(Date rentDate) {
+    public void setRentDate(String rentDate) {
         this.rentDate = rentDate;
     }
 
-    public Date getReturnDate() {
+    public String getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
     }
 

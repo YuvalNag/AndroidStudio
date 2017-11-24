@@ -48,6 +48,7 @@
         android:id="@+id/model_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="the car model picture"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView21"
@@ -88,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Compeny Name"
-            android:inputType="number" />
+            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -105,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Model Name"
-            android:inputType="number" />
+            android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -115,6 +116,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
         <EditText
@@ -122,6 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Engine Volume"
+            android:maxLength="4"
             android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 
@@ -133,6 +136,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textView22"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
 
         <EditText
@@ -140,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Number Of Seats"
+            android:maxLength="2"
             android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 

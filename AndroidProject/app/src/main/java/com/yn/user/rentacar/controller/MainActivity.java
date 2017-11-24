@@ -70,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             }
+            case R.id.showallCars:
+            Intent intent = new Intent(this, car_list.class);
+            startActivity(intent);
+            break;
+
+
         }
 
 
