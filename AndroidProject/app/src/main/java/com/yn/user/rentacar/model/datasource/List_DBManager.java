@@ -1,16 +1,30 @@
 package com.yn.user.rentacar.model.datasource;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 
+import com.yn.user.rentacar.R;
+import com.yn.user.rentacar.controller.MainActivity;
+import com.yn.user.rentacar.controller.addCarActivity;
 import com.yn.user.rentacar.model.backend.DB_manager;
 import com.yn.user.rentacar.model.entities.Address;
 import com.yn.user.rentacar.model.entities.Branch;
 import com.yn.user.rentacar.model.entities.Car;
+import com.yn.user.rentacar.model.entities.CarClass;
 import com.yn.user.rentacar.model.entities.CarModel;
 import com.yn.user.rentacar.model.entities.Client;
 import com.yn.user.rentacar.model.entities.Order;
+import com.yn.user.rentacar.model.entities.TransmissionType;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +32,10 @@ import java.util.List;
  * Created by USER on 07/11/2017.
  */
 
-public class List_DBManager implements DB_manager{
+public class List_DBManager  implements DB_manager {
     final String TAG = "List_DBManager";
+
+
 
     static List<Car> cars;
     static List<CarModel> carModels;
@@ -28,17 +44,25 @@ public class List_DBManager implements DB_manager{
     static List<Branch> branches;
 
     static {
+
          cars=new ArrayList<>();
          carModels=new ArrayList<>();
          clients=new ArrayList<>();
          orders=new ArrayList<>();
          branches=new ArrayList<>();
+/*
+        Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.kia_rio);
+        Resources res = MainActivity.mMainActivity.getResources();
+        Drawable myImage = res.getDrawable(R.drawable.kia_rio);
+        Tools.drawableToBitmap(myImage);
 
-        branches.add(new Branch(0,5*100,new Address("Hadera","",4)));
+
+        carModels.add(new CarModel(12,"KIA","RIO",1600, TransmissionType.AUTOMATIC,5, CarClass.C,bitmap));
+     */   branches.add(new Branch(0,5*100,new Address("Hadera","",4)));
         branches.add(new Branch(1,5*100,new Address("Ashdod","",4)));
         branches.add(new Branch(2,5*100,new Address("Tel Aviv","",4)));
         branches.add(new Branch(3,5*100,new Address("Petah Tikva","",4)));
-        branches.add(new Branch(4,5*100,new Address("אגסי 6 ירושלים","",4)));
+        branches.add(new Branch(1991,5*100,new Address("אגסי 6 ירושלים","",4)));
 
         try {
             clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",0,"052-4422258",3453435,"134"));
@@ -60,8 +84,7 @@ public class List_DBManager implements DB_manager{
         for (Client client:clients)
             if(client.getId()==client_id)
                 return true;
-        return false;
-    }
+        return false;    }
 
 
     public boolean hasCar(long car_id) {

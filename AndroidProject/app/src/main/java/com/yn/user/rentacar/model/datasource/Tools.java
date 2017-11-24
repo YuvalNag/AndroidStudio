@@ -5,6 +5,10 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.entities.Address;
@@ -19,7 +23,9 @@ import com.yn.user.rentacar.model.entities.TransmissionType;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
+import com.yn.user.rentacar.R;
 
 
 /**
@@ -358,7 +364,23 @@ public class Tools {
         return matrixCursor;
     }
 */
+public static Bitmap drawableToBitmap (Drawable drawable) {
+    if (drawable instanceof BitmapDrawable) {
+        return ((BitmapDrawable)drawable).getBitmap();
+    }
 
+    int width = drawable.getIntrinsicWidth();
+    width = width > 0 ? width : 1;
+    int height = drawable.getIntrinsicHeight();
+    height = height > 0 ? height : 1;
+
+    Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+    Canvas canvas = new Canvas(bitmap);
+    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+    drawable.draw(canvas);
+
+    return bitmap;
+}
     public static byte[] imageToByte(Bitmap image) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 50, stream);

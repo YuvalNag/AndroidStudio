@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class YuvalItemAdapter extends BaseAdapter
             convertView = View.inflate(context, R.layout.yuvalitem, null);}
 // set image based on selected text
 
+
         ImageView imageView = (ImageView) convertView.findViewById(R.id.my_image);
         int resId=(((Flower) content.get(position)).getImageId());
         imageView.setImageResource(resId);
@@ -54,6 +56,15 @@ public class YuvalItemAdapter extends BaseAdapter
 
         RatingBar ratingBar=((RatingBar)convertView.findViewById(R.id.my_rating));
         ratingBar.setRating((float)(((Flower) content.get(position)).getRating()));
+
+
+        GridView gridView = (GridView) parent;
+        YuvalItemAdapter yuvalItemAdapter =(YuvalItemAdapter) gridView.getItemAtPosition(position);
+
+
+
+
+
 
         final Button my_button =(Button) convertView.findViewById(R.id.my_button);
         final int my_pos=position;

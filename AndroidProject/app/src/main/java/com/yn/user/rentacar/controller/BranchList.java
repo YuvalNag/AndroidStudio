@@ -1,7 +1,9 @@
 package com.yn.user.rentacar.controller;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.database.Cursor;
@@ -9,6 +11,7 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,14 +21,36 @@ import android.widget.TextView;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
+import com.yn.user.rentacar.model.entities.Branch;
 
 public class BranchList extends AppCompatActivity {
+
+    ListView branchListView;
+    ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_branch_list);
         showBranches();
+
+        branchListView=(ListView) findViewById(R.id.branch_listview);
+        branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                imageButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        branchListView.getItemAtPosition(i);
+
+
+                    }
+                });
+
+            }
+        });
 
     }
 
@@ -56,22 +81,24 @@ public class BranchList extends AppCompatActivity {
                         TextView address = (TextView) view.findViewById(R.id.branch_address);
                         TextView parking_spaces = (TextView) view.findViewById(R.id.branch_parking_spaces);
                         final ImageButton  map_button=   (ImageButton) view.findViewById(R.id.branch_button);
-                        ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
+                        final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
                         map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
-map_button.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        if (view == map_button){
-            ImageButton imageButton=(ImageButton) view;
-            String adrdress =imageButton.getTag(R.id.branch_button).toString();
 
-            Intent intent =new Intent(BranchList.this, MapsActivity.class);
-            intent.putExtra("Address",adrdress);
-            startActivity(intent);
-        }
 
-    }
-});
+                        map_button.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (view == map_button){
+                                        ImageButton imageButton=(ImageButton) view;
+                                        String adrdress =imageButton.getTag(R.id.branch_button).toString();
+
+                                        Intent intent =new Intent(BranchList.this, MapsActivity.class);
+                                        intent.putExtra("Address",adrdress);
+                                        startActivity(intent);
+                                    }
+
+                                }
+                            });
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
                         switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
@@ -110,6 +137,7 @@ map_button.setOnClickListener(new View.OnClickListener() {
             }
         }.execute();
     }
+
     /*private void showBranches() {
 
         Cursor cursor = getContentResolver().query(AppContract.Branch.BRANCH_URI, null, null, null, null, null);

@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
+import com.yn.user.rentacar.model.datasource.List_DBManager;
 import com.yn.user.rentacar.model.entities.TransmissionType;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
         switch(view.getId())
         {
+            case R.id.addCarButton:
+            {
+                Intent intent = new Intent(this, addCarActivity.class);
+                startActivity(intent);
+                break;
+            }
             case R.id.addClientButton:
             {
                 Intent intent = new Intent(this, addClient.class);
