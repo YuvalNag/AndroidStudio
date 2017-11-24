@@ -29,7 +29,7 @@ public class CarModelList extends AppCompatActivity {
         setContentView(R.layout.activity_car_model_list);
 
 
-       new AsyncTask<Void, Void, Cursor>() {
+        new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
@@ -67,7 +67,7 @@ public class CarModelList extends AppCompatActivity {
 
                 };
                 adapter.changeCursor(cursor);
-                ((GridView) findViewById(R.id.model_listview)).setAdapter(adapter);
+                ((ListView)findViewById(R.id.model_listview)).setAdapter(adapter);
             }
         }.execute();
         /*Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
@@ -102,5 +102,6 @@ public class CarModelList extends AppCompatActivity {
         adapter.changeCursor(cursor);
         ((GridView) findViewById(R.id.model_listview)).setAdapter(adapter);
     }*/
+    }
 }
 

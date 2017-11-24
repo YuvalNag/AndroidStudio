@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 public class car_list extends AppCompatActivity {
-;
+    private  Map<Long,CarModel> carModelMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,51 +44,46 @@ public class car_list extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private void showCars() {
-        new AsyncTask<Void, Void, List<Object>>() {
+        new AsyncTask<Void, Void, Cursor>() {
 
             @Override
-            protected List<Object> doInBackground(Void... params) {
+            protected Cursor doInBackground(Void... params) {
                 Cursor cursorCar = getContentResolver().query(AppContract.Car.CAR_URI, null, null, null, null, null);
                 Cursor cursorModel =getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
-                cursorCar.moveToFirst();
-                Map<Long,CarModel> carModelMap=new HashMap<>();
+                carModelMap=new HashMap<>();
 //                LongSparseArray
-                long modelid=0;
-                while(!cursorCar.isAfterLast()) {
-                    modelid = cursorCar.getLong(cursorCar.getColumnIndexOrThrow(AppContract.Car.CAR_MODEL_ID));
+
                     cursorModel.moveToFirst();
                     while (!cursorModel.isAfterLast()) {
-                        if (cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)) == modelid) {
 
-                            carModelMap.put(modelid, new CarModel(cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)),
-                                    cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME)),
-                                    cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)),
-                                    cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)),
-                                    TransmissionType.valueOf(cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE))),
-                                    cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)),
-                                    CarClass.valueOf(cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR))),
-                                    Tools.byteToImage(cursorModel.getBlob(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.IMG)))));
-                            break;
 
-                        }
+                        carModelMap.put(cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)), new CarModel(cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)),
+                                cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME)),
+                                cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)),
+                                cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)),
+                                TransmissionType.valueOf(cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE))),
+                                cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)),
+                                CarClass.valueOf(cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR))),
+                                Tools.byteToImage(cursorModel.getBlob(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.IMG)))));
+
+
                         cursorModel.moveToNext();
+                    }
+                    return cursorCar;
 
                     }
-                    cursorCar.moveToNext();
 
-                }
-List<Object> objectList =new ArrayList<>();
-                        objectList.add(cursorCar);
-                        objectList.add(carModelMap);
-                return objectList;
-            }
+
+
+
+
 
             @Override
-            protected void onPostExecute( List<Object> objects) {
-                super.onPostExecute(objects);
+            protected void onPostExecute( Cursor cursor) {
+                super.onPostExecute(cursor);
 
-                Cursor cursorCar=(Cursor)objects.get(0);
-                final Map<Long,CarModel> carModelMap=(Map<Long,CarModel>)objects.get(1);
+                Cursor cursorCar=cursor;
+
                 CursorAdapter adapter = new CursorAdapter(car_list.this, cursorCar, 0) {
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
@@ -133,7 +128,7 @@ List<Object> objectList =new ArrayList<>();
 
                 };
                 adapter.changeCursor(cursorCar);
-                ((GridView) findViewById(R.id.car_grid_view)).setAdapter(adapter);
+                ((ListView) findViewById(R.id.car_grid_view)).setAdapter(adapter);
             }
         }.execute();
 

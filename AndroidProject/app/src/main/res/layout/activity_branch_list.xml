@@ -13,7 +13,9 @@
         android:layout_marginEnd="8dip"
         android:layout_marginStart="8dip"
         android:layout_marginTop="8dip"
-
+        
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="3dip"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
