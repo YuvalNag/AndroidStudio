@@ -1,6 +1,7 @@
 package com.yn.user.rentacar.controller;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
@@ -18,6 +21,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -28,6 +33,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
@@ -40,8 +52,8 @@ public class addCarActivity extends AppCompatActivity {
     ListView carModelListView;
     TextInputLayout idCar;
     TextInputLayout kilometers;
-    long branch_id;
-    long carModel_id;
+    String branch_id;
+    String carModel_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +67,14 @@ public class addCarActivity extends AppCompatActivity {
         {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                branch_id=(long)view.getTag();
+                branch_id=view.getTag().toString();
             }
         });
 
         carModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                carModel_id=(long)view.getTag();
+                carModel_id=view.getTag().toString();
             }
         });
     }
@@ -88,14 +100,6 @@ public class addCarActivity extends AppCompatActivity {
         carContentValues.put(AppContract.Car.BRANCH_NUM,branch_id);
         carContentValues.put(AppContract.Car.CAR_MODEL_ID,carModel_id);
 
-        /*
-
-        carContentValues.put(AppContract.Car.MODEL_NAME,((EditText)findViewById(R.id.model_name)).getText().toString());
-        carContentValues.put(AppContract.Car.COMPENY_NAME,((EditText)findViewById(R.id.model_comname)).getText().toString());
-        carContentValues.put(AppContract.Car.ID_CAR_MODEL,((EditText)findViewById(R.id.model_id)).getText().toString());
-        carContentValues.put(AppContract.Car.NUM_OF_SEATS,((EditText)findViewById(R.id.model_numofseats)).getText().toString());
-        carContentValues.put(AppContract.Car.TRANSMISSION_TYPE,((Spinner)findViewById(R.id.model_spin_trans)).getSelectedItem().toString());
-*/
         new AsyncTask<Void, Void, Uri>() {
             @Override
             protected Uri doInBackground(Void... params) {
@@ -136,9 +140,25 @@ public class addCarActivity extends AppCompatActivity {
                 TextView classa = (TextView) view.findViewById(R.id.cars_class);
                 TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
                 TextView numseats = (TextView) view.findViewById(R.id.cars_numofseats);
-                ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
+                final ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
+
+
+
 
 view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
+
+                imageView.setTag(R.id.cars_carImage,cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(view == imageView ){
+                            ImageView image = (ImageView) view;
+                            carModel_id = image.getTag(R.id.cars_carImage).toString();
+                        }
+
+                    }
+                });
+
                 numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
                 trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
                 description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
@@ -185,36 +205,68 @@ view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_
                         TextView parking_spaces = (TextView) view.findViewById(R.id.branch_parking_spaces);
                         final ImageButton map_button = (ImageButton) view.findViewById(R.id.branch_button);
                         final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
+
+
                         map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
-                       view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
+
+                       view.setTag(cursor.getString((cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID))));
                        /* branch_imageView.setOnClickListener(new View.OnClickListener() {
+
+
+                        branch_imageView.setTag(R.id.branch_image,cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
+                        branch_imageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 if(view == branch_imageView ){
-                                     branch_id = Long.parseLong(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
-                                     long h=branch_id;
-
-
-                                }
+                                    ImageView image = (ImageView) view;
+                                    branch_id = image.getTag(R.id.branch_image).toString();
+                                 }
 
                             }
                         });
 */
 
-                        /*map_button.setOnClickListener(new View.OnClickListener() {
+                        map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
+                            public void onClick(final View view) {
                                 if (view == map_button) {
-                                    ImageButton imageButton = (ImageButton) view;
-                                    String adrdress = imageButton.getTag(R.id.branch_button).toString();
+                                   Dialog dialog = new Dialog(addCarActivity.this);
+                                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                                        dialog.setContentView(R.layout.dialogmap);
+                                        dialog.show();
+                                        GoogleMap googleMap;
 
-                                    Intent intent = new Intent(addCarActivity.this, MapsActivity.class);
-                                    intent.putExtra("Address", adrdress);
-                                    startActivity(intent);
+
+                                        MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
+                                        MapsInitializer.initialize(addCarActivity.this);
+
+                                        mMapView = (MapView) dialog.findViewById(R.id.mapView);
+                                        mMapView.onCreate(dialog.onSaveInstanceState());
+                                        mMapView.onResume();// needed to get the map to display immediately
+                                        mMapView.getMapAsync(new OnMapReadyCallback() {
+                                            @Override
+                                            public void onMapReady(final GoogleMap googleMap) {
+                                                try {
+                                                    Geocoder geocoder=new Geocoder(addCarActivity.this);
+
+                                                    Address addresses= geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(),1).get(0);////your lat lng
+                                                    LatLng posisiabsen=new LatLng(addresses.getLatitude(),addresses.getLongitude());
+                                                    googleMap.addMarker(new MarkerOptions().position(posisiabsen).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
+                                                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
+                                                    googleMap.getUiSettings().setAllGesturesEnabled(true);
+                                                    googleMap.getUiSettings().setMapToolbarEnabled(true);
+                                                    googleMap.getUiSettings().setZoomControlsEnabled(true);
+                                                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posisiabsen,14), 1000, null);
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                                    }
+
                                 }
-
-                            }
-                        });*/
+                            });
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
                         switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {

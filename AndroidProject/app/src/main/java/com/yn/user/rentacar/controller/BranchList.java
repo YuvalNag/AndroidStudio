@@ -1,10 +1,13 @@
 package com.yn.user.rentacar.controller;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +16,8 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
@@ -20,6 +25,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
@@ -101,14 +113,47 @@ public class BranchList extends AppCompatActivity {
 
                         map_button.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(View view) {
+                                public void onClick(final View view) {
                                     if (view == map_button){
-                                        ImageButton imageButton=(ImageButton) view;
-                                        String adrdress =imageButton.getTag(R.id.branch_button).toString();
+                                       /* ImageButton imageButton=(ImageButton) view;
+                                         String adrdress =imageButton.getTag(R.id.branch_button).toString();
 
                                         Intent intent =new Intent(BranchList.this, MapsActivity.class);
                                         intent.putExtra("Address",adrdress);
-                                        startActivity(intent);
+                                        startActivity(intent);*/
+                                        Dialog dialog = new Dialog(BranchList.this);
+                                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                                        dialog.setContentView(R.layout.dialogmap);
+                                        dialog.show();
+                                        GoogleMap googleMap;
+
+
+                                        MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
+                                        MapsInitializer.initialize(BranchList.this);
+
+                                        mMapView = (MapView) dialog.findViewById(R.id.mapView);
+                                        mMapView.onCreate(dialog.onSaveInstanceState());
+                                        mMapView.onResume();// needed to get the map to display immediately
+                                        mMapView.getMapAsync(new OnMapReadyCallback() {
+                                            @Override
+                                            public void onMapReady(final GoogleMap googleMap) {
+                                                try {
+                                                    Geocoder geocoder=new Geocoder(BranchList.this);
+
+                                                    Address addresses= geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(),1).get(0);////your lat lng
+                                                    LatLng posisiabsen=new LatLng(addresses.getLatitude(),addresses.getLongitude());
+                                                    googleMap.addMarker(new MarkerOptions().position(posisiabsen).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
+                                                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
+                                                    googleMap.getUiSettings().setAllGesturesEnabled(true);
+                                                    googleMap.getUiSettings().setMapToolbarEnabled(true);
+                                                    googleMap.getUiSettings().setZoomControlsEnabled(true);
+                                                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posisiabsen,14), 1000, null);
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
                                     }
 
                                 }
