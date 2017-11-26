@@ -174,8 +174,7 @@ public class Tools {
         );
 
     }
-    public static CarModel ContentValuesToCarModel(ContentValues contentValues)
-    {
+    public static CarModel ContentValuesToCarModel(ContentValues contentValues) {
 
               Long id=  contentValues.getAsLong(AppContract.CarModel.ID_CAR_MODEL);
               String compenyName=  contentValues.getAsString(AppContract.CarModel.COMPENY_NAME);
@@ -212,7 +211,6 @@ public class Tools {
 
                 );
     }
-
     public static Manager ContentValuesToManager(ContentValues contentValues) throws Exception {
         return  new Manager(
                 contentValues.getAsString(AppContract.Manager.LAST_NAME),
@@ -224,7 +222,6 @@ public class Tools {
                 contentValues.getAsLong(AppContract.Manager.BRANCH_ID)
         );
     }
-
     public static Cursor CarListToCursor(List<Car> cars) {
         String[] columns = new String[]
                 {
@@ -283,8 +280,6 @@ public class Tools {
 
         return matrixCursor;
     }
-
-
     public static Cursor carModelsListToCursor(List<CarModel> carModels) {
         String[] columns = new String[]
                 {
@@ -317,7 +312,6 @@ public class Tools {
 
         return matrixCursor;
     }
-
     public static Cursor clientListToCursor(List<Client> clients) {
         String[] columns = new String[]
                 {
@@ -349,7 +343,6 @@ public class Tools {
 
         return matrixCursor;
     }
-
     public static Cursor managerListToCursor(List<Manager> managers) {
         String[] columns = new String[]
                 {
@@ -381,7 +374,6 @@ public class Tools {
 
         return matrixCursor;
     }
-
     public static Cursor branchListToCursor(List<Branch> branches) {
         String[] columns = new String[]
                 {
@@ -409,8 +401,6 @@ public class Tools {
         }
         return matrixCursor;
     }
-
-
     public static Cursor addressListToCursor(List<Address> addresses) {
         String[] columns = new String[]
                 {
@@ -434,9 +424,7 @@ public class Tools {
         }
         return matrixCursor;
     }
-
-/*
-    public static Cursor branchListToCursor(List<Branch> branches) {
+/*    public static Cursor branchListToCursor(List<Branch> branches) {
         String[] columns = new String[]
                 {
                         AppContract.Branch.BRANCH_ID,
@@ -486,7 +474,7 @@ public class Tools {
         return matrixCursor;
     }
 */
-public static Bitmap drawableToBitmap (Drawable drawable) {
+    public static Bitmap drawableToBitmap (Drawable drawable) {
     if (drawable instanceof BitmapDrawable) {
         return ((BitmapDrawable)drawable).getBitmap();
     }
@@ -509,11 +497,9 @@ public static Bitmap drawableToBitmap (Drawable drawable) {
         byte[] byteArray = stream.toByteArray();
         return byteArray;
     }
-
     public static Bitmap byteToImage(byte[] imageArray) {
       return  BitmapFactory.decodeByteArray(imageArray, 0, imageArray.length);
     }
-
     public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
                                    boolean filter) {
         float ratio = Math.min(
