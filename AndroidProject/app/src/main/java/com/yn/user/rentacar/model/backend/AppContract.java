@@ -85,7 +85,7 @@ public class AppContract {
         /**
          * The content:// style URI for this table
          */
-        public static final Uri CLIENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "Order");
+        public static final Uri ORDER_URI = Uri.withAppendedPath(AUTHORITY_URI, "Order");
     }
     public static class Client {
 
@@ -94,7 +94,7 @@ public class AppContract {
         public static final String FIRST_NAME = "firstName";
         public static final String EMAIL_ADDR = "emailAdrs";
         public static final String PHONE_NUMBER = "phoneNum";
-        public static final String CRADIT_NUMBER = "engineCapacity";
+        public static final String CRADIT_NUMBER = "craditCard";
         public static final String SALT = "salt";
         public static final String PASSWORD = "password";
 
@@ -103,5 +103,21 @@ public class AppContract {
          * The content:// style URI for this table
          */
         public static final Uri CLIENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "Client");
+    }
+    public static class Manager {
+
+        public static final String ID = "_id";
+        public static final String LAST_NAME = "lastName";
+        public static final String FIRST_NAME = "firstName";
+        public static final String EMAIL_ADDR = "emailAdrs";
+        public static final String PHONE_NUMBER = "phoneNum";
+        public static final String BRANCH_ID = "branchId";
+        public static final String SALT = "salt";
+        public static final String PASSWORD = "password";
+
+        /**
+         * The content:// style URI for this table
+         */
+        public static final Uri MANAGER_URI = Uri.withAppendedPath(AUTHORITY_URI, "Manager");
     }
 }

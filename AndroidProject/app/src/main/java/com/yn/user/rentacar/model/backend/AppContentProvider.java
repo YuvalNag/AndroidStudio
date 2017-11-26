@@ -42,6 +42,8 @@ public class AppContentProvider extends ContentProvider {
                 return manager.getBranches();//
             case "Client":
                 return manager.getClients();//
+            case "Manager":
+                return manager.getManager();//
             case "Car":
                 return manager.getCars();//
 
@@ -69,7 +71,9 @@ public class AppContentProvider extends ContentProvider {
             case "Client":
                 id = manager.addClient(contentValues);
                 return ContentUris.withAppendedId(uri, id);
-
+            case "Manager":
+                id = manager.addManager(contentValues);
+                return ContentUris.withAppendedId(uri, id);
             case "Car":
                 id = manager.addCar(contentValues);
                 return ContentUris.withAppendedId(uri, id);
@@ -96,6 +100,10 @@ public class AppContentProvider extends ContentProvider {
         switch (listName) {
             case "Client":
                 if(manager.removeClient(id))
+                    return 1;
+                break;
+            case "Manager":
+                if(manager.removeManager(id))
                     return 1;
                 break;
 
@@ -131,7 +139,10 @@ public class AppContentProvider extends ContentProvider {
                 if(manager.updateClient(id,values))
                     return 1;
                 break;
-
+            case "Manager":
+                if(manager.updateManager(id,values))
+                    return 1;
+                break;
             case "Car":
                 if(manager.updateCar(id,values))
                     return 1;

@@ -1,9 +1,7 @@
 package com.yn.user.rentacar.model.entities;
 
 import android.util.Patterns;
-
 import com.yn.user.rentacar.model.backend.SHA_256_Helper;
-
 import java.io.Serializable;
 import java.util.Random;
 
@@ -12,16 +10,18 @@ import java.util.Random;
  */
 
 public class User implements Serializable {
+
+    //region Properties
     private String lastName;
     private String firstName;
     private String emailAdrs;
-
     private long id;
     private final long salt;
     private String password;
-
     private String phoneNum;
+    //endregion
 
+    //region Constructor
     public User(String lastName, String firstName, String emailAdrs, long id, String phoneNum,String password) throws Exception {
         Random random =new Random();
         salt = random.nextLong();
@@ -30,9 +30,15 @@ public class User implements Serializable {
         setEmailAdrs(emailAdrs);
         setId(id);
         setPhoneNum(phoneNum);
-        setPassword(password);
+        //dont do hash on hash :(
+        if(password.trim().length()>14)
+            this.password=password;
+        else
+            setPassword(password);
     }
+    //endregion
 
+    //region Getters & Setters
     public String getLastName() {
         return lastName;
     }
@@ -48,14 +54,14 @@ public class User implements Serializable {
     public void setPassword(String password) throws Exception {
 
         if(password.isEmpty())
-            password="";
+            password="";//TODO no empty password
         this.password = SHA_256_Helper.getHash256String(password,salt);
     }
 
     public void setLastName(String lastName) {
         if(!lastName.isEmpty())
             this.lastName = lastName;
-        else
+        else//TODO no empty last name
             this.lastName = "";
 
 
@@ -70,7 +76,7 @@ public class User implements Serializable {
         if(!firstName.isEmpty())
             this.firstName = firstName;
         else
-            this.firstName="";
+            this.firstName="";//TODO no empty first name
     }
 
     public String getEmailAdrs() {
@@ -103,6 +109,7 @@ public class User implements Serializable {
         else
             throw new IllegalArgumentException("phone number");
     }
+    //endregion
 
 
 
