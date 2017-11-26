@@ -34,14 +34,18 @@ import java.util.Random;
             setId(id);
             setPhoneNum(phoneNum);
             setCraditNumber(craditNumber);
-            setPassword(password);
+            //dont do hash on hash :(
+            if(password.trim().length()>14)
+                this.password=password;
+            else
+                setPassword(password);
         }
 
         public String getLastName() {
             return lastName;
         }
 
-    public long getSalt() {
+    private long getSalt() {
         return salt;
     }
 
@@ -50,7 +54,7 @@ import java.util.Random;
     }
 
     public void setPassword(String password) throws Exception {
-
+            //only for debuging
             if(password.isEmpty())
                 password="";
         this.password = SHA_256_Helper.getHash256String(password,salt);

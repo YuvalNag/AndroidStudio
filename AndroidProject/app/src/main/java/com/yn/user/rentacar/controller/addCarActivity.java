@@ -1,5 +1,7 @@
 package com.yn.user.rentacar.controller;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,14 +10,19 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -26,6 +33,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
@@ -48,6 +62,21 @@ public class addCarActivity extends AppCompatActivity {
         findViews();
         showBranches();
         showCarModel();
+        branchListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+        branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                branch_id=view.getTag().toString();
+            }
+        });
+
+        carModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                carModel_id=view.getTag().toString();
+            }
+        });
     }
 
     private void findViews() {
@@ -60,6 +89,7 @@ public class addCarActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
 
 
@@ -83,12 +113,16 @@ public class addCarActivity extends AppCompatActivity {
                 super.onPostExecute(uriResult);
 
                 long id = ContentUris.parseId(uriResult);
-                if (id > 0)
-                    Toast.makeText(getBaseContext(), "insert car model  id: " + id, Toast.LENGTH_LONG).show();
+                if (id > 0) {
+                    //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), "insert car   id: " + id, Snackbar.LENGTH_LONG).show();
 
-                else
-                    Toast.makeText(getBaseContext(), "error insert car model id: " + id, Toast.LENGTH_LONG).show();
+                }
+                else {
+                    //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), "ERROR inserting car" , Snackbar.LENGTH_LONG).show();
 
+                }
             }
         }.execute();
     }
@@ -112,6 +146,9 @@ public class addCarActivity extends AppCompatActivity {
 
 
 
+
+view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
+
                 imageView.setTag(R.id.cars_carImage,cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -123,6 +160,7 @@ public class addCarActivity extends AppCompatActivity {
 
                     }
                 });
+
                 numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
                 trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
                 description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
@@ -137,8 +175,10 @@ public class addCarActivity extends AppCompatActivity {
         adapter.changeCursor(cursor);
         carModelListView.setAdapter(adapter);
 
+
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void showBranches() {
         new AsyncTask<Void, Void, Cursor>() {
             @Override
@@ -171,6 +211,10 @@ public class addCarActivity extends AppCompatActivity {
 
                         map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
 
+                        view.setTag(cursor.getString((cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID))));
+                       /* branch_imageView.setOnClickListener(new View.OnClickListener() {
+
+
                         branch_imageView.setTag(R.id.branch_image,cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
                         branch_imageView.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -182,22 +226,59 @@ public class addCarActivity extends AppCompatActivity {
 
                             }
                         });
-
+*/
 
                         map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View view) {
+                            public void onClick(final View view) {
                                 if (view == map_button) {
-                                    ImageButton imageButton = (ImageButton) view;
-                                    String adrdress = imageButton.getTag(R.id.branch_button).toString();
+                                    Dialog dialog = new Dialog(addCarActivity.this);
+                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                                    dialog.setContentView(R.layout.dialogmap);
+                                    dialog.show();
+                                    GoogleMap googleMap;
+
+
+                                    MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
+                                    MapsInitializer.initialize(addCarActivity.this);
+
+                                    mMapView = (MapView) dialog.findViewById(R.id.mapView);
+                                    mMapView.onCreate(dialog.onSaveInstanceState());
+                                    mMapView.onResume();// needed to get the map to display immediately
+                                    mMapView.getMapAsync(new OnMapReadyCallback() {
+                                        @Override
+                                        public void onMapReady(final GoogleMap googleMap) {
+                                            try {
+                                                Geocoder geocoder=new Geocoder(addCarActivity.this);
+
+                                                Address addresses= geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(),1).get(0);////your lat lng
+                                                LatLng posisiabsen=new LatLng(addresses.getLatitude(),addresses.getLongitude());
+                                                googleMap.addMarker(new MarkerOptions().position(posisiabsen).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
+                                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
+                                                googleMap.getUiSettings().setAllGesturesEnabled(true);
+                                                googleMap.getUiSettings().setMapToolbarEnabled(true);
+                                                googleMap.getUiSettings().setZoomControlsEnabled(true);
+                                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posisiabsen,14), 1000, null);
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+
 
                                    /* Intent intent = new Intent(addCarActivity.this, MapsActivity.class);
                                     intent.putExtra("Address", adrdress);
                                     startActivity(intent);
-                                */}
-
+                                */
                             }
+
+
                         });
+
+
+
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
                         switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
@@ -226,14 +307,22 @@ public class addCarActivity extends AppCompatActivity {
 
                                 break;
                         }
+                    }
+                };
+
+                        adapter.changeCursor(cursor);
+
+                        branchListView.setAdapter(adapter);
 
                     }
+                }.execute();
 
 
-                };
-                adapter.changeCursor(cursor);
-                branchListView.setAdapter(adapter);
-            }
-        }.execute();
+
+
+     }
+
+    ;
+
     }
-}
+

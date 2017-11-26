@@ -13,11 +13,17 @@
         android:id="@+id/model_listview"
         android:layout_width="0dp"
         android:layout_height="170dip"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="true"
+        android:listSelector="@drawable/ic_select1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="5dip"
         app:layout_constraintBottom_toTopOf="@id/textInputLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout2"
@@ -59,12 +65,18 @@
         android:id="@+id/branch_listview"
         android:layout_width="0dp"
         android:layout_height="190dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="5dip"
+        android:drawSelectorOnTop="true"
         android:fadingEdge="vertical"
+        android:listSelector="@drawable/ic_select1"
         app:layout_constraintBottom_toTopOf="@id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout4"
-        />
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout4" />
 
 
     <Button

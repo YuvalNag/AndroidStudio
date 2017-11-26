@@ -42,6 +42,8 @@ public class car_list extends AppCompatActivity {
         showCars();
     }
 
+
+
     @SuppressLint("StaticFieldLeak")
     private void showCars() {
         new AsyncTask<Void, Void, Cursor>() {
@@ -120,7 +122,7 @@ public class car_list extends AppCompatActivity {
                         TextView carkilo = (TextView) view.findViewById(R.id.car_kilo);
                         TextView branch = (TextView) view.findViewById(R.id.car_branch);
 
-                        carid.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Car.CAR_MODEL_ID)));
+                        carid.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Car.ID_CAR_NUMBER)));
                         carkilo.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Car.KILOMETRERS)));
                         branch.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Car.BRANCH_NUM)));
                     }

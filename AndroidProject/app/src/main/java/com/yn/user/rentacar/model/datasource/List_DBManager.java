@@ -180,12 +180,12 @@ public class List_DBManager  implements DB_manager {
     public long addCar(ContentValues values) {
         try {
             Car car = Tools.ContentValuesToCar(values);
-            if (hasCar(car.getCarModelID())) {
-                Log.d(TAG, "addCar: exist"+car.getCarModelID());
+            if (hasCar(car.getIdCarNumber())) {
+                Log.d(TAG, "addCar: exist"+car.getIdCarNumber());
                 return -2;
             }
             cars.add(car);
-            Log.d(TAG, "addCar: "+car.getCarModelID());
+            Log.d(TAG, "addCar: "+car.getIdCarNumber());
             return car.getIdCarNumber();
         }catch (Exception e)
             {

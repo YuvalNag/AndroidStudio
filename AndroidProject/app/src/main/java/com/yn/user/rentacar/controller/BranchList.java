@@ -1,8 +1,10 @@
 package com.yn.user.rentacar.controller;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
@@ -35,18 +37,21 @@ import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
 import com.yn.user.rentacar.model.entities.Branch;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BranchList extends AppCompatActivity {
 
     ListView branchListView;
     ImageButton imageButton;
-
+   //Map<Long,Bitmap> carsImages;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_branch_list);
         showBranches();
 
-        branchListView=(ListView) findViewById(R.id.branch_listview);
+ /*       branchListView=(ListView) findViewById(R.id.branch_listview);
         branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -62,16 +67,24 @@ public class BranchList extends AppCompatActivity {
                 });
 
             }
-        });
+        });*/
 
     }
 
-
+    @SuppressLint("StaticFieldLeak")
     private void showBranches() {
         new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursor = getContentResolver().query(AppContract.Branch.BRANCH_URI, null, null, null, null, null);
+               /* carsImages=new HashMap<>();
+                if (cursor!=null) {
+                    cursor.moveToFirst();
+                    while(!cursor.isAfterLast()) {
+                        carsImages.put(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Branch.)))
+                    }
+                }*/
+
                 return cursor;
             }
 
@@ -145,6 +158,8 @@ public class BranchList extends AppCompatActivity {
 
                                 }
                             });
+                       // branch_imageView.setImageResource(R.drawable.ashdod);
+                       // branch_imageView.setImageResource(R.drawable.netanya2);
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
                         switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
@@ -161,11 +176,12 @@ public class BranchList extends AppCompatActivity {
 
                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.pt),4096,true));
                                 branch_imageView.setImageResource(R.drawable.pt);
+
                                 break;
                             case "Netanya":
                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                branch_imageView.setImageResource(R.drawable.netanya2);
-
+                                // branch_imageView.setImageResource(R.drawable.netanya2);
+                                branch_imageView.setImageResource(R.drawable.tel_aviv);
                                 break;
                             default:
                               //  branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
