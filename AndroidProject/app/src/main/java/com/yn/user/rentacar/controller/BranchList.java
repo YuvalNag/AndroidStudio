@@ -115,12 +115,6 @@ public class BranchList extends AppCompatActivity {
                                 @Override
                                 public void onClick(final View view) {
                                     if (view == map_button){
-                                       /* ImageButton imageButton=(ImageButton) view;
-                                         String adrdress =imageButton.getTag(R.id.branch_button).toString();
-
-                                        Intent intent =new Intent(BranchList.this, MapsActivity.class);
-                                        intent.putExtra("Address",adrdress);
-                                        startActivity(intent);*/
                                         Dialog dialog = new Dialog(BranchList.this);
                                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                         dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -200,55 +194,7 @@ public class BranchList extends AppCompatActivity {
         }.execute();
     }
 
-    /*private void showBranches() {
 
-        Cursor cursor = getContentResolver().query(AppContract.Branch.BRANCH_URI, null, null, null, null, null);
-
-
-        CursorAdapter adapter = new CursorAdapter(BranchList.this, cursor, 0) {
-            @Override
-            public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                return LayoutInflater.from(context).inflate(R.layout.branch_item, parent, false);
-            }
-
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                TextView address = (TextView) view.findViewById(R.id.branch_address);
-                TextView parking_spaces = (TextView) view.findViewById(R.id.branch_parking_spaces);
-               // ImageButton map_button = (ImageButton) view.findViewById(R.id.branch_button);
-                ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
-                //view.setTag(5, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
-
-
-                address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "\n" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "\n #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
-                parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
-                switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
-                    case "H":
-                        branch_imageView.setImageResource(R.drawable.hadera);
-                        break;
-                    case "A":
-                        branch_imageView.setImageResource(R.drawable.ashdod);
-                        break;
-                    case "T":
-                        branch_imageView.setImageResource(R.drawable.tel_aviv);
-                        break;
-                    case "P":
-                        branch_imageView.setImageResource(R.drawable.pt);
-                        break;
-                    case "N":
-                        branch_imageView.setImageResource(R.drawable.netanya2);
-                        break;
-                    default: branch_imageView.setImageResource(R.drawable.netanya);
-                        break;
-
-                }
-
-            }
-
-
-        };
-        adapter.changeCursor(cursor);
-        ((ListView) findViewById(R.id.branch_listview)).setAdapter(adapter);*/
 }
 
 

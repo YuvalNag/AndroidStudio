@@ -13,6 +13,13 @@
             android:text="Add Car"
             android:onClick="onClick"/>
 
+    <Button
+        android:id="@+id/showallCars"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick"
+        android:text="show all cars" />
+
         <Button
             android:id="@+id/addCarModelButton"
             android:layout_width="match_parent"
@@ -24,8 +31,14 @@
             android:id="@+id/addClientButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Client"
+            android:text="Add Manager"
             android:onClick="onClick"/>
+    <Button
+        android:id="@+id/showallmanagers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="show all Managers"
+        android:onClick="onClick"/>
 
     <Button
         android:id="@+id/showallClientButton"
@@ -34,12 +47,7 @@
         android:onClick="onClick"
         android:text="show all clients" />
 
-    <Button
-        android:id="@+id/showallCars"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="show all cars" />
+
 
     <Button
         android:id="@+id/showAllCarModels"

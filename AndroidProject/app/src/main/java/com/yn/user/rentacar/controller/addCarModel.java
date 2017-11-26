@@ -39,12 +39,15 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addmodel);
+
         ((Button)findViewById(R.id.model_add)).setOnClickListener(this);
-        // Toast.makeText(getBaseContext(), "error insert car model id: " , Toast.LENGTH_LONG).show();
-        /*Snackbar.make(findViewById(R.id.model_spin_class), "Replace with your own action", Snackbar.LENGTH_LONG).show();*/
+
+        //populate the spinners
         ((Spinner)findViewById(R.id.model_spin_class)).setAdapter(new ArrayAdapter<CarClass>(this, android.R.layout.simple_list_item_1, CarClass.values()));
         ((Spinner)findViewById(R.id.model_spin_trans)).setAdapter(new ArrayAdapter<TransmissionType>(this, android.R.layout.simple_list_item_1, TransmissionType.values()));
-       ((ImageView)findViewById(R.id.model_image)).setOnClickListener(new View.OnClickListener() {
+
+        //check permission
+        ((ImageView)findViewById(R.id.model_image)).setOnClickListener(new View.OnClickListener() {
 
            @Override
             public void onClick(View view) {
@@ -57,7 +60,7 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
         });
 
 
-    }
+    }//check permission
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -76,6 +79,12 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    /**
+     * gets the image from the  intent
+      * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -97,10 +106,11 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
 
 
 
-//TODO check permissions
+
 
     @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
+
        final ContentValues modelcontentValues= new ContentValues();
         modelcontentValues.put(AppContract.CarModel.CLASS_OF_CAR,((Spinner)findViewById(R.id.model_spin_class)).getSelectedItem().toString());
         modelcontentValues.put(AppContract.CarModel.IMG, Tools.imageToByte(((BitmapDrawable)((ImageView)findViewById(R.id.model_image)).getDrawable()).getBitmap()));

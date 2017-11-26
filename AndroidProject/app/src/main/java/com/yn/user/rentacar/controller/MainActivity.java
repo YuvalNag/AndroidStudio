@@ -35,16 +35,13 @@ public class MainActivity extends AppCompatActivity {
         }
     public void onClick(View view) {
 
-        switch(view.getId())
-        {
-            case R.id.addCarButton:
-            {
+        switch(view.getId()) {
+            case R.id.addCarButton: {
                 Intent intent = new Intent(this, addCarActivity.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.addClientButton:
-            {
+            case R.id.addClientButton: {
                 Intent intent = new Intent(this, addManager.class);
                 startActivity(intent);
                 break;
@@ -54,32 +51,39 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             }
-            case R.id.addCarModelButton:{
+            case R.id.addCarModelButton: {
                 Intent intent = new Intent(this, addCarModel.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.showAllCarModels:{
+            case R.id.showAllCarModels: {
                 Intent intent = new Intent(this, CarModelList.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.showAllBranches:{
+            case R.id.showAllBranches: {
                 Intent intent = new Intent(this, BranchList.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.showallCars:
-            Intent intent = new Intent(this, car_list.class);
-            startActivity(intent);
-            break;
+            case R.id.showallCars: {
+                Intent intent = new Intent(this, car_list.class);
+                startActivity(intent);
+                break;
+            }
 
-
+            case R.id.showallmanagers:
+                Intent intent = new Intent(this, managerList.class);
+                startActivity(intent);
+                break;
         }
 
 
-
     }
+
+
+
+
 
     private void showCarList() {
         Cursor cursor;

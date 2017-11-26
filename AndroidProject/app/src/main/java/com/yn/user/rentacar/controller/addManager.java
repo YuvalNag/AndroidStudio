@@ -60,42 +60,75 @@ public class addManager extends AppCompatActivity {
     private ListView branchListView;
     private String branch_id;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_manager);
+        findViews();
+        showBranches();
+        branchListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+        branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                branch_id = view.getTag().toString();
+
+            }
+        });
+    }
 
     /**
-     * Find the Views in the layout<br />
-     * <br />
-     * Auto-created on 2017-11-21 00:02:35 by Android Layout Finder
-     * (http://www.buzzingandroid.com/tools/android-layout-finder)
+     * find views and check all input text
      */
     private void findViews() {
         textInputLayoutuserPassword = (TextInputLayout) findViewById(R.id.user_password);
         textInputLayoutuserConfrimPassword= (TextInputLayout) findViewById(R.id.user_password_confrim);
         textInputLayoutuserConfrimPassword.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().contentEquals(textInputLayoutuserPassword.getEditText().getText().toString())) {
                     textInputLayoutuserConfrimPassword.setErrorEnabled(false);
+                    textInputLayoutuserPassword.setErrorEnabled(false);
                 } else {
                     textInputLayoutuserConfrimPassword.setErrorEnabled(true);
+                    textInputLayoutuserPassword.setErrorEnabled(true);
                     textInputLayoutuserConfrimPassword.setError("Password are not matching");
+                    textInputLayoutuserPassword.setError("Password are not matching");
 
                 }
             }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        textInputLayoutuserPassword.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().trim().contentEquals(textInputLayoutuserConfrimPassword.getEditText().getText().toString())) {
+                    textInputLayoutuserConfrimPassword.setErrorEnabled(false);
+                    textInputLayoutuserPassword.setErrorEnabled(false);
+                } else {
+                    textInputLayoutuserConfrimPassword.setErrorEnabled(true);
+                    textInputLayoutuserPassword.setErrorEnabled(true);
+                    textInputLayoutuserConfrimPassword.setError("Password are not matching");
+                    textInputLayoutuserPassword.setError("Password are not matching");
 
+                }
             }
+            @Override
+            public void afterTextChanged(Editable editable) {}
         });
+
         textInputLayout = (TextInputLayout) findViewById(R.id.textInputLayout);
         userFirstname = (EditText) findViewById(R.id.user_firstname);
         textInputLayout3 = (TextInputLayout) findViewById(R.id.textInputLayout3);
         userLastname = (EditText) findViewById(R.id.user_lastname);
+
         textInputLayoutuserEmail = (TextInputLayout) findViewById(R.id.textInputLayout_user_email);
         branchListView = (ListView) findViewById(R.id.branch_listview);
         userEmail = (EditText) findViewById(R.id.user_email);
@@ -125,6 +158,7 @@ public class addManager extends AppCompatActivity {
 
             }
         });
+
         textInputLayoutuserPhone = (TextInputLayout) findViewById(R.id.textInputLayout_user_phone);
         userPhone = (EditText) findViewById(R.id.user_phone);
         userPhone.addTextChangedListener(new TextWatcher() {
@@ -149,6 +183,7 @@ public class addManager extends AppCompatActivity {
 
             }
         });
+
         textInputLayoutuserId = (TextInputLayout) findViewById(R.id.textInputLayout_user_id);
         userId = (EditText) findViewById(R.id.user_id);
         userId.addTextChangedListener(new TextWatcher() {
@@ -159,7 +194,7 @@ public class addManager extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().trim().isEmpty()||charSequence.toString().trim()=="0") {
+                if (charSequence.toString().trim().isEmpty()||charSequence.toString().trim().contentEquals("0")) {
                     textInputLayoutuserId.setErrorEnabled(true);
                     textInputLayoutuserId.setError("This Field Is Mandatory");
 
@@ -173,6 +208,8 @@ public class addManager extends AppCompatActivity {
 
             }
         });
+
+
         addManager = (Button) findViewById(R.id.add_manager);
 
 
@@ -180,21 +217,7 @@ public class addManager extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_client);
-        findViews();
-        showBranches();
-        branchListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-        branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                 branch_id = view.getTag().toString();
 
-            }
-        });
-    }
 
 
     @SuppressLint("StaticFieldLeak")
@@ -322,6 +345,7 @@ public class addManager extends AppCompatActivity {
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
         if (view == addManager) {
             final ContentValues uservalues = new ContentValues();
@@ -360,8 +384,6 @@ public class addManager extends AppCompatActivity {
 
     }
 
-       /* long id = ContentUris.parseId(getContentResolver().insert(AppContract.user.user_URI, uservalues));
-        if (id > 0)
-            Toast.makeText(getBaseContext(), "insert id: " + id, Toast.LENGTH_LONG).show();*/
+
 }
 
