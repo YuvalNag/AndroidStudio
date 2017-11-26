@@ -19,6 +19,7 @@ import com.yn.user.rentacar.model.entities.CarModel;
 import com.yn.user.rentacar.model.entities.Client;
 
 
+import com.yn.user.rentacar.model.entities.Manager;
 import com.yn.user.rentacar.model.entities.Order;
 import com.yn.user.rentacar.model.entities.TransmissionType;
 
@@ -43,16 +44,6 @@ public class Tools {
         contentValues.put(AppContract.Address.NUMBER, address.getNumber());
         return contentValues;
     }
-    private  long idOrderNum;
-    private  long clientId;
-    private  long carNumber;
-    private  String rentDate;
-    private  String returnDate;
-    private  long kilometersAtRent;
-    private  long  kilometersAtReturn;
-    private  Boolean fouled;
-    private  long amountOfFoul;
-    private  long finalAmount;
 
     public static ContentValues OrderToContentValues(Order order) {
 
@@ -108,6 +99,19 @@ public class Tools {
         contentValues.put(AppContract.Client.PHONE_NUMBER, client.getPhoneNum());
         contentValues.put(AppContract.Client.CRADIT_NUMBER,client.getCraditNumber());
         contentValues.put(AppContract.Client.PASSWORD,client.getPassword());
+
+        return contentValues;
+    }
+
+    public static ContentValues ManagerToContentValues(Manager manager) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(AppContract.Manager.ID, manager.getId());
+        contentValues.put(AppContract.Manager.FIRST_NAME,   manager.getFirstName());
+        contentValues.put(AppContract.Manager.LAST_NAME,    manager.getLastName());
+        contentValues.put(AppContract.Manager.EMAIL_ADDR,   manager.getEmailAdrs());
+        contentValues.put(AppContract.Manager.PHONE_NUMBER, manager.getPhoneNum());
+        contentValues.put(AppContract.Manager.BRANCH_ID,manager.getBranchId());
+        contentValues.put(AppContract.Manager.PASSWORD,manager.getPassword());
 
         return contentValues;
     }
@@ -209,6 +213,17 @@ public class Tools {
                 );
     }
 
+    public static Manager ContentValuesToManager(ContentValues contentValues) throws Exception {
+        return  new Manager(
+                contentValues.getAsString(AppContract.Manager.LAST_NAME),
+                contentValues.getAsString(AppContract.Manager.FIRST_NAME),
+                contentValues.getAsString(AppContract.Manager.EMAIL_ADDR),
+                contentValues.getAsLong(AppContract.Manager.ID),
+                contentValues.getAsString(AppContract.Manager.PHONE_NUMBER),
+                contentValues.getAsString(AppContract.Manager.PASSWORD),
+                contentValues.getAsLong(AppContract.Manager.BRANCH_ID)
+        );
+    }
 
     public static Cursor CarListToCursor(List<Car> cars) {
         String[] columns = new String[]
@@ -329,6 +344,38 @@ public class Tools {
                             client.getLastName(),
                             client.getPhoneNum(),
                             client.getPassword()
+                    });
+        }
+
+        return matrixCursor;
+    }
+
+    public static Cursor managerListToCursor(List<Manager> managers) {
+        String[] columns = new String[]
+                {
+                        AppContract.Manager.ID,
+                        AppContract.Manager.BRANCH_ID,
+                        AppContract.Manager.EMAIL_ADDR,
+                        AppContract.Manager.FIRST_NAME,
+                        AppContract.Manager.LAST_NAME,
+                        AppContract.Manager.PHONE_NUMBER,
+                        AppContract.Manager.PASSWORD
+
+
+                };
+
+        MatrixCursor matrixCursor = new MatrixCursor(columns);
+
+        for (Manager manager : managers) {
+            matrixCursor.addRow(new Object[]
+                    {
+                            manager.getId(),
+                            manager.getBranchId(),
+                            manager.getEmailAdrs(),
+                            manager.getFirstName(),
+                            manager.getLastName(),
+                            manager.getPhoneNum(),
+                            manager.getPassword()
                     });
         }
 
