@@ -11,7 +11,7 @@ import java.util.Random;
  * Created by USER on 07/11/2017.
  */
 
-    public class Client implements Serializable {
+    public class Client extends User {
 
         private String lastName;
         private String firstName;

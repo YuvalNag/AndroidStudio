@@ -70,6 +70,8 @@ public class addCarActivity extends AppCompatActivity {
         carContentValues.put(AppContract.Car.BRANCH_NUM,branch_id);
         carContentValues.put(AppContract.Car.CAR_MODEL_ID,carModel_id);
 
+
+
         new AsyncTask<Void, Void, Uri>() {
             @Override
             protected Uri doInBackground(Void... params) {
@@ -182,20 +184,20 @@ public class addCarActivity extends AppCompatActivity {
                         });
 
 
-                        /*map_button.setOnClickListener(new View.OnClickListener() {
+                        map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 if (view == map_button) {
                                     ImageButton imageButton = (ImageButton) view;
                                     String adrdress = imageButton.getTag(R.id.branch_button).toString();
 
-                                    Intent intent = new Intent(addCarActivity.this, MapsActivity.class);
+                                   /* Intent intent = new Intent(addCarActivity.this, MapsActivity.class);
                                     intent.putExtra("Address", adrdress);
                                     startActivity(intent);
-                                }
+                                */}
 
                             }
-                        });*/
+                        });
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
                         switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
