@@ -212,21 +212,8 @@ view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_
                         map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
 
                         view.setTag(cursor.getString((cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID))));
-                       /* branch_imageView.setOnClickListener(new View.OnClickListener() {
 
 
-                        branch_imageView.setTag(R.id.branch_image,cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
-                        branch_imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if(view == branch_imageView ){
-                                    ImageView image = (ImageView) view;
-                                    branch_id = image.getTag(R.id.branch_image).toString();
-                                 }
-
-                            }
-                        });
-*/
 
                         map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -267,11 +254,6 @@ view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_
                                     });
                                 }
 
-
-                                   /* Intent intent = new Intent(addCarActivity.this, MapsActivity.class);
-                                    intent.putExtra("Address", adrdress);
-                                    startActivity(intent);
-                                */
                             }
 
 
