@@ -1,12 +1,14 @@
 package com.yn.user.rentacar.controller;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -96,6 +99,7 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
 
 //TODO check permissions
 
+    @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
        final ContentValues modelcontentValues= new ContentValues();
         modelcontentValues.put(AppContract.CarModel.CLASS_OF_CAR,((Spinner)findViewById(R.id.model_spin_class)).getSelectedItem().toString());
@@ -118,12 +122,21 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
                 super.onPostExecute(uriResult);
 
                 long id = ContentUris.parseId(uriResult);
-                if (id > 0)
-                    Toast.makeText(getBaseContext(), "insert car model  id: " + id, Toast.LENGTH_LONG).show();
+                Toast toast;
+                if (id > 0) {
+                    //Toast.makeText(getApplicationContext(), "insert car model  id: " + id, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), "insert car model  id: " + id, Snackbar.LENGTH_LONG)
+                            .show();
 
-                else
-                    Toast.makeText(getBaseContext(), "error insert car model id: " + id, Toast.LENGTH_LONG).show();
 
+
+
+
+                }
+                else {
+                    Snackbar.make(findViewById(android.R.id.content), "ERROR inserting car model  " , Snackbar.LENGTH_LONG).show();
+                    //toast.show();
+                }
             }
         }.execute();
     }

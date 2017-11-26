@@ -1,5 +1,6 @@
 package com.yn.user.rentacar.controller;
 
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -168,12 +169,15 @@ public class addClient extends AppCompatActivity {
                 super.onPostExecute(uriResult);
 
                 long id = ContentUris.parseId(uriResult);
-                if (id > 0)
-                    Toast.makeText(getBaseContext(), "insert id: " + id, Toast.LENGTH_LONG).show();
+                if (id > 0) {
+                    // Toast.makeText(getBaseContext(), "insert id: " + id, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), "insert id: " + id, Snackbar.LENGTH_LONG).show();
+                } else {
 
-                else
-                Toast.makeText(getBaseContext(), "error insert id: " + id, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getBaseContext(), "error insert id: " + id, Toast.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(android.R.id.content), "ERROR inserting client " + id, Snackbar.LENGTH_LONG).show();
 
+                }
             }
         }.execute();
        /* long id = ContentUris.parseId(getContentResolver().insert(AppContract.Client.CLIENT_URI, clientvalues));

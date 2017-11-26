@@ -33,6 +33,7 @@
         </activity>
         <activity android:name=".controller.addClient" />
         <activity android:name=".controller.client_list" />
+        <activity android:name=".controller.car_list" />
         <activity android:name=".controller.addCarModel" />
         <activity android:name=".controller.CarModelList" />
         <activity android:name=".controller.BranchList" />
