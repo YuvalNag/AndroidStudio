@@ -21,6 +21,7 @@ import com.yn.user.rentacar.model.entities.Car;
 import com.yn.user.rentacar.model.entities.CarClass;
 import com.yn.user.rentacar.model.entities.CarModel;
 import com.yn.user.rentacar.model.entities.Client;
+import com.yn.user.rentacar.model.entities.Manager;
 import com.yn.user.rentacar.model.entities.Order;
 import com.yn.user.rentacar.model.entities.TransmissionType;
 
@@ -40,6 +41,7 @@ public class List_DBManager  implements DB_manager {
     static List<Car> cars;
     static List<CarModel> carModels;
     static List<Client> clients;
+    static List<Manager> managers;
     static List<Order> orders;
     static List<Branch> branches;
     
@@ -50,7 +52,7 @@ public class List_DBManager  implements DB_manager {
          clients=new ArrayList<>();
          orders=new ArrayList<>();
          branches=new ArrayList<>();
-
+         managers=new ArrayList<>();
 /*
         Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.kia_rio);
         Resources res = MainActivity.mMainActivity.getResources();
@@ -131,7 +133,12 @@ public class List_DBManager  implements DB_manager {
                 return true;
         return false;
     }
-
+    public boolean hasManager(long manager_id) {
+        for (Manager manager:managers)
+            if(manager.getId()==manager_id )
+                return true;
+        return false;
+    }
     @Override
     public long addClient(ContentValues values){
         try {
@@ -215,6 +222,25 @@ public class List_DBManager  implements DB_manager {
     }
 
     @Override
+    public long addManager(ContentValues contentValues) {
+        try {
+            Manager manager = Tools.ContentValuesToManager(contentValues);
+            if (hasBranch(manager.getId())) {
+                Log.d(TAG, "addManager: exist"+manager.getId());
+                return -2;
+            }
+            managers.add(manager);
+            Log.d(TAG, "addManager: "+manager.getId());
+            return manager.getId();
+        }catch (Exception e)
+        {
+            Log.e(TAG, "addManager: "+e.getMessage(),e );
+            return -1;
+
+        }
+    }
+
+    @Override
     public boolean removeClient(long id) {
         Client client = null;
         for (Client item : clients)
@@ -261,6 +287,18 @@ public class List_DBManager  implements DB_manager {
                 break;
             }
         return branches.remove(branch);
+    }
+
+    @Override
+    public boolean removeManager(long id) {
+        Manager manager = null;
+        for (Manager item : managers)
+            if (manager.getId() == id) {
+                manager = item;
+                //isUpdate = true;
+                break;
+            }
+        return managers.remove(manager);
     }
 
     @Override
@@ -328,6 +366,22 @@ public class List_DBManager  implements DB_manager {
     }
 
     @Override
+    public boolean updateManager(long id, ContentValues values) {
+        try {
+            Manager manager = Tools.ContentValuesToManager(values);
+            for(int i=0;i<managers.size();i++)
+                if(managers.get(i).getId()==id) {
+                    managers.set(i, manager);
+                    Log.d(TAG, "updateManager: "+id);
+                    return true;
+                }
+        } catch (Exception e) {
+            Log.e(TAG, "updateManager: "+id,e );
+        }
+        return false;
+    }
+
+    @Override
     public Cursor getCarModels()  {
         return Tools.carModelsListToCursor(carModels);
     }
@@ -346,6 +400,11 @@ public class List_DBManager  implements DB_manager {
     @Override
     public Cursor getCars() {
         return Tools.CarListToCursor(cars);
+    }
+
+    @Override
+    public Cursor getManager() {
+        return Tools.managerListToCursor(managers);
     }
 
 }
