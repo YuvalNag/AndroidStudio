@@ -65,21 +65,21 @@ public class List_DBManager  implements DB_manager {
         try {
 
             cars.add(new Car(1,2,3232,2988768));
+            cars.add(new Car(3,2,3232,2988768));
             cars.add(new Car(1,2,3232,2988768));
             cars.add(new Car(1,2,3232,2988768));
             cars.add(new Car(1,2,3232,2988768));
             cars.add(new Car(1,2,3232,2988768));
-            cars.add(new Car(1,2,3232,2988768));
+            cars.add(new Car(1991,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(2,2,3232,2988));
             cars.add(new Car(1,2,3232,2988));
             cars.add(new Car(1,2,3232,2988));
             cars.add(new Car(1,2,3232,2988));
             cars.add(new Car(1,2,3232,2988));
             cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(3,2,3232,2988));
             cars.add(new Car(1,2,3232,2988));
             cars.add(new Car(1,2,3232,2988));
         branches.add(new Branch(0,5*100,new Address("Hadera","",4)));
