@@ -69,11 +69,11 @@ public class addCarActivity extends AppCompatActivity {
         carContentValues.put(AppContract.Car.KILOMETRERS,kilometers.getEditText().getText().toString());
         carContentValues.put(AppContract.Car.BRANCH_NUM,branch_id);
         carContentValues.put(AppContract.Car.CAR_MODEL_ID,carModel_id);
-        
+
         new AsyncTask<Void, Void, Uri>() {
             @Override
             protected Uri doInBackground(Void... params) {
-                return getContentResolver().insert(AppContract.CarModel.CAR_MODEL_URI, carContentValues);
+                return getContentResolver().insert(AppContract.Car.CAR_URI, carContentValues);
             }
 
             @Override
