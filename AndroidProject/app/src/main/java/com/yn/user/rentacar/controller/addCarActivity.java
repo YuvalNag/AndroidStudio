@@ -147,19 +147,9 @@ public class addCarActivity extends AppCompatActivity {
 
 
 
-view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
+                view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
 
-                imageView.setTag(R.id.cars_carImage,cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
-                imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(view == imageView ){
-                            ImageView image = (ImageView) view;
-                            carModel_id = image.getTag(R.id.cars_carImage).toString();
-                        }
 
-                    }
-                });
 
                 numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
                 trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
@@ -209,12 +199,11 @@ view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_
                         final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
 
 
-                        map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
 
                         view.setTag(cursor.getString((cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID))));
 
 
-
+                        map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
                         map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(final View view) {
@@ -304,7 +293,7 @@ view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_
 
      }
 
-    ;
+
 
     }
 

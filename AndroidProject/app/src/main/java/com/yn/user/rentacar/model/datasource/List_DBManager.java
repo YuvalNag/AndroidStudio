@@ -145,15 +145,15 @@ public class List_DBManager  implements DB_manager {
             Client client = Tools.ContentValuesToClient(values);
 
             if (hasClient(client.getId())) {
-                Log.i(TAG, "addClient: exist"+client.getId());
+                Log.i(TAG, "addManager: exist"+client.getId());
                 return -2;
             }
             clients.add(client);
-            Log.d(TAG, "addClient: "+client.getId());
+            Log.d(TAG, "addManager: "+client.getId());
             return client.getId();
         }catch (Exception e)
         {
-            Log.e(TAG, "addClient: "+e.getMessage(),e);
+            Log.e(TAG, "addManager: "+e.getMessage(),e);
             return -1;
 
         }

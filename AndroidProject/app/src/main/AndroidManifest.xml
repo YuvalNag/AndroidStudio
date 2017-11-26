@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.addClient" />
+        <activity android:name=".controller.addManager" />
         <activity android:name=".controller.client_list" />
         <activity android:name=".controller.car_list" />
         <activity android:name=".controller.addCarModel" />
