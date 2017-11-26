@@ -42,7 +42,7 @@ public class List_DBManager  implements DB_manager {
     static List<Client> clients;
     static List<Order> orders;
     static List<Branch> branches;
-
+    
     static {
 
          cars=new ArrayList<>();
