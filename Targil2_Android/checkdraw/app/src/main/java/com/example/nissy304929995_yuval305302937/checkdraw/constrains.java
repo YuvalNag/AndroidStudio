@@ -25,6 +25,7 @@ public class constrains extends Fragment {
 
 
     public constrains() {
+
         // Required empty public constructor
     }
 

@@ -30,11 +30,19 @@ public interface DB_manager {
     boolean updateBranch(long id, ContentValues values);
     boolean updateManager(long id, ContentValues values);
 
+    /*
+    Cursor getCarModel(long id);
+    Cursor getClient(long id);
+    Cursor getBranche(long id);
+    Cursor getCar(long id);
+    Cursor getManagers(long id);
+    */
+
     Cursor getCarModels();
     Cursor getClients();
     Cursor getBranches();
     Cursor getCars();
-    Cursor getManager();
+    Cursor getManagers();
 
 
 

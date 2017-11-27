@@ -64,24 +64,26 @@ public class List_DBManager  implements DB_manager {
      */
         try {
 
-            cars.add(new Car(1,2,3232,2988768));
-            cars.add(new Car(3,2,3232,2988768));
-            cars.add(new Car(1,2,3232,2988768));
-            cars.add(new Car(1,2,3232,2988768));
-            cars.add(new Car(1,2,3232,2988768));
-            cars.add(new Car(1,2,3232,2988768));
-            cars.add(new Car(1991,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(2,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(3,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
-            cars.add(new Car(1,2,3232,2988));
+            cars.add(new Car(1,2,3232,1));
+            cars.add(new Car(3,2,3232,11));
+            cars.add(new Car(1,2,3232,111));
+            cars.add(new Car(1,2,3232,11113));
+            cars.add(new Car(1,2,3232,11113));
+            cars.add(new Car(1,2,3232,11113));
+            cars.add(new Car(1991,2,3232,1311));
+            cars.add(new Car(1,2,3232,2988131));
+            cars.add(new Car(1,2,3232,5));
+            cars.add(new Car(2,2,3232,56));
+            cars.add(new Car(1,2,3232,567));
+            cars.add(new Car(1,2,3232,5678));
+            cars.add(new Car(1,2,3232,56789));
+            cars.add(new Car(1,2,3232,567891));
+            cars.add(new Car(1,2,3232,5678912));
+            cars.add(new Car(3,2,3232,56789123));
+            cars.add(new Car(1,2,3232,567891234));
+            cars.add(new Car(1,2,3232,912345));
+
+
         branches.add(new Branch(0,5*100,new Address("Hadera","",4)));
         branches.add(new Branch(0,5*100,new Address("Hadera","",4)));
 
@@ -404,7 +406,7 @@ public class List_DBManager  implements DB_manager {
     }
 
     @Override
-    public Cursor getManager() {
+    public Cursor getManagers() {
         return Tools.managerListToCursor(managers);
     }
 

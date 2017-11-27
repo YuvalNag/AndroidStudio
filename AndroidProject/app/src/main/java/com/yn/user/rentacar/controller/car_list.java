@@ -1,6 +1,10 @@
 package com.yn.user.rentacar.controller;
 
 import android.annotation.SuppressLint;
+import android.content.ContentUris;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Context;
@@ -13,6 +17,7 @@ import android.util.LongSparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -34,12 +39,61 @@ import java.util.Map;
 
 public class car_list extends AppCompatActivity {
     private  Map<Long,CarModel> carModelMap;
+    Long car_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_list);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
 
         showCars();
+        ((ListView) findViewById(R.id.car_grid_view)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                fab.setVisibility(View.VISIBLE);
+                car_id=(Long)view.getTag();
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Are You Sure", Snackbar.LENGTH_LONG)
+                        .setAction("Yes", new View.OnClickListener() {
+
+                            @SuppressLint("StaticFieldLeak")
+                            @Override
+                            public void onClick(View view) {
+                                final Uri uri=ContentUris.withAppendedId(AppContract.Car.CAR_URI,car_id);
+                                new AsyncTask<Void, Void, Integer>() {
+                                    @Override
+                                    protected Integer doInBackground(Void... params) {
+                                        return getContentResolver().delete(uri, null,null);
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(Integer result) {
+                                        super.onPostExecute(result);
+
+
+                                        if (result > 0) {
+                                            //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "delete car   id: " + car_id, Snackbar.LENGTH_LONG).show();
+                                            showCars();
+                                            fab.setVisibility(View.INVISIBLE);
+
+                                        }
+                                        else {
+                                            //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "ERROR deleting car" , Snackbar.LENGTH_LONG).show();
+
+                                        }
+                                    }
+                                }.execute();
+                            }
+                        }).show();
+            }
+        });
     }
 
 
@@ -117,7 +171,7 @@ public class car_list extends AppCompatActivity {
                             engine.setText(String.valueOf(carModel.getEngineCapacity()));
                             imageView.setImageBitmap(carModel.getCarPic());
                         }
-
+                        view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Car.ID_CAR_NUMBER)));
                         TextView carid = (TextView) view.findViewById(R.id.car_id);
                         TextView carkilo = (TextView) view.findViewById(R.id.car_kilo);
                         TextView branch = (TextView) view.findViewById(R.id.car_branch);

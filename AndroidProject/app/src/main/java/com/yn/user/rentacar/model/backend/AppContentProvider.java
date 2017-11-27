@@ -3,6 +3,7 @@ package com.yn.user.rentacar.model.backend;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -17,9 +18,22 @@ import static com.yn.user.rentacar.model.backend.DBManagerFactory.getManager;
 
 public class AppContentProvider extends ContentProvider {
 
-//fdgdsg
+
     DB_manager manager;
     final String TAG = "AppContentProvider";
+    private static final int CAR = 100;
+    private static final int CAR_ID = 101;
+    private static final int CARMODEL = 200;
+    private static final int CARMODEL_ID = 201;
+    private static final int CLIENT = 300;
+    private static final int CLIENT_ID = 301;
+    private static final int MANAGER = 400;
+    private static final int MAMAGER_ID = 401;
+    private static final int ORDER = 500;
+    private static final int ORDER_ID = 501;
+    private static final int BRANCH = 600;
+    private static final int BRANCH_ID = 601;
+
 
     @Override
     public boolean onCreate() {
@@ -27,7 +41,29 @@ public class AppContentProvider extends ContentProvider {
         manager=getManager();
         return false;
     }
+    private static final UriMatcher sUriMatcher = buildUriMatcher();
 
+    public static UriMatcher buildUriMatcher(){
+        String content = AppContract.AUTHORITY;
+
+        // All paths to the UriMatcher have a corresponding code to return
+        // when a match is found (the ints above).
+        UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+        matcher.addURI(content, "Car", CAR);
+        matcher.addURI(content, "car" + "/#", CAR_ID);
+        matcher.addURI(content, "CarModel", CARMODEL);
+        matcher.addURI(content, "CarModel"+ "/#", CARMODEL_ID);
+        matcher.addURI(content, "Branch", BRANCH);
+        matcher.addURI(content, "Branch"+ "/#", BRANCH_ID);
+        matcher.addURI(content, "Client", CLIENT);
+        matcher.addURI(content, "Client"+ "/#", CLIENT_ID);
+        matcher.addURI(content, "Manager", MANAGER);
+        matcher.addURI(content, "Manager"+ "/#", MAMAGER_ID);
+        matcher.addURI(content, "Order", ORDER);
+        matcher.addURI(content, "Order"+ "/#", ORDER_ID);
+
+        return matcher;
+    }
     @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
@@ -37,18 +73,17 @@ public class AppContentProvider extends ContentProvider {
 
         String listName = uri.getLastPathSegment();
         // String s = AcademyContract.Student.STUDENT_URI.getLastPathSegment();
-        switch (listName) {
-            case "Branch":
-                return manager.getBranches();//
-            case "Client":
-                return manager.getClients();//
-            case "Manager":
-                return manager.getManager();//
-            case "Car":
-                return manager.getCars();//
-
-            case "CarModel":
-                return manager.getCarModels();//
+        switch (sUriMatcher.match(uri)) {
+            case BRANCH:
+                return manager.getBranches();
+            case  CLIENT:
+                return manager.getClients();
+            case MANAGER:
+                return manager.getManagers();
+            case CAR:
+                return manager.getCars();
+            case CARMODEL:
+                return manager.getCarModels();
 
         }
         return null;
@@ -95,7 +130,7 @@ public class AppContentProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
         Log.d(TAG, "delete " + uri.toString());
 
-        String listName = uri.getLastPathSegment();
+        String listName = uri.getPathSegments().get(0);
         long id = ContentUris.parseId(uri);
         switch (listName) {
             case "Client":

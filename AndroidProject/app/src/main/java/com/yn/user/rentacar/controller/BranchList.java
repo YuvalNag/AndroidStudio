@@ -1,6 +1,7 @@
 package com.yn.user.rentacar.controller;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.database.Cursor;
@@ -44,6 +48,7 @@ public class BranchList extends AppCompatActivity {
 
     ListView branchListView;
     ImageButton imageButton;
+    long branch_num;
    //Map<Long,Bitmap> carsImages;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,23 +56,56 @@ public class BranchList extends AppCompatActivity {
         setContentView(R.layout.activity_branch_list);
         showBranches();
 
- /*       branchListView=(ListView) findViewById(R.id.branch_listview);
-        branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
 
+
+        ((ListView) findViewById(R.id.branch_listview)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                imageButton.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        branchListView.getItemAtPosition(i);
-
-
-                    }
-                });
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                fab.setVisibility(View.VISIBLE);
+                branch_num=(Long)view.getTag();
             }
-        });*/
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Are You Sure", Snackbar.LENGTH_LONG)
+                        .setAction("Yes", new View.OnClickListener() {
+
+                            @SuppressLint("StaticFieldLeak")
+                            @Override
+                            public void onClick(View view) {
+                                final Uri uri= ContentUris.withAppendedId(AppContract.Branch.BRANCH_URI,branch_num);
+                                new AsyncTask<Void, Void, Integer>() {
+                                    @Override
+                                    protected Integer doInBackground(Void... params) {
+                                        return getContentResolver().delete(uri, null,null);
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(Integer result) {
+                                        super.onPostExecute(result);
+
+
+                                        if (result > 0) {
+                                            //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "delete barnch  num: " + branch_num, Snackbar.LENGTH_LONG).show();
+                                            showBranches();
+                                            fab.setVisibility(View.INVISIBLE);
+
+                                        }
+                                        else {
+                                            //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "ERROR deleting branch" , Snackbar.LENGTH_LONG).show();
+
+                                        }
+                                    }
+                                }.execute();
+                            }
+                        }).show();
+            }
+        });
 
     }
 
@@ -152,6 +190,7 @@ public class BranchList extends AppCompatActivity {
 
                                 }
                             });
+                        view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
                        // branch_imageView.setImageResource(R.drawable.ashdod);
                        // branch_imageView.setImageResource(R.drawable.netanya2);
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
