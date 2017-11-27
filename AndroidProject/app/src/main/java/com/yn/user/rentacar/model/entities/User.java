@@ -17,6 +17,7 @@ public class User implements Serializable {
     private String emailAdrs;
     private long id;
     private final long salt;
+    private  boolean hashed;
     private String password;
     private String phoneNum;
     //endregion
@@ -36,6 +37,8 @@ public class User implements Serializable {
         else
             setPassword(password);
     }
+
+
     //endregion
 
     //region Getters & Setters

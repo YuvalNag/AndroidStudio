@@ -63,6 +63,8 @@ public class List_DBManager  implements DB_manager {
         carModels.add(new CarModel(12,"KIA","RIO",1600, TransmissionType.AUTOMATIC,5, CarClass.C,bitmap));
      */
         try {
+            managers.add(new Manager("Mangaer","Big","n@gmail.com",0,"9999","1234",0));
+            managers.add(new Manager("Mangaer","Big","nr@gmail.com",1,"9999","1234",0));
 
             cars.add(new Car(1,2,3232,1));
             cars.add(new Car(3,2,3232,11));
