@@ -21,7 +21,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="RentACar"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <provider
             android:name=".model.backend.AppContentProvider"
@@ -54,14 +54,15 @@
         <activity android:name=".controller.addCarActivity" />
         <activity android:name=".controller.managerList" />
         <activity android:name=".controller.LoginActivity">
+
+        </activity>
+        <activity android:name=".controller.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            android:label="@string/title_activity_login">
         </activity>
-        <activity android:name=".controller.StartActivity"></activity>
     </application>
 
 </manifest>

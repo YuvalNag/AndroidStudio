@@ -1,6 +1,9 @@
 package com.yn.user.rentacar.controller;
 
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
@@ -14,8 +17,11 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.LongSparseArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -41,26 +47,36 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //Remove title bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
-        mSharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
-        long lo=mSharedPreferences.getLong(getString(R.string.login_user_id),0);
-        if(mSharedPreferences.getBoolean(getString(R.string.is_login),false)){
-            Intent mainIntent =new Intent(this,MainActivity.class);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(mainIntent);
-        }
-        else {
-            Intent mainIntent = new Intent(this,LoginActivity.class);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(mainIntent);
-        }
+//Remove notification bar
+       // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_start);
+        /* New Handler to start the Menu-Activity
+         * and close this Splash-Screen after some seconds.*/
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                /* Create an Intent that will start the Menu-Activity. */
+                mSharedPreferences =  PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                if(mSharedPreferences.getBoolean(getString(R.string.is_login),false)){
+                    Intent mainIntent =new Intent(StartActivity.this,MainActivity.class);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(mainIntent);
+                }
+                else {
+                    Intent mainIntent = new Intent(StartActivity.this,LoginActivity.class);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(mainIntent);
+                }
+            }
+        }, 1000);
+
+
     }
 }

@@ -2,8 +2,10 @@ package com.yn.user.rentacar.controller;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -72,10 +74,24 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
 
-            case R.id.showallmanagers:
+            case R.id.showallmanagers: {
                 Intent intent = new Intent(this, managerList.class);
                 startActivity(intent);
                 break;
+            }
+            case R.id.logouot:{
+                SharedPreferences sharedPreferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                    Intent mainIntent = new Intent(this,LoginActivity.class);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(mainIntent);
+
+
+                break;
+        }
         }
 
 
