@@ -348,20 +348,23 @@ public class addManager extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
         if (view == addManager) {
-            final ContentValues uservalues = new ContentValues();
-            uservalues.put(AppContract.Manager.ID, ((EditText) findViewById(R.id.user_id)).getText().toString());
-            uservalues.put(AppContract.Manager.BRANCH_ID, branch_id);
-            uservalues.put(AppContract.Manager.PHONE_NUMBER, ((EditText) findViewById(R.id.user_phone)).getText().toString());
-            uservalues.put(AppContract.Manager.EMAIL_ADDR, ((EditText) findViewById(R.id.user_email)).getText().toString());
-            uservalues.put(AppContract.Manager.FIRST_NAME, ((EditText) findViewById(R.id.user_firstname)).getText().toString());
-            uservalues.put(AppContract.Manager.LAST_NAME, ((EditText) findViewById(R.id.user_lastname)).getText().toString());
-            uservalues.put(AppContract.Manager.PASSWORD, ((EditText) findViewById(R.id.user_pass)).getText().toString());
+            final ContentValues managerValues = new ContentValues();
+            managerValues.put(AppContract.Manager.ID, ((EditText) findViewById(R.id.user_id)).getText().toString());
+            managerValues.put(AppContract.Manager.BRANCH_ID, branch_id);
+            managerValues.put(AppContract.Manager.PHONE_NUMBER, ((EditText) findViewById(R.id.user_phone)).getText().toString());
+            managerValues.put(AppContract.Manager.EMAIL_ADDR, ((EditText) findViewById(R.id.user_email)).getText().toString());
+            managerValues.put(AppContract.Manager.FIRST_NAME, ((EditText) findViewById(R.id.user_firstname)).getText().toString());
+            managerValues.put(AppContract.Manager.LAST_NAME, ((EditText) findViewById(R.id.user_lastname)).getText().toString());
+            managerValues.put(AppContract.Manager.PASSWORD, ((EditText) findViewById(R.id.user_pass)).getText().toString());
+            managerValues.put(AppContract.Manager.SALT, 0);
+
+
 
 
             new AsyncTask<Void, Void, Uri>() {
                 @Override
                 protected Uri doInBackground(Void... params) {
-                    return getContentResolver().insert(AppContract.Manager.MANAGER_URI, uservalues);
+                    return getContentResolver().insert(AppContract.Manager.MANAGER_URI, managerValues);
                 }
 
                 @Override
