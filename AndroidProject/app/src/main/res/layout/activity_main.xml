@@ -62,6 +62,12 @@
         android:layout_height="wrap_content"
         android:text="show all brances"
         android:onClick="onClick"/>
+    <Button
+        android:id="@+id/logouot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="log out"
+        android:onClick="onClick"/>
 
 </LinearLayout>
 

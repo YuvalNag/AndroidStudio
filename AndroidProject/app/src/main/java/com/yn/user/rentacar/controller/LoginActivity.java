@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +46,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity  {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -78,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getManagersCursor();
-        mSharedPreferences = LoginActivity.this.getPreferences(Context.MODE_PRIVATE);
+        mSharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this);
         long lo=mSharedPreferences.getLong(getString(R.string.login_user_id),0);
         if(mSharedPreferences.getBoolean(getString(R.string.is_login),false)){
             Intent mainIntent =new Intent(LoginActivity.this,MainActivity.class);
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+       // populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -114,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    private void populateAutoComplete() {
+   /* private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
         }
@@ -144,9 +145,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return false;
     }
 
-    /**
+    *//**
      * Callback received when a permissions request has been completed.
-     */
+     *//*
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -157,13 +158,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-
+*/
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+
+
         if (mAuthTask != null) {
             return;
         }
@@ -264,7 +267,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    @Override
+   /* @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
                 // Retrieve data rows for the device user's 'profile' contact.
@@ -317,7 +320,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
-
+*/
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
