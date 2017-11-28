@@ -22,10 +22,16 @@ public class User implements Serializable {
     private String phoneNum;
     //endregion
 
+
     //region Constructor
-    public User(String lastName, String firstName, String emailAdrs, long id, String phoneNum,String password) throws Exception {
-        Random random =new Random();
-        salt = random.nextLong();
+    public User(String lastName, String firstName, String emailAdrs, long id, String phoneNum,String password,long salt) throws Exception {
+
+        while (salt == 0 ) {
+            Random random =new Random();
+            salt = random.nextLong();
+        }
+
+        this.salt=salt;
         setLastName(lastName);
         setFirstName(firstName);
         setEmailAdrs(emailAdrs);

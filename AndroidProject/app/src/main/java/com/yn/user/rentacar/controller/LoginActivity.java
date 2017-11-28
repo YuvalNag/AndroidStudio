@@ -344,7 +344,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String cEmail=mCursor.getString(mCursor.getColumnIndexOrThrow(AppContract.Manager.EMAIL_ADDR));
                 String sPassword= null;
                 try {
-                    sPassword = (SHA_256_Helper.getHash256String(mPassword,0/*mCursor.getLong(mCursor.getColumnIndexOrThrow(AppContract.Manager.SALT))*/));
+                    sPassword = (SHA_256_Helper.getHash256String(mPassword,mCursor.getLong(mCursor.getColumnIndexOrThrow(AppContract.Manager.SALT))));
                 } catch (Exception e) {
                     e.printStackTrace();
                     return false;

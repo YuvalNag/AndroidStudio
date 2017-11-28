@@ -112,7 +112,7 @@ public class Tools {
         contentValues.put(AppContract.Manager.PHONE_NUMBER, manager.getPhoneNum());
         contentValues.put(AppContract.Manager.BRANCH_ID,manager.getBranchId());
         contentValues.put(AppContract.Manager.PASSWORD,manager.getPassword());
-
+        contentValues.put(AppContract.Manager.SALT,manager.getSalt());
         return contentValues;
     }
 
@@ -207,6 +207,7 @@ public class Tools {
                 contentValues.getAsLong(AppContract.Client.ID),
                 contentValues.getAsString(AppContract.Client.PHONE_NUMBER),
                 contentValues.getAsLong(AppContract.Client.CRADIT_NUMBER),
+                contentValues.getAsLong(AppContract.Client.SALT),
                 contentValues.getAsString(AppContract.Client.PASSWORD)
 
                 );
@@ -219,7 +220,9 @@ public class Tools {
                 contentValues.getAsLong(AppContract.Manager.ID),
                 contentValues.getAsString(AppContract.Manager.PHONE_NUMBER),
                 contentValues.getAsString(AppContract.Manager.PASSWORD),
+                contentValues.getAsLong(AppContract.Manager.SALT),
                 contentValues.getAsLong(AppContract.Manager.BRANCH_ID)
+
         );
     }
     public static Cursor CarListToCursor(List<Car> cars) {
@@ -352,9 +355,8 @@ public class Tools {
                         AppContract.Manager.FIRST_NAME,
                         AppContract.Manager.LAST_NAME,
                         AppContract.Manager.PHONE_NUMBER,
-                        AppContract.Manager.PASSWORD
-
-
+                        AppContract.Manager.PASSWORD,
+                        AppContract.Manager.SALT
                 };
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
@@ -368,7 +370,8 @@ public class Tools {
                             manager.getFirstName(),
                             manager.getLastName(),
                             manager.getPhoneNum(),
-                            manager.getPassword()
+                            manager.getPassword(),
+                            manager.getSalt(),
                     });
         }
 

@@ -10,7 +10,7 @@ public class SHA_256_Helper {
     public static String getHash256String(String password,long salt )throws Exception {
 
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-        //(password+=salt).trim();
+        (password+=salt).trim();
         (password).trim();
         sha256.update(password.getBytes());
 

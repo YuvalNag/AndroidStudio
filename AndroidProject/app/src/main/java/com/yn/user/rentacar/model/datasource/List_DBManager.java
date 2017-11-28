@@ -63,8 +63,8 @@ public class List_DBManager  implements DB_manager {
         carModels.add(new CarModel(12,"KIA","RIO",1600, TransmissionType.AUTOMATIC,5, CarClass.C,bitmap));
      */
         try {
-            managers.add(new Manager("Mangaer","Big","n@gmail.com",0,"9999","1234",0));
-            managers.add(new Manager("Mangaer","Big","nr@gmail.com",1,"9999","1234",0));
+            managers.add(new Manager("Mangaer","Big","n@gmail.com",0,"9999","1234",0,0));
+            managers.add(new Manager("Mangaer","Big","nr@gmail.com",1,"9999","1234",0,0));
 
             cars.add(new Car(1,2,3232,1));
             cars.add(new Car(3,2,3232,11));
@@ -95,13 +95,13 @@ public class List_DBManager  implements DB_manager {
         branches.add(new Branch(1991,5*100,new Address("אגסי 6 ירושלים","",4)));
 
 
-            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",0,"052-4422258",3453435,"134"));
-            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",1,"052-4422258",3453435,"134"));
-            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",2,"052-4422258",3453435,"134"));
-            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",3,"052-4422258",3453435,"134"));
-            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",4,"052-4422258",3453435,"134"));
-            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",5,"052-4422258",3453435,"134"));
-            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",6,"052-4422258",3453435,"134"));
+            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",0,"052-4422258",3453435,0,"1234"));
+            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",1,"052-4422258",3453435,0,"1234"));
+            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",2,"052-4422258",3453435,0,"1234"));
+            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",3,"052-4422258",3453435,0,"1234"));
+            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",4,"052-4422258",3453435,0,"1234"));
+            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",5,"052-4422258",3453435,0,"1234"));
+            clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",6,"052-4422258",3453435,0,"1234"));
 
         } catch (Exception e) {
             e.printStackTrace();

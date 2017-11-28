@@ -15,8 +15,8 @@ import java.util.Random;
 
         private long craditNumber;
 
-        public Client(String lastName, String firstName, String emailAdrs, long id, String phoneNum, long craditNumber,String password) throws Exception {
-            super(lastName, firstName, emailAdrs, id, phoneNum, password);
+        public Client(String lastName, String firstName, String emailAdrs, long id, String phoneNum, long craditNumber,long salt, String password) throws Exception {
+            super(lastName, firstName, emailAdrs, id, phoneNum, password,salt);
             setCraditNumber(craditNumber);
             }
 
