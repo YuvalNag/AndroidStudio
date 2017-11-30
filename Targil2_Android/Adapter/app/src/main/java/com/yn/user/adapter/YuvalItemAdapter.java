@@ -58,8 +58,7 @@ public class YuvalItemAdapter extends BaseAdapter
         ratingBar.setRating((float)(((Flower) content.get(position)).getRating()));
 
 
-        GridView gridView = (GridView) parent;
-        YuvalItemAdapter yuvalItemAdapter =(YuvalItemAdapter) gridView.getItemAtPosition(position);
+
 
 
 
