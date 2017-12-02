@@ -82,8 +82,13 @@ public class AppContentProvider extends ContentProvider {
                 return manager.getManagers();
             case CAR:
                 return manager.getCars();
+            case CAR_ID:
+                return manager.getCar(ContentUris.parseId(uri));
             case CARMODEL:
                 return manager.getCarModels();
+            case CARMODEL_ID:
+                return manager.getCarModel(ContentUris.parseId(uri));
+
 
         }
         return null;
@@ -166,7 +171,7 @@ public class AppContentProvider extends ContentProvider {
                       String[] selectionArgs) {
         Log.d(TAG, "update " + uri.toString());
 
-        String listName = uri.getLastPathSegment();
+        String listName = uri.getPathSegments().get(0);
         long id = ContentUris.parseId(uri);
 
         switch (listName) {

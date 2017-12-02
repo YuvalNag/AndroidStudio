@@ -10,11 +10,11 @@
         android:id="@+id/car_grid_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@android:color/darker_gray"
         android:choiceMode="singleChoice"
         android:drawSelectorOnTop="true"
-        android:listSelector="@drawable/ic_select1"
-        android:background="@android:color/darker_gray"
         android:horizontalSpacing="2dip"
+        android:listSelector="@drawable/ic_select1"
         android:numColumns="auto_fit"
         android:verticalSpacing="2dip"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +30,20 @@
         android:layout_margin="16dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/fabEdit"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fabEdit"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fab"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 </android.support.constraint.ConstraintLayout>

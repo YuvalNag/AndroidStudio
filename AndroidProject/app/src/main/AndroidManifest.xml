@@ -29,7 +29,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".controller.MainActivity"></activity>
+        <activity android:name=".controller.MainActivity" />
         <activity android:name=".controller.addManager" />
         <activity android:name=".controller.client_list" />
         <activity android:name=".controller.car_list" />
@@ -53,9 +53,7 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".controller.addCarActivity" />
         <activity android:name=".controller.managerList" />
-        <activity android:name=".controller.LoginActivity">
-
-        </activity>
+        <activity android:name=".controller.LoginActivity" />
         <activity android:name=".controller.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,6 +61,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".controller.UpdateCarModel" />
+        <activity android:name=".controller.UpdateCar"></activity>
     </application>
 
 </manifest>

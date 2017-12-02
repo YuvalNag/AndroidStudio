@@ -387,6 +387,35 @@ public class List_DBManager  implements DB_manager {
     }
 
     @Override
+    public Cursor getCar(long id) {
+        for (Car car:cars)
+            if(car.getIdCarNumber()==id)
+            {
+                List<Car> templist=new ArrayList<Car>();
+                templist.add(car);
+                Log.d(TAG, "getCar: "+id);
+                return Tools.CarListToCursor(templist);
+            }
+        Log.d(TAG, "getCar: dosnt exist "+id);
+        return null;
+    }
+
+    @Override
+    public Cursor getCarModel(long id) {
+
+        for (CarModel carMOde:carModels)
+            if(carMOde.getIdCarModel()==id)
+            {
+                List<CarModel> templist=new ArrayList<CarModel>();
+                templist.add(carMOde);
+                Log.d(TAG, "getCarModel: "+id);
+                return Tools.carModelsListToCursor(templist);
+            }
+        Log.d(TAG, "getCarModel: dosnt exist "+id);
+        return null;
+    }
+
+    @Override
     public Cursor getCarModels()  {
         return Tools.carModelsListToCursor(carModels);
     }

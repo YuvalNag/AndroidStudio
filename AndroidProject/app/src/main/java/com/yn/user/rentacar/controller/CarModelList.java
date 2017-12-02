@@ -1,7 +1,13 @@
 package com.yn.user.rentacar.controller;
 
 import android.annotation.SuppressLint;
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.database.Cursor;
@@ -9,6 +15,7 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -18,17 +25,32 @@ import android.widget.TextView;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
+import com.yn.user.rentacar.model.entities.CarClass;
+import com.yn.user.rentacar.model.entities.CarModel;
+import com.yn.user.rentacar.model.entities.TransmissionType;
+
+import java.util.zip.Inflater;
 
 
 public class CarModelList extends AppCompatActivity {
+   private long carModel_id;
+
+   private ListView carModelListView;
 
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_model_list);
+        carModelListView= ((ListView)findViewById(R.id.model_listview));
+        showCarModels();
+        manageDeleteOrEdit();
 
+    }
 
+    @SuppressLint("StaticFieldLeak")
+    private void showCarModels()
+    {
         new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
@@ -37,9 +59,40 @@ public class CarModelList extends AppCompatActivity {
             }
 
             @Override
-            protected void onPostExecute(Cursor cursor) {
+            protected void onPostExecute(final Cursor cursor) {
                 super.onPostExecute(cursor);
                 CursorAdapter adapter = new CursorAdapter(CarModelList.this, cursor, 0) {
+
+
+                    /*@Override
+                    public Object getItem(int position) {
+                        *//*setIdCarModel(idCarModel);
+                        setCompenyName(compenyName);
+                        setModelName( modelName);
+                        setEngineCapacity(engineCapacity);
+                        setTransmissionType(transmissionType);
+                        setNumOfSeats(numOfSeats);
+                        setCarClass(carClass);
+                        setCarPic(image);*//*
+
+                        Cursor row = (Cursor) super.getItem(position);
+                        if (row == null)
+                            return null;
+                        else
+
+                            return new CarModel(
+                                    row.getLong(row.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)),
+                                    row.getString(row.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME)),
+                                    row.getString(row.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)),
+                                    row.getLong(row.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)),
+                                    TransmissionType.valueOf(row.getString(row.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE))),
+                                    row.getLong(row.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)),
+                                    CarClass.valueOf(row.getString(row.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR))),
+                                    Tools.byteToImage(row.getBlob(row.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
+                          );
+
+                    }*/
+
                     @Override
                     public View newView(Context context, Cursor cursor, ViewGroup parent) {
                         return LayoutInflater.from(context).inflate(R.layout.carmodel_card, parent, false);
@@ -55,6 +108,9 @@ public class CarModelList extends AppCompatActivity {
                         ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
 
 
+
+                        //view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
+
                         numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
                         trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
                         description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
@@ -67,41 +123,87 @@ public class CarModelList extends AppCompatActivity {
 
                 };
                 adapter.changeCursor(cursor);
-                ((ListView)findViewById(R.id.model_listview)).setAdapter(adapter);
+               carModelListView.setAdapter(adapter);
             }
         }.execute();
-        /*Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
+    }
 
-        CursorAdapter adapter = new CursorAdapter(CarModelList.this, cursor, 0) {
+    private  void manageDeleteOrEdit() {
+        final FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
+        fabDelete.setVisibility(View.INVISIBLE);
+        fabEdit.setVisibility(View.INVISIBLE);
+
+
+        carModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                return LayoutInflater.from(context).inflate(R.layout.carmodel_card, parent, false);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                fabDelete.setVisibility(View.VISIBLE);
+                fabEdit.setVisibility(View.VISIBLE);
+                carModel_id =l;
             }
-
+        });
+        fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                TextView trans = (TextView) view.findViewById(R.id.cars_transmition);
-                TextView description = (TextView) view.findViewById(R.id.cars_name_description);
-                TextView classa = (TextView) view.findViewById(R.id.cars_class);
-                TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
-                TextView numseats = (TextView) view.findViewById(R.id.cars_numofseats);
-                ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
+            public void onClick(View view) {
+                Snackbar.make(view, "Are You Sure", Snackbar.LENGTH_LONG)
+                        .setAction("Yes", new View.OnClickListener() {
+
+                            @SuppressLint("StaticFieldLeak")
+                            @Override
+                            public void onClick(View view) {
+
+                                final Uri uri = ContentUris.withAppendedId(AppContract.CarModel.CAR_MODEL_URI, carModel_id);
+                                new AsyncTask<Void, Void, Integer>() {
+                                    @Override
+                                    protected Integer doInBackground(Void... params) {
+                                        return getContentResolver().delete(uri, null, null);
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(Integer result) {
+                                        super.onPostExecute(result);
 
 
-                numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
-                trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
-                description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
-                classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
-                engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                imageView.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+                                        if (result > 0) {
+                                            //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "delete car model   id: " + carModel_id, Snackbar.LENGTH_LONG).show();
+                                            showCarModels();
+                                            fabDelete.setVisibility(View.INVISIBLE);
 
+                                        } else {
+                                            //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "ERROR deleting car model id: " + carModel_id, Snackbar.LENGTH_LONG).show();
+
+                                        }
+                                    }
+                                }.execute();
+                            }
+                        }).show();
             }
+        });
 
 
-        };
-        adapter.changeCursor(cursor);
-        ((GridView) findViewById(R.id.model_listview)).setAdapter(adapter);
-    }*/
+
+        fabEdit.setOnClickListener(new View.OnClickListener() {
+
+
+
+                            @SuppressLint("StaticFieldLeak")
+                            @Override
+                            public void onClick(View view) {
+
+
+
+                                 Intent intent=new Intent(CarModelList.this,UpdateCarModel.class);
+                                 intent.putExtra(AppContract.CarModel.ID_CAR_MODEL,carModel_id);
+
+                                startActivity(intent);
+
+                            }
+
+
+        });
     }
 }
 

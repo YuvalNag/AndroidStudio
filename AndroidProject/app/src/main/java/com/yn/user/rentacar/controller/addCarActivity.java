@@ -5,11 +5,7 @@ import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -25,13 +21,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,7 +36,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
-import com.yn.user.rentacar.model.entities.Branch;
 
 
 public class addCarActivity extends AppCompatActivity {
@@ -52,8 +44,8 @@ public class addCarActivity extends AppCompatActivity {
     ListView carModelListView;
     TextInputLayout idCar;
     TextInputLayout kilometers;
-    String branch_id;
-    String carModel_id;
+    Long branch_id;
+    Long carModel_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +59,14 @@ public class addCarActivity extends AppCompatActivity {
         {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                branch_id=view.getTag().toString();
+                branch_id=l;
             }
         });
 
         carModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                carModel_id=view.getTag().toString();
+                carModel_id=l;
             }
         });
     }
@@ -82,8 +74,8 @@ public class addCarActivity extends AppCompatActivity {
     private void findViews() {
         branchListView = (ListView) findViewById(R.id.branch_listview);
         carModelListView = (ListView) findViewById(R.id.model_listview);
-        idCar = (TextInputLayout) findViewById(R.id.textInputLayout2);
-        kilometers = (TextInputLayout) findViewById(R.id.textInputLayout4);
+        idCar = (TextInputLayout) findViewById(R.id.textInputLayout_car_id);
+        kilometers = (TextInputLayout) findViewById(R.id.textInputLayout_kilo);
 
     }
 
