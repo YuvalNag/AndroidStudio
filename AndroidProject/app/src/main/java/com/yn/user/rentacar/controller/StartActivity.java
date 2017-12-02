@@ -75,7 +75,7 @@ public class StartActivity extends AppCompatActivity {
                     startActivity(mainIntent);
                 }
             }
-        }, 1000);
+        }, 3000);
 
 
     }

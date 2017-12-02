@@ -5,7 +5,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-
     android:layoutDirection="ltr">
 
    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -14,31 +13,35 @@
        android:layout_height="wrap_content"
        android:layout_centerInParent="true"
        android:layout_gravity="center"
-       card_view:cardBackgroundColor="@color/cardview_dark_background"
-
-
+       card_view:cardBackgroundColor="@android:color/holo_green_light"
        android:layout_margin="10dp"
        android:layout_marginEnd="10dp"
        android:layout_marginStart="10dp"
        card_view:cardCornerRadius="20dip"
        card_view:cardElevation="10dip"
        card_view:contentPadding="10dip">
+      <ImageView
+          android:src="@drawable/green_ba"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scaleType="fitXY"/>
 
       <android.support.constraint.ConstraintLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
 
-         <TextView
-             android:id="@+id/cars_name_description"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginEnd="8dp"
-             android:layout_marginStart="8dp"
-             android:text="TextView"
-             android:textColor="@android:color/holo_blue_dark"
-             card_view:layout_constraintEnd_toEndOf="parent"
-             card_view:layout_constraintStart_toStartOf="parent"
-             card_view:layout_constraintTop_toTopOf="parent" />
+          <TextView
+              android:id="@+id/cars_name_description"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginEnd="8dp"
+              android:layout_marginStart="8dp"
+              android:text="comp_and_model"
+              android:textColor="@android:color/holo_orange_dark"
+              android:textStyle="bold|italic"
+              card_view:layout_constraintEnd_toEndOf="parent"
+              card_view:layout_constraintStart_toStartOf="parent"
+              card_view:layout_constraintTop_toTopOf="parent" />
 
          <ImageView
              android:id="@+id/cars_carImage"
@@ -55,7 +58,7 @@
              card_view:layout_constraintHorizontal_bias="0.5"
              card_view:layout_constraintStart_toEndOf="@+id/tableLayout"
              card_view:layout_constraintTop_toBottomOf="@+id/cars_name_description"
-             card_view:srcCompat="@drawable/ic_car_placeholder" />
+             card_view:srcCompat="@drawable/car_placeholder1" />
 
          <TableLayout
              android:id="@+id/tableLayout"
@@ -87,9 +90,10 @@
                    android:layout_height="wrap_content"
                    android:layout_gravity="center_vertical|start"
                    android:gravity="start"
-                   android:text="TextView"
-                   android:textColor="@android:color/holo_blue_dark"
-                   android:textStyle="bold" />
+                   android:text="Number of seats"
+                   android:textColor="@android:color/holo_orange_dark"
+                   android:textStyle="bold|italic"
+                   />
             </TableRow>
 
             <TableRow
@@ -111,9 +115,10 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center_vertical|start"
-                   android:text="TextView"
-                   android:textColor="@android:color/holo_blue_dark"
-                   android:textStyle="bold" />
+                   android:text="Tranmission"
+                   android:textColor="@android:color/holo_orange_dark"
+                   android:textStyle="bold|italic"
+                   />
             </TableRow>
 
             <TableRow
@@ -134,9 +139,10 @@
                    android:layout_height="wrap_content"
                    android:layout_gravity="center_vertical|start"
                    android:gravity="start"
-                   android:text="TextView"
-                   android:textColor="@android:color/holo_blue_dark"
-                   android:textStyle="bold" />
+                   android:text="Class"
+                   android:textColor="@android:color/holo_orange_dark"
+                   android:textStyle="bold|italic"
+                   />
             </TableRow>
 
             <TableRow
@@ -155,9 +161,10 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center_vertical|start"
-                   android:text="TextView"
-                   android:textColor="@android:color/holo_blue_dark"
-                   android:textStyle="bold" />
+                   android:text="Engine capacity"
+                   android:textColor="@android:color/holo_orange_dark"
+                   android:textStyle="bold|italic"
+                   />
             </TableRow>
          </TableLayout>
       </android.support.constraint.ConstraintLayout>
