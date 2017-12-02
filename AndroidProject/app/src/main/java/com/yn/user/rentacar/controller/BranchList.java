@@ -63,7 +63,6 @@ public class BranchList extends AppCompatActivity {
         ((ListView) findViewById(R.id.branch_listview)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                view.setBackgroundResource(R.drawable.green_ba);
                 fab.setVisibility(View.VISIBLE);
                 branch_num=(Long)view.getTag();
             }
