@@ -62,7 +62,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".controller.UpdateCarModel" />
-        <activity android:name=".controller.UpdateCar"></activity>
+        <activity android:name=".controller.UpdateCar" />
+        <activity android:name=".controller.UpdateManager"></activity>
     </application>
 
 </manifest>

@@ -236,6 +236,20 @@ public class car_list extends AppCompatActivity {
             final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
             fabDelete.setVisibility(View.INVISIBLE);
             fabEdit.setVisibility(View.INVISIBLE);
+        } else if (requestCode==2&&resultCode==1) {
+            data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0);
+            Snackbar.make(findViewById(android.R.id.content), "insert car   id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
+            showCars();
+            final FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab);
+            final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
+            fabDelete.setVisibility(View.INVISIBLE);
+            fabEdit.setVisibility(View.INVISIBLE);
+
         }
+    }
+
+    public void onClick(View view) {
+        Intent intent=new Intent(this,addCarActivity.class);
+        startActivityForResult(intent,2);
     }
 }

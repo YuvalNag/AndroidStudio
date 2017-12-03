@@ -170,6 +170,7 @@ public class CarModelList extends AppCompatActivity {
                                             Snackbar.make(findViewById(android.R.id.content), "delete car model   id: " + carModel_id, Snackbar.LENGTH_LONG).show();
                                             showCarModels();
                                             fabDelete.setVisibility(View.INVISIBLE);
+                                            fabEdit.setVisibility(View.INVISIBLE);
 
                                         } else {
                                             //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
@@ -219,9 +220,19 @@ public class CarModelList extends AppCompatActivity {
             fabDelete.setVisibility(View.INVISIBLE);
             fabEdit.setVisibility(View.INVISIBLE);
         }
+        else if (requestCode==2&&resultCode==1)
+        {
+            data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0);
+            Snackbar.make(findViewById(android.R.id.content), "insert car model  id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
+            showCarModels();
+        }
 
 
 
+    }
+
+    public void onClick(View view) {
+        startActivityForResult(new Intent(this,addCarModel.class),2);
     }
 }
 

@@ -8,38 +8,26 @@
     tools:context="com.yn.user.rentacar.controller.CarModelList">
 
     <ListView
+        android:background="@android:color/darker_gray"
         android:id="@+id/model_listview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dip"
         android:layout_marginEnd="8dip"
         android:layout_marginStart="8dip"
-        android:layout_marginTop="8dip"
 
+        android:layout_marginTop="8dp"
         android:choiceMode="singleChoice"
-        android:drawSelectorOnTop="true"
-        android:horizontalSpacing="2dip"
-        android:listSelector="@drawable/ic_select1"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="3dip"
+        android:drawSelectorOnTop="true"
 
+        android:horizontalSpacing="2dip"
+        android:listSelector="@drawable/ic_select1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="all models"
-        android:textAllCaps="true"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button_addmanager" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -65,4 +53,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fab"
         app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <Button
+        android:id="@+id/button_addmanager"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="onClick"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:text="add a car model"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

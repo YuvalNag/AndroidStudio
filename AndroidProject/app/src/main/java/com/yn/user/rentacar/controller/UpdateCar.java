@@ -140,6 +140,7 @@ public class UpdateCar extends AppCompatActivity {
 
 
     }
+
     private int findPosition(CursorAdapter cursorAdapter,long id)
     {
         for(int i=0;i<cursorAdapter.getCount();i++)

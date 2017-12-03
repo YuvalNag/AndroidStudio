@@ -5,36 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.yn.user.rentacar.controller.managerList"
-    android:background="@color/cardview_dark_background">
+    >
+
+    <Button
+        android:id="@+id/button_addmanager"
+        
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="onClick"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:text="add a manager"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <GridView
+        android:drawSelectorOnTop="true"
+        android:choiceMode="singleChoice"
+        android:listSelector="@drawable/ic_select1"
+        android:background="@color/cardview_dark_background"
         android:id="@+id/manager_listview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dip"
         android:layout_marginEnd="8dip"
         android:layout_marginStart="8dip"
-        android:layout_marginTop="8dip"
+        android:layout_marginTop="8dp"
+        android:horizontalSpacing="5dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/button_addmanager" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="all managers"
-        android:textAllCaps="true"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -44,7 +57,20 @@
         android:layout_margin="16dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/fabEdit"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fabEdit"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fab"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 </android.support.constraint.ConstraintLayout>

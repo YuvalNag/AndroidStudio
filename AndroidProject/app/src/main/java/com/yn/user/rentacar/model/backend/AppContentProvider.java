@@ -80,12 +80,12 @@ public class AppContentProvider extends ContentProvider {
                 return manager.getClients();
             case MANAGER:
                 return manager.getManagers();
+            case MAMAGER_ID:
+                return manager.getManager(ContentUris.parseId(uri));
             case CAR:
                 return manager.getCars();
-            case CAR_ID: {
-                int i=10;
+            case CAR_ID:
                 return manager.getCar(ContentUris.parseId(uri));
-            }
             case CARMODEL:
                 return manager.getCarModels();
             case CARMODEL_ID:

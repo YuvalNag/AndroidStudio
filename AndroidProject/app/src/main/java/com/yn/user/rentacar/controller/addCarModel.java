@@ -135,10 +135,12 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
                 Toast toast;
                 if (id > 0) {
                     //Toast.makeText(getApplicationContext(), "insert car model  id: " + id, Toast.LENGTH_LONG).show();
-                    Snackbar.make(findViewById(android.R.id.content), "insert car model  id: " + id, Snackbar.LENGTH_LONG)
-                            .show();
 
+                    Intent data=new Intent();
+                    data.putExtra(AppContract.CarModel.ID_CAR_MODEL, id);
 
+                    setResult(1,data);
+                    finish();
 
 
 

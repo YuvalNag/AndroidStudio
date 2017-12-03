@@ -178,7 +178,7 @@
                         android:id="@+id/imageView7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        card_view:srcCompat="@drawable/ic_menu_slideshow" />
+                        card_view:srcCompat="@drawable/ic_063_seat" />
 
                     <TextView
                         android:id="@+id/cars_numofseats"
@@ -201,7 +201,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/cardview_light_background"
-                        card_view:srcCompat="@drawable/ic_menu_camera"
+                        card_view:srcCompat="@drawable/ic_014_gearshift_1"
                         tools:layout_editor_absoluteX="195dp"
                         tools:layout_editor_absoluteY="46dp" />
 
@@ -225,7 +225,7 @@
                         android:id="@+id/imageView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        card_view:srcCompat="@android:drawable/btn_star" />
+                        card_view:srcCompat="@drawable/ic_061_car" />
 
                     <TextView
                         android:id="@+id/cars_class"
@@ -247,7 +247,7 @@
                         android:id="@+id/imageView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        card_view:srcCompat="@drawable/ic_menu_gallery" />
+                        card_view:srcCompat="@drawable/ic_031_engine" />
 
                     <TextView
                         android:id="@+id/cars_engineCapacity"
