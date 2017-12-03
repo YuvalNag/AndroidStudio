@@ -198,12 +198,30 @@ public class CarModelList extends AppCompatActivity {
                                  Intent intent=new Intent(CarModelList.this,UpdateCarModel.class);
                                  intent.putExtra(AppContract.CarModel.ID_CAR_MODEL,carModel_id);
 
-                                startActivity(intent);
+                                startActivityForResult(intent,1);
 
                             }
 
 
         });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==1&&resultCode==1)
+        {
+            showCarModels();
+            Snackbar.make(findViewById(android.R.id.content), "updated car model", Snackbar.LENGTH_LONG)
+                    .show();
+            final FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab);
+            final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
+            fabDelete.setVisibility(View.INVISIBLE);
+            fabEdit.setVisibility(View.INVISIBLE);
+        }
+
+
+
     }
 }
 

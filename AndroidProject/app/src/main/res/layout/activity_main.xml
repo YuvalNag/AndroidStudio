@@ -2,15 +2,16 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="8dp"
+
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <Button
             android:id="@+id/addCarButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add Car"
+            android:background="@drawable/ic_car_2"
+            style="?android:attr/borderlessButtonStyle"
             android:onClick="onClick"/>
 
     <Button
@@ -18,10 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
+        style="?android:attr/borderlessButtonStyle"
+
         android:text="show all cars" />
 
         <Button
             android:id="@+id/addCarModelButton"
+            style="?android:attr/borderlessButtonStyle"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add CarModel"
@@ -29,6 +34,8 @@
 
         <Button
             android:id="@+id/addClientButton"
+            style="?android:attr/borderlessButtonStyle"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add Manager"
@@ -36,6 +43,8 @@
     <Button
         android:id="@+id/showallmanagers"
         android:layout_width="match_parent"
+        style="?android:attr/borderlessButtonStyle"
+
         android:layout_height="wrap_content"
         android:text="show all Managers"
         android:onClick="onClick"/>

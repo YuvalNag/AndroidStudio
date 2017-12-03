@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -76,6 +77,7 @@ public class UpdateCarModel extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void populateViews() {
         //populate the spinners
 
@@ -109,7 +111,7 @@ public class UpdateCarModel extends AppCompatActivity {
                   modelEngine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
                   modelImage.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
                   modelId.setText(String.valueOf(carModel_id));
-
+                  ((ProgressBar)findViewById(R.id.updtecar_pb)).setVisibility(View.GONE);
               }
             }
         }.execute(carModel_id);
@@ -175,6 +177,7 @@ public class UpdateCarModel extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+
     }
 
 
@@ -205,9 +208,8 @@ public class UpdateCarModel extends AppCompatActivity {
                 Toast toast;
                 if (result == 1) {
                     //Toast.makeText(getApplicationContext(), "insert car model  id: " + id, Toast.LENGTH_LONG).show();
-                    Snackbar.make(findViewById(android.R.id.content), "updated car model", Snackbar.LENGTH_LONG)
-                            .show();
-
+                   setResult(1);
+                   finish();
 
                 } else {
                     Snackbar.make(findViewById(android.R.id.content), "ERROR updating car model  ", Snackbar.LENGTH_LONG).show();

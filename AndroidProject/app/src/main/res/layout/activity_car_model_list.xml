@@ -16,6 +16,10 @@
         android:layout_marginStart="8dip"
         android:layout_marginTop="8dip"
 
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="true"
+        android:horizontalSpacing="2dip"
+        android:listSelector="@drawable/ic_select1"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="3dip"
 
