@@ -31,33 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     void findViews(){
-       addCarButton      = (Button) findViewById(R.id.addCarButton);
-       addCarModelButton = (Button) findViewById(R.id.addCarModelButton);
-       addClientButton   = (Button) findViewById(R.id.addClientButton);
+
         }
     public void onClick(View view) {
 
         switch(view.getId()) {
-            case R.id.addCarButton: {
-                Intent intent = new Intent(this, addCarActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.addClientButton: {
-                Intent intent = new Intent(this, addManager.class);
-                startActivity(intent);
-                break;
-            }
+
             case R.id.showallClientButton: {
                 Intent intent = new Intent(this, client_list.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.addCarModelButton: {
-                Intent intent = new Intent(this, addCarModel.class);
-                startActivity(intent);
-                break;
-            }
+
             case R.id.showAllCarModels: {
                 Intent intent = new Intent(this, CarModelList.class);
                 startActivity(intent);
