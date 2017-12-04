@@ -216,8 +216,11 @@ public class car_list extends AppCompatActivity {
 
 
 
+
                 Intent intent=new Intent(car_list.this,UpdateCar.class);
                 intent.putExtra(AppContract.Car.ID_CAR_NUMBER,car_id);
+
+                startActivity(intent);
 
                 startActivityForResult(intent,1);
 
