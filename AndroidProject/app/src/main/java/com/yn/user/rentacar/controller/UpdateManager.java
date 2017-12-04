@@ -1,21 +1,33 @@
 package com.yn.user.rentacar.controller;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -24,13 +36,19 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,9 +59,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
+import com.yn.user.rentacar.model.datasource.Tools;
+import com.yn.user.rentacar.model.entities.CarClass;
+import com.yn.user.rentacar.model.entities.TransmissionType;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+public class UpdateManager extends AppCompatActivity {
 
 
-public class addManager extends AppCompatActivity {
+
 
     private TextInputLayout textInputLayout;
     private EditText userFirstname;
@@ -59,19 +84,20 @@ public class addManager extends AppCompatActivity {
     private TextInputLayout textInputLayoutuserConfrimPassword;
     private Button addManager;
     private ListView branchListView;
-    private String branch_id;
+    private Long branch_id;
+    private Long manager_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_manager);
+        setContentView(R.layout.activity_update_manager);
         findViews();
-        showBranches();
+        populateViews();
         branchListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
         branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                branch_id = view.getTag().toString();
+                branch_id = l;
 
             }
         });
@@ -88,7 +114,7 @@ public class addManager extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-           public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().contentEquals(textInputLayoutuserPassword.getEditText().getText().toString())) {
                     textInputLayoutuserConfrimPassword.setErrorEnabled(false);
                     textInputLayoutuserPassword.setErrorEnabled(false);
@@ -187,28 +213,8 @@ public class addManager extends AppCompatActivity {
 
         textInputLayoutuserId = (TextInputLayout) findViewById(R.id.textInputLayout_user_id);
         userId = (EditText) findViewById(R.id.user_id);
-        userId.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().trim().isEmpty()||charSequence.toString().trim().contentEquals("0")) {
-                    textInputLayoutuserId.setErrorEnabled(true);
-                    textInputLayoutuserId.setError("This Field Is Mandatory");
-
-                } else
-                    textInputLayoutuserId.setErrorEnabled(false);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
+        userId.setEnabled(false);
+        userId.setInputType(InputType.TYPE_NULL);
 
 
         addManager = (Button) findViewById(R.id.add_manager);
@@ -217,7 +223,51 @@ public class addManager extends AppCompatActivity {
 
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private void populateViews() {
 
+
+        final Intent intent=getIntent();
+        manager_id =intent.getLongExtra(AppContract.Manager.ID,-1);
+        //TODO check if -1
+        new AsyncTask<Long, Void, Cursor>() {
+            @Override
+            protected Cursor doInBackground(Long... longs) {
+
+                return getContentResolver().query(ContentUris.withAppendedId(AppContract.Manager.MANAGER_URI,longs[0]), null,null,null,null);
+            }
+
+            @Override
+            protected void onPostExecute(Cursor cursor) {
+                super.onPostExecute(cursor);
+
+                if(cursor!=null) {
+                    cursor.moveToFirst();
+
+
+                    userFirstname.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Manager.FIRST_NAME)));
+
+                    userLastname.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Manager.LAST_NAME)));
+                    userEmail.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Manager.EMAIL_ADDR)));
+                    userPhone.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Manager.PHONE_NUMBER)));
+
+                    userId.setText(manager_id.toString());
+                   branch_id=cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Manager.BRANCH_ID));
+
+                   showBranches();
+
+
+
+
+
+
+
+                }
+            }
+        }.execute(manager_id);
+
+
+    }
 
 
 
@@ -233,7 +283,7 @@ public class addManager extends AppCompatActivity {
             @Override
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
-                CursorAdapter adapter = new CursorAdapter(com.yn.user.rentacar.controller.addManager.this, cursor, 0) {
+                CursorAdapter adapter = new CursorAdapter(UpdateManager.this, cursor, 0) {
 
 
                     @Override
@@ -258,7 +308,7 @@ public class addManager extends AppCompatActivity {
                             @Override
                             public void onClick(final View view) {
                                 if (view == map_button) {
-                                    Dialog dialog = new Dialog(com.yn.user.rentacar.controller.addManager.this);
+                                    Dialog dialog = new Dialog(UpdateManager.this);
                                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                     dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
                                     dialog.setContentView(R.layout.dialogmap);
@@ -267,7 +317,7 @@ public class addManager extends AppCompatActivity {
 
 
                                     MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
-                                    MapsInitializer.initialize(com.yn.user.rentacar.controller.addManager.this);
+                                    MapsInitializer.initialize(UpdateManager.this);
 
                                     mMapView = (MapView) dialog.findViewById(R.id.mapView);
                                     mMapView.onCreate(dialog.onSaveInstanceState());
@@ -276,7 +326,7 @@ public class addManager extends AppCompatActivity {
                                         @Override
                                         public void onMapReady(final GoogleMap googleMap) {
                                             try {
-                                                Geocoder geocoder=new Geocoder(com.yn.user.rentacar.controller.addManager.this);
+                                                Geocoder geocoder=new Geocoder(UpdateManager.this);
 
                                                 Address addresses= geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(),1).get(0);////your lat lng
                                                 LatLng posisiabsen=new LatLng(addresses.getLatitude(),addresses.getLongitude());
@@ -334,6 +384,20 @@ public class addManager extends AppCompatActivity {
                 adapter.changeCursor(cursor);
 
                 branchListView.setAdapter(adapter);
+                final int position=findPosition(adapter,branch_id);
+               /* adapterBranch.notifyDataSetChanged();
+                branchListView.setSelection(position);
+                branchListView.setItemChecked(position,true);*/
+                //branchListView.clearFocus();
+                branchListView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        branchListView.requestFocusFromTouch();
+                        branchListView.setSelection(position);
+                        //branchListView.requestFocus();
+                    }
+                });
+                ((ProgressBar)findViewById(R.id.updatemanager_pb)).setVisibility(View.GONE);
 
             }
         }.execute();
@@ -342,6 +406,15 @@ public class addManager extends AppCompatActivity {
 
 
     }
+
+    private int findPosition(CursorAdapter cursorAdapter,long id)
+    {
+        for(int i=0;i<cursorAdapter.getCount();i++)
+            if(cursorAdapter.getItemId(i)==id)
+                return i;
+        return -1;
+    }
+
 
     @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
@@ -354,32 +427,32 @@ public class addManager extends AppCompatActivity {
             managerValues.put(AppContract.Manager.FIRST_NAME, ((EditText) findViewById(R.id.user_firstname)).getText().toString());
             managerValues.put(AppContract.Manager.LAST_NAME, ((EditText) findViewById(R.id.user_lastname)).getText().toString());
             managerValues.put(AppContract.Manager.PASSWORD, ((EditText) findViewById(R.id.user_pass)).getText().toString());
-            managerValues.put(AppContract.Manager.SALT, 0);
+            managerValues.put(AppContract.Manager.SALT, 1);
 
 
 
 
-            new AsyncTask<Void, Void, Uri>() {
+            new AsyncTask<Void, Void, Integer>() {
                 @Override
-                protected Uri doInBackground(Void... params) {
-                    return getContentResolver().insert(AppContract.Manager.MANAGER_URI, managerValues);
+                protected Integer doInBackground(Void... params) {
+                    return getContentResolver().update(ContentUris.withAppendedId(AppContract.Manager.MANAGER_URI,manager_id), managerValues,null,null);
                 }
 
                 @Override
-                protected void onPostExecute(Uri uriResult) {
-                    super.onPostExecute(uriResult);
+                protected void onPostExecute(Integer result) {
+                    super.onPostExecute(result);
 
-                    long id = ContentUris.parseId(uriResult);
-                    if (id > 0) {
+
+                    if (result == 1) {
                         // Toast.makeText(getBaseContext(), "insert id: " + id, Toast.LENGTH_LONG).show();
                         Intent data=new Intent();
-                        data.putExtra(AppContract.Manager.ID,id);
+                        data.putExtra(AppContract.Manager.ID,manager_id);
                         setResult(1,data);
                         finish();
                     } else {
 
                         //Toast.makeText(getBaseContext(), "error insert id: " + id, Toast.LENGTH_LONG).show();
-                        Snackbar.make(findViewById(android.R.id.content), "ERROR inserting user " + id, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content), "ERROR inserting user " + manager_id, Snackbar.LENGTH_LONG).show();
 
                     }
                 }
@@ -387,7 +460,4 @@ public class addManager extends AppCompatActivity {
         }
 
     }
-
-
 }
-

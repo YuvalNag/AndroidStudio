@@ -1,122 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="com.yn.user.rentacar.controller.UpdateCar">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yn.user.rentacar.controller.UpdateCar">
 
 
-<ListView
+    <ProgressBar
+        android:id="@+id/carmodel_pb"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/model_listview"
+        app:layout_constraintEnd_toEndOf="@+id/model_listview"
+        app:layout_constraintStart_toStartOf="@+id/model_listview"
+        app:layout_constraintTop_toTopOf="@+id/model_listview" />
 
-    android:id="@+id/model_listview"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
-    android:choiceMode="singleChoice"
-    android:divider="@android:color/darker_gray"
-    android:dividerHeight="5dip"
-    android:drawSelectorOnTop="true"
-    android:listSelector="@drawable/ic_select1"
-    app:layout_constraintBottom_toTopOf="@id/textInputLayout_car_id"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    <ProgressBar
+        android:id="@+id/branch_pb"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="@+id/branch_listview"
+        app:layout_constraintEnd_toEndOf="@+id/branch_listview"
+        app:layout_constraintStart_toStartOf="@+id/branch_listview"
+        app:layout_constraintTop_toTopOf="@+id/branch_listview"
+        tools:visibility="visible" />
 
-<android.support.design.widget.TextInputLayout
-    android:id="@+id/textInputLayout_car_id"
-    android:layout_width="0dp"
-    android:layout_height="57dp"
-    android:layout_marginEnd="4dp"
-    android:layout_marginStart="4dp"
-    app:layout_constraintBottom_toTopOf="@id/textInputLayout_kilo"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/model_listview">
+    <ListView
 
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/car_id"
-        android:layout_width="match_parent"
+        android:id="@+id/model_listview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="5dip"
+        android:drawSelectorOnTop="true"
+        android:listSelector="@drawable/ic_select1"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayout_car_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout_car_id"
+        android:layout_width="0dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toTopOf="@id/textInputLayout_kilo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/model_listview">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/car_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Car Number"
+            android:enabled="false"
+            android:inputType="none" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout_kilo"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Car Number"
-        android:inputType="number" />
-</android.support.design.widget.TextInputLayout>
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toTopOf="@id/branch_listview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout_car_id">
 
-<android.support.design.widget.TextInputLayout
-    android:id="@+id/textInputLayout_kilo"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="4dp"
-    android:layout_marginStart="4dp"
-    app:layout_constraintBottom_toTopOf="@id/branch_listview"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/textInputLayout_car_id">
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/car_kilo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Persent kilometers"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/car_kilo"
-        android:layout_width="match_parent"
+    <ListView
+        android:id="@+id/branch_listview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="5dip"
+        android:drawSelectorOnTop="true"
+        android:fadingEdge="vertical"
+        android:listSelector="@drawable/ic_select1"
+        app:layout_constraintBottom_toTopOf="@id/car_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInputLayout_kilo" />
+
+
+    <Button
+        android:id="@+id/car_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Persent kilometers"
-        android:inputType="number" />
-</android.support.design.widget.TextInputLayout>
+        android:onClick="onClick"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/branch_listview" />
 
-<ListView
-    android:id="@+id/branch_listview"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:choiceMode="singleChoice"
-    android:divider="@android:color/darker_gray"
-    android:dividerHeight="5dip"
-    android:drawSelectorOnTop="true"
-    android:fadingEdge="vertical"
-    android:listSelector="@drawable/ic_select1"
-    app:layout_constraintBottom_toTopOf="@id/car_button"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.0"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/textInputLayout_kilo" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="model of the car"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/model_listview" />
 
-
-<Button
-    android:id="@+id/car_button"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:onClick="onClick"
-    android:text="Submit"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/branch_listview" />
-
-<TextView
-    android:id="@+id/textView2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:text="model of the car"
-    android:textColor="@android:color/holo_blue_light"
-    android:textSize="18sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.023"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="@+id/model_listview" />
-
-<TextView
-    android:id="@+id/textView3"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp"
-    android:text="branch of the car"
-    android:textColor="@android:color/holo_blue_light"
-    android:textSize="18sp"
-    app:layout_constraintStart_toStartOf="@+id/branch_listview"
-    app:layout_constraintTop_toBottomOf="@+id/textInputLayout_kilo" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="branch of the car"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/branch_listview"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_kilo" />
 
 </android.support.constraint.ConstraintLayout>

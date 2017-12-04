@@ -30,12 +30,12 @@
             android:exported="true" />
 
         <activity android:name=".controller.MainActivity" />
-        <activity android:name=".controller.addManager" />
-        <activity android:name=".controller.client_list" />
-        <activity android:name=".controller.car_list" />
-        <activity android:name=".controller.addCarModel" />
-        <activity android:name=".controller.CarModelList" />
-        <activity android:name=".controller.BranchList" />
+        <activity android:name=".controller.addManager" android:label="Add Manager"/>
+        <activity android:name=".controller.client_list" android:label="Client's Department"/>
+        <activity android:name=".controller.car_list" android:label="Car's Department"/>
+        <activity android:name=".controller.addCarModel" android:label="Add Car Model"/>
+        <activity android:name=".controller.CarModelList" android:label="Car Model's Department" />
+        <activity android:name=".controller.BranchList" android:label="Branch's Department"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -51,9 +51,9 @@
         <activity
             android:name=".controller.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".controller.addCarActivity" />
-        <activity android:name=".controller.managerList" />
-        <activity android:name=".controller.LoginActivity" />
+        <activity android:name=".controller.addCarActivity" android:label="Add Car Model" />
+        <activity android:name=".controller.managerList" android:label="Manager"/>
+        <activity android:name=".controller.LoginActivity" android:label="Login" />
         <activity android:name=".controller.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,8 +61,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.UpdateCarModel" />
-        <activity android:name=".controller.UpdateCar"></activity>
+        <activity android:name=".controller.UpdateCarModel" android:label="Update Car Model" />
+        <activity android:name=".controller.UpdateCar" android:label="Update Car"/>
+        <activity android:name=".controller.UpdateManager" android:label="Update Manager"></activity>
     </application>
 
 </manifest>

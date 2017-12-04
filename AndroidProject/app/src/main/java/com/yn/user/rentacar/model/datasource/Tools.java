@@ -26,6 +26,7 @@ import com.yn.user.rentacar.model.entities.TransmissionType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.sql.Date;
 import java.util.List;
 import com.yn.user.rentacar.R;
 
@@ -51,8 +52,8 @@ public class Tools {
         contentValues.put(AppContract.Order.ORDER_ID,             order.getIdOrderNum());
         contentValues.put(AppContract.Order.CLIENT_ID,            order.getClientId()  );
         contentValues.put(AppContract.Order.CAR_NUM,              order.getCarNumber() );
-        contentValues.put(AppContract.Order.RENT_DATE,            order.getRentDate());
-        contentValues.put(AppContract.Order.RETURN_DATE,          order.getReturnDate());
+        contentValues.put(AppContract.Order.RENT_DATE,            order.getRentDate().toString());
+        contentValues.put(AppContract.Order.RETURN_DATE,          order.getReturnDate().toString());
         contentValues.put(AppContract.Order.KILOMETERS_AT_RENT,   order.getKilometersAtRent());
         contentValues.put(AppContract.Order.KILOMETERS_AT_RETURN, order.getKilometersAtReturn());
         contentValues.put(AppContract.Order.FOULED,               order.getFouled());
@@ -122,8 +123,8 @@ public class Tools {
                 contentValues.getAsLong(AppContract.Order.ORDER_ID)                 ,
                 contentValues.getAsLong(AppContract.Order.CLIENT_ID           ),
                 contentValues.getAsLong(AppContract.Order.CAR_NUM            ),
-                contentValues.getAsString(AppContract.Order.RENT_DATE         ),
-                contentValues.getAsString(AppContract.Order.RETURN_DATE      ),
+                Date.valueOf(contentValues.getAsString(AppContract.Order.RENT_DATE)),
+                Date.valueOf(contentValues.getAsString(AppContract.Order.RETURN_DATE)),
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RENT  ),
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RETURN),
                 contentValues.getAsBoolean(AppContract.Order.FOULED               ),

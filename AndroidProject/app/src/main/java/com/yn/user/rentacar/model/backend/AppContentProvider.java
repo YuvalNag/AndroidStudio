@@ -50,7 +50,7 @@ public class AppContentProvider extends ContentProvider {
         // when a match is found (the ints above).
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(content, "Car", CAR);
-        matcher.addURI(content, "car" + "/#", CAR_ID);
+        matcher.addURI(content, "Car" + "/#", CAR_ID);
         matcher.addURI(content, "CarModel", CARMODEL);
         matcher.addURI(content, "CarModel"+ "/#", CARMODEL_ID);
         matcher.addURI(content, "Branch", BRANCH);
@@ -80,6 +80,8 @@ public class AppContentProvider extends ContentProvider {
                 return manager.getClients();
             case MANAGER:
                 return manager.getManagers();
+            case MAMAGER_ID:
+                return manager.getManager(ContentUris.parseId(uri));
             case CAR:
                 return manager.getCars();
             case CAR_ID:

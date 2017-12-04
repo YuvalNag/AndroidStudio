@@ -298,7 +298,7 @@ public class List_DBManager  implements DB_manager {
     public boolean removeManager(long id) {
         Manager manager = null;
         for (Manager item : managers)
-            if (manager.getId() == id) {
+            if (item.getId() == id) {
                 manager = item;
                 //isUpdate = true;
                 break;
@@ -384,6 +384,20 @@ public class List_DBManager  implements DB_manager {
             Log.e(TAG, "updateManager: "+id,e );
         }
         return false;
+    }
+
+    @Override
+    public Cursor getManager(long id) {
+        for (Manager manager:managers)
+            if(manager.getId()==id)
+            {
+                List<Manager> templist=new ArrayList<Manager>();
+                templist.add(manager);
+                Log.d(TAG, "getManager: "+id);
+                return Tools.managerListToCursor(templist);
+            }
+        Log.d(TAG, "getManager: dosnt exist "+id);
+        return null;
     }
 
     @Override
