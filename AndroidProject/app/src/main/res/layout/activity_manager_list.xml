@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/button_addmanager"
-        
+
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -32,7 +32,8 @@
         android:drawSelectorOnTop="true"
         android:choiceMode="singleChoice"
         android:listSelector="@drawable/ic_select1"
-        android:background="@color/cardview_dark_background"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/cardview_dark_background"
         android:id="@+id/manager_listview"
         android:layout_width="0dp"
         android:layout_height="0dp"

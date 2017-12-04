@@ -8,14 +8,15 @@
     tools:context="com.yn.user.rentacar.controller.CarModelList">
 
     <ListView
-        android:background="@android:color/darker_gray"
+
         android:id="@+id/model_listview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dip"
         android:layout_marginEnd="8dip"
         android:layout_marginStart="8dip"
-
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@android:color/darker_gray"
         android:layout_marginTop="8dp"
         android:choiceMode="singleChoice"
         android:divider="@android:color/darker_gray"
