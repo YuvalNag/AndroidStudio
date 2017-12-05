@@ -16,10 +16,10 @@
 
         android:divider="@android:color/darker_gray"
         android:dividerHeight="3dip"
-
+        android:background="@drawable/rounded_corners"
         android:choiceMode="singleChoice"
         android:drawSelectorOnTop="true"
-        android:listSelector="@drawable/check"
+        android:listSelector="@drawable/ic_select1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

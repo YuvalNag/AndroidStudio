@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.yn.user.rentacar.controller.client_list"
-    android:background="@android:color/darker_gray">
-
+>
     <GridView
+
         android:id="@+id/client_listview"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -16,7 +16,10 @@
         android:layout_marginStart="8dip"
         android:layout_marginTop="8dip"
         android:numColumns="auto_fit"
-        android:verticalSpacing="5dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/cardview_dark_background"
+
+    android:verticalSpacing="5dp"
         android:horizontalSpacing="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

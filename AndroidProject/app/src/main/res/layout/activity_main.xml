@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerInParent="true"
-    android:background="@drawable/car_start_trans1">
+    android:background="@drawable/car_start">
 
 
     <Button
@@ -19,6 +19,7 @@
         android:backgroundTint="@color/colorAccent"
         android:onClick="onClick"
         android:text="Cars Depaertment"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/showallClientButton"
         app:layout_constraintEnd_toEndOf="@+id/showallClientButton"
         app:layout_constraintStart_toStartOf="@+id/showallClientButton"
@@ -37,6 +38,7 @@
         android:backgroundTint="@color/colorAccent"
         android:onClick="onClick"
         android:text="Managers Department"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/showAllCarModels"
         app:layout_constraintEnd_toEndOf="@+id/showAllCarModels"
         app:layout_constraintStart_toStartOf="@+id/showAllCarModels"
@@ -54,7 +56,8 @@
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@color/colorAccent"
         android:onClick="onClick"
-        android:text="client's departments"
+        android:text="clients department"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/showAllBranches"
         app:layout_constraintEnd_toEndOf="@+id/showAllBranches"
         app:layout_constraintEnd_toStartOf="@+id/showAllCarModels"
@@ -75,6 +78,7 @@
         android:backgroundTint="@color/colorAccent"
         android:onClick="onClick"
         android:text="car models departments"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/showallClientButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/showallClientButton"
@@ -94,6 +98,7 @@
         android:backgroundTint="@color/colorAccent"
         android:onClick="onClick"
         android:text="brances departments"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/logouot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,11 +111,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="160dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="#AAFF4081"
+        android:drawableLeft="@drawable/ic_logout"
         android:onClick="onClick"
         android:text="log out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_conversion_absoluteHeight="48dp"
         tools:layout_conversion_absoluteWidth="175dp" />
 

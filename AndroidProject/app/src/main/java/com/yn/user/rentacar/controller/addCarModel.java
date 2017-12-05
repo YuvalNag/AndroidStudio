@@ -60,6 +60,7 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
         });
 
 
+
     }//check permission
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -120,6 +121,8 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
         modelcontentValues.put(AppContract.CarModel.ID_CAR_MODEL,((EditText)findViewById(R.id.model_id)).getText().toString());
         modelcontentValues.put(AppContract.CarModel.NUM_OF_SEATS,((EditText)findViewById(R.id.model_numofseats)).getText().toString());
         modelcontentValues.put(AppContract.CarModel.TRANSMISSION_TYPE,((Spinner)findViewById(R.id.model_spin_trans)).getSelectedItem().toString());
+
+
 
         new AsyncTask<Void, Void, Uri>() {
             @Override
