@@ -51,24 +51,27 @@ public class addCarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car);
-        findViews();
-        showBranches();
-        showCarModel();
-        branchListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-        branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                branch_id=l;
-            }
-        });
 
-        carModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                carModel_id=l;
-            }
-        });
+                findViews();
+                showBranches();
+                showCarModel();
+                branchListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+                branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        branch_id=l;
+                    }
+                });
+
+                carModelListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        carModel_id=l;
+                    }
+                });
+
+
     }
 
     private void findViews() {
@@ -118,44 +121,54 @@ public class addCarActivity extends AppCompatActivity {
             }
         }.execute();
     }
+
+    @SuppressLint("StaticFieldLeak")
     private void showCarModel() {
-        Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
-
-        CursorAdapter adapter = new CursorAdapter(addCarActivity.this, cursor, 0) {
+        new AsyncTask<Void, Void, Cursor>() {
             @Override
-            public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                return LayoutInflater.from(context).inflate(R.layout.carmodel_card, parent, false);
+            protected Cursor doInBackground(Void... params) {
+                return getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
             }
 
             @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                TextView trans = (TextView) view.findViewById(R.id.cars_transmition);
-                TextView description = (TextView) view.findViewById(R.id.cars_name_description);
-                TextView classa = (TextView) view.findViewById(R.id.cars_class);
-                TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
-                TextView numseats = (TextView) view.findViewById(R.id.cars_numofseats);
-                final ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
+            protected void onPostExecute(Cursor cursor) {
+                super.onPostExecute(cursor);
 
 
+                CursorAdapter adapter = new CursorAdapter(addCarActivity.this, cursor, 0) {
+                    @Override
+                    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                        return LayoutInflater.from(context).inflate(R.layout.carmodel_card, parent, false);
+                    }
+
+                    @Override
+                    public void bindView(View view, Context context, Cursor cursor) {
+                        TextView trans = (TextView) view.findViewById(R.id.cars_transmition);
+                        TextView description = (TextView) view.findViewById(R.id.cars_name_description);
+                        TextView classa = (TextView) view.findViewById(R.id.cars_class);
+                        TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
+                        TextView numseats = (TextView) view.findViewById(R.id.cars_numofseats);
+                        final ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
 
 
-                view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
+                        //view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
 
-                numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
-                trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
-                description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
-                classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
-                engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                imageView.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+                        numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
+                        trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
+                        description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
+                        classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
+                        engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
+                        imageView.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
 
+                    }
+
+
+                };
+                adapter.changeCursor(cursor);
+                carModelListView.setAdapter(adapter);
             }
 
-
-        };
-        adapter.changeCursor(cursor);
-        carModelListView.setAdapter(adapter);
-
-
+        }.execute();
     }
 
     @SuppressLint("StaticFieldLeak")

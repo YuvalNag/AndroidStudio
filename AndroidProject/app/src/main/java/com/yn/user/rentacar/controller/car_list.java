@@ -23,6 +23,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yn.user.rentacar.R;
@@ -43,13 +44,14 @@ public class car_list extends AppCompatActivity {
 
     Long car_id;
     ListView carListView;
+    ProgressBar carProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_list);
         carListView=((ListView) findViewById(R.id.car_grid_view));
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.INVISIBLE);
+
+        carProgressBar = (ProgressBar)findViewById(R.id.car_pb);
 
         showCars();
         manageDeleteOrEdit();
@@ -62,10 +64,17 @@ public class car_list extends AppCompatActivity {
         new AsyncTask<Void, Void, Cursor>() {
 
             @Override
+            protected void onPreExecute() {
+                carProgressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursorCar = getContentResolver().query(AppContract.Car.CAR_URI, null, null, null, null, null);
-                Cursor cursorModel =getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
-                carModelMap=new HashMap<>();
+                Cursor cursorModel = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
+                if (carModelMap != null) {
+                    
+                    carModelMap = new HashMap<>();
 
 
                     cursorModel.moveToFirst();
@@ -84,9 +93,10 @@ public class car_list extends AppCompatActivity {
 
                         cursorModel.moveToNext();
                     }
-                    return cursorCar;
+                }
+                return cursorCar;
 
-                    }
+            }
 
 
 
@@ -140,6 +150,7 @@ public class car_list extends AppCompatActivity {
                 };
                 adapter.changeCursor(cursorCar);
                 carListView.setAdapter(adapter);
+                carProgressBar.setVisibility(View.GONE);
             }
         }.execute();
 
@@ -220,7 +231,7 @@ public class car_list extends AppCompatActivity {
                 Intent intent=new Intent(car_list.this,UpdateCar.class);
                 intent.putExtra(AppContract.Car.ID_CAR_NUMBER,car_id);
 
-                startActivity(intent);
+
 
                 startActivityForResult(intent,1);
 
@@ -241,7 +252,7 @@ public class car_list extends AppCompatActivity {
             fabEdit.setVisibility(View.INVISIBLE);
         } else if (requestCode==2&&resultCode==1) {
             data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0);
-            Snackbar.make(findViewById(android.R.id.content), "insert car   id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(android.R.id.content), "update car   id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
             showCars();
             final FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab);
             final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);

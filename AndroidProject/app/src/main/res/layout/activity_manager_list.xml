@@ -29,9 +29,9 @@
 
 
     <GridView
-        android:drawSelectorOnTop="true"
+        android:drawSelectorOnTop="false"
         android:choiceMode="singleChoice"
-        android:listSelector="@drawable/ic_select1"
+        android:listSelector="@drawable/rounded_list_selector"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@color/cardview_dark_background"
         android:id="@+id/manager_listview"
