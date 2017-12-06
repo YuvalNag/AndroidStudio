@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,23 +17,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
-import com.yn.user.rentacar.model.entities.CarClass;
-import com.yn.user.rentacar.model.entities.CarModel;
-import com.yn.user.rentacar.model.entities.TransmissionType;
 
-import java.util.zip.Inflater;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class CarModelList extends AppCompatActivity {
    private long carModel_id;
+    ProgressBar carModelProgressBar;
+
+
 
    private ListView carModelListView;
 
@@ -42,7 +43,10 @@ public class CarModelList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_model_list);
+
         carModelListView= ((ListView)findViewById(R.id.model_listview));
+        carModelProgressBar = (ProgressBar)findViewById(R.id.carModel_pb);
+
         showCarModels();
         manageDeleteOrEdit();
 
@@ -52,9 +56,26 @@ public class CarModelList extends AppCompatActivity {
     private void showCarModels()
     {
         new AsyncTask<Void, Void, Cursor>() {
+
+            Map<Long,Bitmap> bitmapMap;
+            @Override
+            protected void onPreExecute() {
+                carModelProgressBar.setVisibility(View.VISIBLE);
+            }
+
             @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
+                bitmapMap=new HashMap<>();
+                if (cursor!=null) {
+                    cursor.moveToFirst();
+                    while (!cursor.isAfterLast()) {
+                        bitmapMap.put(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)), Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+                        cursor.moveToNext();
+                    }
+                }
+
+
                 return cursor;
             }
 
@@ -64,34 +85,6 @@ public class CarModelList extends AppCompatActivity {
                 CursorAdapter adapter = new CursorAdapter(CarModelList.this, cursor, 0) {
 
 
-                    /*@Override
-                    public Object getItem(int position) {
-                        *//*setIdCarModel(idCarModel);
-                        setCompenyName(compenyName);
-                        setModelName( modelName);
-                        setEngineCapacity(engineCapacity);
-                        setTransmissionType(transmissionType);
-                        setNumOfSeats(numOfSeats);
-                        setCarClass(carClass);
-                        setCarPic(image);*//*
-
-                        Cursor row = (Cursor) super.getItem(position);
-                        if (row == null)
-                            return null;
-                        else
-
-                            return new CarModel(
-                                    row.getLong(row.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)),
-                                    row.getString(row.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME)),
-                                    row.getString(row.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)),
-                                    row.getLong(row.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)),
-                                    TransmissionType.valueOf(row.getString(row.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE))),
-                                    row.getLong(row.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)),
-                                    CarClass.valueOf(row.getString(row.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR))),
-                                    Tools.byteToImage(row.getBlob(row.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
-                          );
-
-                    }*/
 
                     @Override
                     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -116,7 +109,7 @@ public class CarModelList extends AppCompatActivity {
                         description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
                         classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
                         engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                        imageView.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+                        imageView.setImageBitmap(bitmapMap.get(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL))));
 
                     }
 
@@ -124,6 +117,7 @@ public class CarModelList extends AppCompatActivity {
                 };
                 adapter.changeCursor(cursor);
                carModelListView.setAdapter(adapter);
+                carModelProgressBar.setVisibility(View.GONE);
             }
         }.execute();
     }

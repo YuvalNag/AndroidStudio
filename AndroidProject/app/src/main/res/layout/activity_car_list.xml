@@ -35,9 +35,9 @@
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@android:color/darker_gray"
         android:choiceMode="singleChoice"
-        android:drawSelectorOnTop="true"
+        android:drawSelectorOnTop="false"
         android:horizontalSpacing="2dip"
-        android:listSelector="@drawable/ic_select1"
+        android:listSelector="@drawable/rounded_list_selector"
         android:numColumns="auto_fit"
         android:verticalSpacing="2dip"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,6 +57,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fabEdit"
         app:srcCompat="@android:drawable/ic_menu_delete" />
+
+    <ProgressBar
+        android:id="@+id/car_pb"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="241dp"
+        android:layout_height="197dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabEdit"

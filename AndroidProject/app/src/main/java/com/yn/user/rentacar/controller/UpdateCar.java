@@ -103,6 +103,9 @@ public class UpdateCar extends AppCompatActivity {
         kilometers = (TextInputLayout) findViewById(R.id.textInputLayout_kilo);
 
     }
+
+
+    @SuppressLint("StaticFieldLeak")
     private void populateViews() {
         //populate the spinners
 
@@ -141,6 +144,7 @@ public class UpdateCar extends AppCompatActivity {
 
     }
 
+
     private int findPosition(CursorAdapter cursorAdapter,long id)
     {
         for(int i=0;i<cursorAdapter.getCount();i++)
@@ -149,13 +153,7 @@ public class UpdateCar extends AppCompatActivity {
         return -1;
     }
 
-    private void populateviews() {
-        branchListView = (ListView) findViewById(R.id.branch_listview);
-        carModelListView = (ListView) findViewById(R.id.model_listview);
-        idCar = (TextInputLayout) findViewById(R.id.textInputLayout_car_id);
-        kilometers = (TextInputLayout) findViewById(R.id.textInputLayout_kilo);
 
-    }
 
     @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
@@ -203,8 +201,8 @@ public class UpdateCar extends AppCompatActivity {
         new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
-                Cursor cursor =  getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
-                return cursor;
+                return   getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
+
             }
 
             @Override
@@ -271,8 +269,8 @@ public class UpdateCar extends AppCompatActivity {
         new AsyncTask<Void, Void, Cursor>() {
             @Override
             protected Cursor doInBackground(Void... params) {
-                Cursor cursor = getContentResolver().query(AppContract.Branch.BRANCH_URI, null, null, null, null, null);
-                return cursor;
+                return getContentResolver().query(AppContract.Branch.BRANCH_URI, null, null, null, null, null);
+
             }
 
             @Override
@@ -393,7 +391,7 @@ public class UpdateCar extends AppCompatActivity {
                     public void run() {
                         branchListView.requestFocusFromTouch();
                         branchListView.setSelection(position);
-                        //branchListView.requestFocus();
+                        ((ProgressBar)findViewById(R.id.branch_pb)).setVisibility(View.GONE);
                     }
                 });
 
