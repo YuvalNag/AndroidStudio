@@ -355,10 +355,9 @@ public class LoginActivity extends AppCompatActivity  {
                 }
                 String cPassword =mCursor.getString(mCursor.getColumnIndexOrThrow(AppContract.Manager.PASSWORD));
 
-                    if(mEmail.contentEquals(cEmail) && sPassword.contentEquals(cPassword)){
-
+                    if(mEmail.contentEquals(cEmail) && sPassword.contentEquals(cPassword))
                         return true;
-                    }
+
 
             }
             return false;

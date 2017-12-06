@@ -21,7 +21,7 @@ public class SHA_256_Helper {
         for (int i = 0; i < byteData.length; i++) {
             stringBuffer.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
-
+        String s=stringBuffer.toString();
         return stringBuffer.toString();
 
     }

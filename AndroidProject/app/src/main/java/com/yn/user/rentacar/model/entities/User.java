@@ -26,9 +26,11 @@ public class User implements Serializable {
     //region Constructor
     public User(String lastName, String firstName, String emailAdrs, long id, String phoneNum,String password,long salt) throws Exception {
 
+        this.password=password;
         while (salt == 0 ) {
             Random random =new Random();
             salt = random.nextLong();
+            setPassword(password);
         }
 
         this.salt=salt;
@@ -37,11 +39,6 @@ public class User implements Serializable {
         setEmailAdrs(emailAdrs);
         setId(id);
         setPhoneNum(phoneNum);
-        //dont do hash on hash :(
-        if(password.trim().length()>14)
-            this.password=password;
-        else
-            setPassword(password);
     }
 
 
