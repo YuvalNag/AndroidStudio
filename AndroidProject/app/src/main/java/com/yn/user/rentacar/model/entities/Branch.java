@@ -15,7 +15,7 @@ public class Branch implements Serializable{
 
     private Address branchAddress;
 
-    private android.location.Address addressBranch;
+    private String branchImgUrl;
 
 
     public Branch(long branchID, int numberOfParkingSpaces, Address branchAddress) {
@@ -50,11 +50,4 @@ public class Branch implements Serializable{
         this.branchAddress = branchAddress;
     }
 
-    public android.location.Address getAddressBranch() {
-        return addressBranch;
-    }
-
-    public void setAddressBranch(android.location.Address addressBranch) {
-        this.addressBranch = addressBranch;
-    }
 }

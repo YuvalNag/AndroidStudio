@@ -14,11 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
 
-        android:layout_marginLeft="10dp"
+        android:layout_margin="7dip"
         card_view:cardBackgroundColor="@color/cardview_dark_background"
         card_view:cardCornerRadius="20dip"
-        card_view:cardElevation="10dp"
-        card_view:cardUseCompatPadding="true">
+        card_view:cardElevation="10dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -144,7 +143,6 @@
                 android:id="@+id/cars_carImage"
                 android:layout_width="253dip"
                 android:layout_height="125dip"
-                android:layout_marginTop="4dp"
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"

@@ -2,15 +2,10 @@ package com.yn.user.rentacar.controller;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -38,11 +34,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
-import com.yn.user.rentacar.model.datasource.Tools;
-import com.yn.user.rentacar.model.entities.Branch;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class BranchList extends AppCompatActivity {
 
@@ -64,7 +55,7 @@ public class BranchList extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 fab.setVisibility(View.VISIBLE);
-                branch_num=(Long)view.getTag();
+                branch_num=l;
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {
@@ -115,13 +106,6 @@ public class BranchList extends AppCompatActivity {
             @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursor = getContentResolver().query(AppContract.Branch.BRANCH_URI, null, null, null, null, null);
-               /* carsImages=new HashMap<>();
-                if (cursor!=null) {
-                    cursor.moveToFirst();
-                    while(!cursor.isAfterLast()) {
-                        carsImages.put(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Branch.)))
-                    }
-                }*/
 
                 return cursor;
             }
@@ -130,10 +114,6 @@ public class BranchList extends AppCompatActivity {
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
                 CursorAdapter adapter = new CursorAdapter(BranchList.this, cursor, 0) {
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        return super.getView(position, convertView, parent);
-                    }
 
                     @Override
                     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -197,29 +177,57 @@ public class BranchList extends AppCompatActivity {
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
                         switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
                             case "Hadera":
-                                branch_imageView.setImageResource(R.drawable.hadera);
+                                GlideApp.with(BranchList.this)
+                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/hadera.jpg")
+                                        .placeholder(R.drawable.progress_animation)
+                                        .centerCrop()
+                                        .into(branch_imageView);
+                                //branch_imageView.setImageResource(R.drawable.hadera);
                                 break;
                             case "Ashdod":
-                                branch_imageView.setImageResource(R.drawable.ashdod);
+                                GlideApp.with(BranchList.this)
+                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/ashdod.jpg")
+                                        .placeholder(R.drawable.progress_animation)
+                                        .centerCrop()
+                                        .into(branch_imageView);
+                                //branch_imageView.setImageResource(R.drawable.ashdod);
                                 break;
                             case "Tel Aviv":
-                                branch_imageView.setImageResource(R.drawable.tel_aviv);
+                                GlideApp.with(BranchList.this)
+                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/tel_aviv.jpg")
+                                        .placeholder(R.drawable.progress_animation)
+                                        .centerCrop()
+                                        .into(branch_imageView);
+                               // branch_imageView.setImageResource(R.drawable.tel_aviv);
                                 break;
                             case "Petah Tikva":
-
+                                GlideApp.with(BranchList.this)
+                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/pt.jpg")
+                                        .placeholder(R.drawable.progress_animation)
+                                        .centerCrop()
+                                        .into(branch_imageView);
                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.pt),4096,true));
-                                branch_imageView.setImageResource(R.drawable.pt);
+                                //branch_imageView.setImageResource(R.drawable.pt);
 
                                 break;
                             case "Netanya":
                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
                                 // branch_imageView.setImageResource(R.drawable.netanya2);
-                                branch_imageView.setImageResource(R.drawable.tel_aviv);
+                                GlideApp.with(BranchList.this)
+                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/tel_aviv.jpg")
+                                        .placeholder(R.drawable.progress_animation)
+                                        .centerCrop()
+                                        .into(branch_imageView);
+                                //branch_imageView.setImageResource(R.drawable.tel_aviv);
                                 break;
                             default:
                               //  branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                branch_imageView.setImageResource(R.drawable.netanya);
-
+                                //branch_imageView.setImageResource(R.drawable.netanya);
+                                GlideApp.with(BranchList.this)
+                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/netanya.jpg")
+                                        .placeholder(R.drawable.progress_animation)
+                                        .centerCrop()
+                                        .into(branch_imageView);
                                 break;
                         }
 

@@ -72,9 +72,10 @@ public class car_list extends AppCompatActivity {
             protected Cursor doInBackground(Void... params) {
                 Cursor cursorCar = getContentResolver().query(AppContract.Car.CAR_URI, null, null, null, null, null);
                 Cursor cursorModel = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
-                if (carModelMap != null) {
+                carModelMap = new HashMap<>();
+                if (cursorModel != null) {
                     
-                    carModelMap = new HashMap<>();
+
 
 
                     cursorModel.moveToFirst();
@@ -93,6 +94,7 @@ public class car_list extends AppCompatActivity {
 
                         cursorModel.moveToNext();
                     }
+                    cursorModel.close();
                 }
                 return cursorCar;
 
@@ -120,8 +122,10 @@ public class car_list extends AppCompatActivity {
                     @Override
                     public void bindView(View view, Context context, Cursor cursor) {
                         long modelid=cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Car.CAR_MODEL_ID));
+
                         CarModel carModel=carModelMap.get(modelid);
-                        if(carModel!=null) {
+                        if(carModel != null) {
+
                             TextView trans = (TextView) view.findViewById(R.id.cars_transmition);
                             TextView description = (TextView) view.findViewById(R.id.cars_name_description);
                             TextView classa = (TextView) view.findViewById(R.id.cars_class);

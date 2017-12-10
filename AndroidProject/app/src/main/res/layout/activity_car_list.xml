@@ -36,10 +36,10 @@
         android:backgroundTint="@android:color/darker_gray"
         android:choiceMode="singleChoice"
         android:drawSelectorOnTop="false"
-        android:horizontalSpacing="2dip"
+
         android:listSelector="@drawable/rounded_list_selector"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="2dip"
+
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

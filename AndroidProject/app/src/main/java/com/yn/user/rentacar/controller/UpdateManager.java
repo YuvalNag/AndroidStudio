@@ -427,7 +427,7 @@ public class UpdateManager extends AppCompatActivity {
             managerValues.put(AppContract.Manager.FIRST_NAME, ((EditText) findViewById(R.id.user_firstname)).getText().toString());
             managerValues.put(AppContract.Manager.LAST_NAME, ((EditText) findViewById(R.id.user_lastname)).getText().toString());
             managerValues.put(AppContract.Manager.PASSWORD, ((EditText) findViewById(R.id.user_pass)).getText().toString());
-            managerValues.put(AppContract.Manager.SALT, 1);
+            managerValues.put(AppContract.Manager.SALT, 0);
 
 
 

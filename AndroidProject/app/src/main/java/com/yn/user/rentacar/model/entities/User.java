@@ -26,14 +26,22 @@ public class User implements Serializable {
     //region Constructor
     public User(String lastName, String firstName, String emailAdrs, long id, String phoneNum,String password,long salt) throws Exception {
 
-        this.password=password;
-        while (salt == 0 ) {
-            Random random =new Random();
-            salt = random.nextLong();
+        if(salt != 0) {
+            this.password = password;
+            this.salt = salt;
+        }
+        else {
+            long tempSalt=salt;
+            while (tempSalt == 0) {
+                Random random = new Random();
+                 tempSalt= random.nextLong();
+            }
+
+            this.salt=tempSalt;
             setPassword(password);
         }
 
-        this.salt=salt;
+
         setLastName(lastName);
         setFirstName(firstName);
         setEmailAdrs(emailAdrs);

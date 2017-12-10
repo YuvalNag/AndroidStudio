@@ -80,13 +80,13 @@ public class LoginActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_login);
         getManagersCursor();
         mSharedPreferences =  PreferenceManager.getDefaultSharedPreferences(this);
-        long lo=mSharedPreferences.getLong(getString(R.string.login_user_id),0);
+        /*long lo=mSharedPreferences.getLong(getString(R.string.login_user_id),0);
         if(mSharedPreferences.getBoolean(getString(R.string.is_login),false)){
             Intent mainIntent =new Intent(LoginActivity.this,MainActivity.class);
             mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(mainIntent);
-        }
+        }*/
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
        // populateAutoComplete();

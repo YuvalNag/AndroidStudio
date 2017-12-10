@@ -14,12 +14,10 @@
        android:layout_height="wrap_content"
        android:layout_centerInParent="true"
        android:layout_gravity="center"
+
+
+       android:layout_margin="10dip"
        card_view:cardBackgroundColor="@color/cardview_dark_background"
-
-
-       android:layout_margin="10dp"
-       android:layout_marginEnd="10dp"
-       android:layout_marginStart="10dp"
        card_view:cardCornerRadius="20dip"
        card_view:cardElevation="10dip"
        card_view:contentPadding="10dip">
