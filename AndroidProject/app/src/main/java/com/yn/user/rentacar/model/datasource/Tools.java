@@ -86,7 +86,7 @@ public class Tools {
         contentValues.put(AppContract.CarModel.MODEL_NAME, carModel.getModelName());
         contentValues.put(AppContract.CarModel.TRANSMISSION_TYPE, carModel.getTransmissionType().toString());
         contentValues.put(AppContract.CarModel.NUM_OF_SEATS, carModel.getNumOfSeats());
-        contentValues.put(AppContract.CarModel.IMG, carModel.getCarPicByteArray());
+        contentValues.put(AppContract.CarModel.IMG, carModel.getCarPic());
         contentValues.put(AppContract.CarModel.CLASS_OF_CAR, carModel.getCarClass().toString());
 
         return contentValues;
@@ -136,8 +136,7 @@ public class Tools {
     public static Address ContentValuesToAddress(ContentValues contentValues)
     {
         Integer number = contentValues.getAsInteger(AppContract.Address.NUMBER);
-       // if (number == null || number <= 0 )
-       //     throw new IllegalArgumentException();
+
         return new Address(
                 contentValues.getAsString(AppContract.Address.CITY),
                 contentValues.getAsString(AppContract.Address.STREET),
@@ -160,11 +159,7 @@ public class Tools {
                Long kilo= contentValues.getAsLong(AppContract.Car.KILOMETRERS);
                Long carNum= contentValues.getAsLong(AppContract.Car.ID_CAR_NUMBER);
 
-        //if(branchnuum==null || branchnuum<0 ||
-        //        carmodelId==null || carmodelId<0 ||
-        //        kilo==null || kilo<0 ||
-        //        carNum==null || carNum<0)
-        //    throw new IllegalArgumentException();
+
 
         return new Car(
                 branchnuum,
@@ -182,7 +177,7 @@ public class Tools {
               Long engine=  contentValues.getAsLong(AppContract.CarModel.ENGINE_COPACITY);
               TransmissionType transmissionType =  TransmissionType.valueOf(contentValues.getAsString(AppContract.CarModel.TRANSMISSION_TYPE));
               Long numofseats=  contentValues.getAsLong(AppContract.CarModel.NUM_OF_SEATS);
-              Bitmap bitmap=byteToImage(contentValues.getAsByteArray(AppContract.CarModel.IMG));
+              String imageUrl=contentValues.getAsString(AppContract.CarModel.IMG);
               CarClass classofcar= CarClass.valueOf(contentValues.getAsString(AppContract.CarModel.CLASS_OF_CAR));
              // if(id==null || id<0 ||
              //         numofseats==null || numofseats<0)
@@ -196,7 +191,7 @@ public class Tools {
                 transmissionType,
                 numofseats,
                       classofcar ,
-                      bitmap
+                      imageUrl
                 );
     }
     public static Client ContentValuesToClient(ContentValues contentValues) throws Exception {
@@ -309,7 +304,7 @@ public class Tools {
                             carModel.getNumOfSeats(),
                             carModel.getTransmissionType(),
                             carModel.getCarClass(),
-                            carModel.getCarPicByteArray()
+                            carModel.getCarPic()
                     });
         }
 

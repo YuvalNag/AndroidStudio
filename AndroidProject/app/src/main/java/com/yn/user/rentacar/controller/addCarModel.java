@@ -114,7 +114,7 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
 
        final ContentValues modelcontentValues= new ContentValues();
         modelcontentValues.put(AppContract.CarModel.CLASS_OF_CAR,((Spinner)findViewById(R.id.model_spin_class)).getSelectedItem().toString());
-        modelcontentValues.put(AppContract.CarModel.IMG, Tools.imageToByte(((BitmapDrawable)((ImageView)findViewById(R.id.model_image)).getDrawable()).getBitmap()));
+        Bitmap bitmap= ((BitmapDrawable) ((ImageView) findViewById(R.id.model_image)).getDrawable()).getBitmap();
         modelcontentValues.put(AppContract.CarModel.ENGINE_COPACITY,((EditText)findViewById(R.id.model_engine)).getText().toString());
         modelcontentValues.put(AppContract.CarModel.MODEL_NAME,((EditText)findViewById(R.id.model_name)).getText().toString());
         modelcontentValues.put(AppContract.CarModel.COMPENY_NAME,((EditText)findViewById(R.id.model_comname)).getText().toString());
@@ -124,9 +124,11 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
 
 
 
-        new AsyncTask<Void, Void, Uri>() {
+        new AsyncTask<Bitmap, Void, Uri>() {
+
             @Override
-            protected Uri doInBackground(Void... params) {
+            protected Uri doInBackground(Bitmap... bitmaps) {
+                modelcontentValues.put(AppContract.CarModel.IMG, Tools.encodeToBase64(bitmaps[0], Bitmap.CompressFormat.PNG,50));
                 return getContentResolver().insert(AppContract.CarModel.CAR_MODEL_URI, modelcontentValues);
             }
 
@@ -153,6 +155,6 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
                     //toast.show();
                 }
             }
-        }.execute();
+        }.execute(bitmap);
     }
 }

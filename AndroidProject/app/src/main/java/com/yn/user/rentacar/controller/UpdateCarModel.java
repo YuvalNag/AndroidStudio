@@ -109,7 +109,12 @@ public class UpdateCarModel extends AppCompatActivity {
                   modelComname.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME)));
                   //classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
                   modelEngine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                  modelImage.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+                  //modelImage.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+                  GlideApp.with(UpdateCarModel.this)
+                          .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
+                          .placeholder(R.drawable.progress_animation)
+                          .centerCrop()
+                          .into(modelImage);
                   modelId.setText(String.valueOf(carModel_id));
                   ((ProgressBar)findViewById(R.id.updtecar_pb)).setVisibility(View.GONE);
               }
@@ -186,7 +191,7 @@ public class UpdateCarModel extends AppCompatActivity {
 
         final ContentValues modelcontentValues = new ContentValues();
         modelcontentValues.put(AppContract.CarModel.CLASS_OF_CAR, ((Spinner) findViewById(R.id.model_spin_class)).getSelectedItem().toString());
-        modelcontentValues.put(AppContract.CarModel.IMG, Tools.imageToByte(((BitmapDrawable) ((ImageView) findViewById(R.id.model_image)).getDrawable()).getBitmap()));
+        Bitmap bitmap= ((BitmapDrawable) ((ImageView) findViewById(R.id.model_image)).getDrawable()).getBitmap();
         modelcontentValues.put(AppContract.CarModel.ENGINE_COPACITY, ((EditText) findViewById(R.id.model_engine)).getText().toString());
         modelcontentValues.put(AppContract.CarModel.MODEL_NAME, ((EditText) findViewById(R.id.model_name)).getText().toString());
         modelcontentValues.put(AppContract.CarModel.COMPENY_NAME, ((EditText) findViewById(R.id.model_comname)).getText().toString());
@@ -194,9 +199,12 @@ public class UpdateCarModel extends AppCompatActivity {
         modelcontentValues.put(AppContract.CarModel.NUM_OF_SEATS, ((EditText) findViewById(R.id.model_numofseats)).getText().toString());
         modelcontentValues.put(AppContract.CarModel.TRANSMISSION_TYPE, ((Spinner) findViewById(R.id.model_spin_trans)).getSelectedItem().toString());
 
-        new AsyncTask<Void, Void, Integer>() {
+        new AsyncTask<Bitmap,Void , Integer>() {
             @Override
-            protected Integer doInBackground(Void... params) {
+            protected Integer doInBackground(Bitmap... bitmaps) {
+
+                modelcontentValues.put(AppContract.CarModel.IMG, Tools.encodeToBase64(bitmaps[0], Bitmap.CompressFormat.PNG,50));
+
                 return getContentResolver().update(ContentUris.withAppendedId(AppContract.CarModel.CAR_MODEL_URI,Long.valueOf(modelId.getText().toString())),modelcontentValues,null,null );
             }
 
@@ -216,6 +224,6 @@ public class UpdateCarModel extends AppCompatActivity {
                     //toast.show();
                 }
             }
-        }.execute();
+        }.execute(bitmap);
     }
 }

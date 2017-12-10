@@ -89,7 +89,7 @@ public class car_list extends AppCompatActivity {
                                 TransmissionType.valueOf(cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE))),
                                 cursorModel.getLong(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)),
                                 CarClass.valueOf(cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR))),
-                                Tools.byteToImage(cursorModel.getBlob(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.IMG)))));
+                                cursorModel.getString(cursorModel.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
 
 
                         cursorModel.moveToNext();
@@ -139,7 +139,12 @@ public class car_list extends AppCompatActivity {
                             description.setText(carModel.getCompenyName() + " " + carModel.getModelName());
                             classa.setText(carModel.getCarClass().toString());
                             engine.setText(String.valueOf(carModel.getEngineCapacity()));
-                            imageView.setImageBitmap(carModel.getCarPic());
+                            //imageView.setImageBitmap(carModel.getCarPic());
+                            GlideApp.with(car_list.this)
+                                    .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
+                                    .placeholder(R.drawable.progress_animation)
+                                    .centerCrop()
+                                    .into(imageView);
                         }
                         TextView carid = (TextView) view.findViewById(R.id.car_id);
                         TextView carkilo = (TextView) view.findViewById(R.id.car_kilo);

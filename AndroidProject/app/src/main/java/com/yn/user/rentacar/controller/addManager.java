@@ -249,7 +249,6 @@ public class addManager extends AppCompatActivity {
                         final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
 
 
-
                         view.setTag(cursor.getString((cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID))));
 
 
@@ -276,16 +275,16 @@ public class addManager extends AppCompatActivity {
                                         @Override
                                         public void onMapReady(final GoogleMap googleMap) {
                                             try {
-                                                Geocoder geocoder=new Geocoder(com.yn.user.rentacar.controller.addManager.this);
+                                                Geocoder geocoder = new Geocoder(com.yn.user.rentacar.controller.addManager.this);
 
-                                                Address addresses= geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(),1).get(0);////your lat lng
-                                                LatLng posisiabsen=new LatLng(addresses.getLatitude(),addresses.getLongitude());
+                                                Address addresses = geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(), 1).get(0);////your lat lng
+                                                LatLng posisiabsen = new LatLng(addresses.getLatitude(), addresses.getLongitude());
                                                 googleMap.addMarker(new MarkerOptions().position(posisiabsen).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
                                                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
                                                 googleMap.getUiSettings().setAllGesturesEnabled(true);
                                                 googleMap.getUiSettings().setMapToolbarEnabled(true);
                                                 googleMap.getUiSettings().setZoomControlsEnabled(true);
-                                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posisiabsen,14), 1000, null);
+                                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posisiabsen, 14), 1000, null);
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
@@ -299,35 +298,13 @@ public class addManager extends AppCompatActivity {
                         });
 
 
-
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
-                        switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
-                            case "Hadera":
-                                branch_imageView.setImageResource(R.drawable.hadera);
-                                break;
-                            case "Ashdod":
-                                branch_imageView.setImageResource(R.drawable.ashdod);
-                                break;
-                            case "Tel Aviv":
-                                branch_imageView.setImageResource(R.drawable.tel_aviv);
-                                break;
-                            case "Petah Tikva":
-
-                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.pt),4096,true));
-                                branch_imageView.setImageResource(R.drawable.pt);
-                                break;
-                            case "Netanya":
-                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                branch_imageView.setImageResource(R.drawable.netanya2);
-
-                                break;
-                            default:
-                                //  branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                branch_imageView.setImageResource(R.drawable.netanya);
-
-                                break;
-                        }
+                        GlideApp.with(addManager.this)
+                                .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.IMAGE_URL)))
+                                .placeholder(R.drawable.progress_animation)
+                                .centerCrop()
+                                .into(branch_imageView);
                     }
                 };
 

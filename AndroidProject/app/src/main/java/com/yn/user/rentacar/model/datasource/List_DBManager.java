@@ -86,13 +86,13 @@ public class List_DBManager  implements DB_manager {
             cars.add(new Car(1,2,3232,912345));
 
 
-        branches.add(new Branch(0,5*100,new Address("Hadera","",4)));
-        branches.add(new Branch(0,5*100,new Address("Hadera","",4)));
+        branches.add(new Branch(0,5*100,new Address("Hadera","",4),"http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/hadera.jpg"));
+        branches.add(new Branch(0,5*100,new Address("Hadera","",4),"http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/hadera.jpg"));
 
-        branches.add(new Branch(1,5*100,new Address("Ashdod","",4)));
-        branches.add(new Branch(2,5*100,new Address("Tel Aviv","",4)));
-        branches.add(new Branch(3,5*100,new Address("Petah Tikva","",4)));
-        branches.add(new Branch(1991,5*100,new Address("אגסי 6 ירושלים","",4)));
+        branches.add(new Branch(1,5*100,new Address("Ashdod","",4),"http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/ashdod.jpg"));
+        branches.add(new Branch(2,5*100,new Address("Tel Aviv","",4),"http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/tel_aviv.jpg"));
+        branches.add(new Branch(3,5*100,new Address("Petah Tikva","",4),"http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/pt.jpg"));
+        branches.add(new Branch(1991,5*100,new Address("אגסי 6 ירושלים","",4),"http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/netanya.jpg"));
 
 
             clients.add(new Client("Nagar","Yuval","yuval.nag.91@gmail.com",0,"052-4422258",3453435,0,"1234"));

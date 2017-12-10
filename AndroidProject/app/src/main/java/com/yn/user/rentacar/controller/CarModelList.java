@@ -57,7 +57,7 @@ public class CarModelList extends AppCompatActivity {
     {
         new AsyncTask<Void, Void, Cursor>() {
 
-            Map<Long,Bitmap> bitmapMap;
+
             @Override
             protected void onPreExecute() {
                 carModelProgressBar.setVisibility(View.VISIBLE);
@@ -66,14 +66,6 @@ public class CarModelList extends AppCompatActivity {
             @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursor = getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
-                bitmapMap=new HashMap<>();
-                if (cursor!=null) {
-                    cursor.moveToFirst();
-                    while (!cursor.isAfterLast()) {
-                        bitmapMap.put(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)), Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
-                        cursor.moveToNext();
-                    }
-                }
 
 
                 return cursor;
@@ -109,8 +101,12 @@ public class CarModelList extends AppCompatActivity {
                         description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
                         classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
                         engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                        imageView.setImageBitmap(bitmapMap.get(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL))));
-
+                        //imageView.setImageBitmap(bitmapMap.get(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL))));
+                        GlideApp.with(CarModelList.this)
+                                .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
+                                .placeholder(R.drawable.progress_animation)
+                                .centerCrop()
+                                .into(imageView);
                     }
 
 
