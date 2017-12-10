@@ -170,67 +170,16 @@ public class BranchList extends AppCompatActivity {
 
                                 }
                             });
-                        view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
+                        //view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID)));
                        // branch_imageView.setImageResource(R.drawable.ashdod);
                        // branch_imageView.setImageResource(R.drawable.netanya2);
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
-                        switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
-                            case "Hadera":
-                                GlideApp.with(BranchList.this)
-                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/hadera.jpg")
-                                        .placeholder(R.drawable.progress_animation)
-                                        .centerCrop()
-                                        .into(branch_imageView);
-                                //branch_imageView.setImageResource(R.drawable.hadera);
-                                break;
-                            case "Ashdod":
-                                GlideApp.with(BranchList.this)
-                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/ashdod.jpg")
-                                        .placeholder(R.drawable.progress_animation)
-                                        .centerCrop()
-                                        .into(branch_imageView);
-                                //branch_imageView.setImageResource(R.drawable.ashdod);
-                                break;
-                            case "Tel Aviv":
-                                GlideApp.with(BranchList.this)
-                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/tel_aviv.jpg")
-                                        .placeholder(R.drawable.progress_animation)
-                                        .centerCrop()
-                                        .into(branch_imageView);
-                               // branch_imageView.setImageResource(R.drawable.tel_aviv);
-                                break;
-                            case "Petah Tikva":
-                                GlideApp.with(BranchList.this)
-                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/pt.jpg")
-                                        .placeholder(R.drawable.progress_animation)
-                                        .centerCrop()
-                                        .into(branch_imageView);
-                               // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.pt),4096,true));
-                                //branch_imageView.setImageResource(R.drawable.pt);
-
-                                break;
-                            case "Netanya":
-                               // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                // branch_imageView.setImageResource(R.drawable.netanya2);
-                                GlideApp.with(BranchList.this)
-                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/tel_aviv.jpg")
-                                        .placeholder(R.drawable.progress_animation)
-                                        .centerCrop()
-                                        .into(branch_imageView);
-                                //branch_imageView.setImageResource(R.drawable.tel_aviv);
-                                break;
-                            default:
-                              //  branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                //branch_imageView.setImageResource(R.drawable.netanya);
-                                GlideApp.with(BranchList.this)
-                                        .load("http://nheifetz.vlab.jct.ac.il/TakeAndGo/images/branches/netanya.jpg")
-                                        .placeholder(R.drawable.progress_animation)
-                                        .centerCrop()
-                                        .into(branch_imageView);
-                                break;
-                        }
-
+                        GlideApp.with(BranchList.this)
+                                .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.IMAGE_URL)))
+                                .placeholder(R.drawable.progress_animation)
+                                .centerCrop()
+                                .into(branch_imageView);
                     }
 
 
