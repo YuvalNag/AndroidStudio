@@ -18,16 +18,25 @@ public class Branch implements Serializable{
     private String branchImgUrl;
 
 
-    public Branch(long branchID, int numberOfParkingSpaces, Address branchAddress) {
+    public Branch(long branchID, int numberOfParkingSpaces, Address branchAddress, String branchImgUrl) {
 
         this.branchID = branchID;
         this.numberOfParkingSpaces = numberOfParkingSpaces;
         this.branchAddress = branchAddress;
+        this.branchImgUrl=branchImgUrl;
     }
 
 
     public long getBranchID() {
         return branchID;
+    }
+
+    public String getBranchImgUrl() {
+        return branchImgUrl;
+    }
+
+    public void setBranchImgUrl(String branchImgUrl) {
+        this.branchImgUrl = branchImgUrl;
     }
 
     public void setBranchID(long branchID) {

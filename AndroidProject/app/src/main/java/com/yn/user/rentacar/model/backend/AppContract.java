@@ -22,6 +22,7 @@ public class AppContract {
         public static final String BRANCH_ID = "_id";
         public static final String NUMBER_OF_PARKING_SPACES = "number_of_parking_spaces";
         public static final String ADDRESS = "address";
+        public static final String IMAGE_URL = "branchImgUrl";
         /**
          * The content:// style URI for this table
          */

@@ -148,11 +148,9 @@ public class Tools {
     {
         Long id = contentValues.getAsLong(AppContract.Branch.BRANCH_ID);
         Integer numberOfParkingSpaces = contentValues.getAsInteger(AppContract.Branch.NUMBER_OF_PARKING_SPACES);
-      // if(id <= 0 || id == null || numberOfParkingSpaces < 0 )
-      //     throw new IllegalArgumentException();
+        String imageurl=contentValues.getAsString(AppContract.Branch.IMAGE_URL);
 
-        return new Branch(id, numberOfParkingSpaces,//TODO check if null.intValue() == 0
-                          ContentValuesToAddress(contentValues));
+        return new Branch(id, numberOfParkingSpaces,ContentValuesToAddress(contentValues),imageurl);
     }
     public static Car ContentValuesToCar(ContentValues contentValues)
     {
@@ -384,6 +382,7 @@ public class Tools {
                 {
                         AppContract.Branch.BRANCH_ID,
                         AppContract.Branch.NUMBER_OF_PARKING_SPACES,
+                        AppContract.Branch.IMAGE_URL,
                         AppContract.Address.CITY,
                         AppContract.Address.NUMBER,
                         AppContract.Address.STREET
@@ -396,6 +395,7 @@ public class Tools {
                     {
                             branch.getBranchID(),
                             branch.getNumberOfParkingSpaces(),
+                            branch.getBranchImgUrl(),
                             branch.getBranchAddress().getCity(),
                             branch.getBranchAddress().getNumber(),
                             branch.getBranchAddress().getStreet()
@@ -429,56 +429,7 @@ public class Tools {
         }
         return matrixCursor;
     }
-/*    public static Cursor branchListToCursor(List<Branch> branches) {
-        String[] columns = new String[]
-                {
-                        AppContract.Branch.BRANCH_ID,
-                        AppContract.Branch.ADDRESS,
-                        AppContract.Branch.NUMBER_OF_PARKING_SPACES
-                };
 
-        MatrixCursor matrixCursor = new MatrixCursor(columns);
-
-        for (Branch branch : branches) {
-            matrixCursor.addRow(new Object[]
-                    {
-                            branch.getBranchID(),
-                            branch.getBranchAddress(),
-                            branch.getNumberOfParkingSpaces()
-
-                    });
-
-
-
-        }
-        return matrixCursor;
-    }
-
-
-    public static Cursor addressListToCursor(List<Address> addresses) {
-        String[] columns = new String[]
-                {
-                        AppContract.Address.CITY,
-                        AppContract.Address.NUMBER,
-                        AppContract.Address.STREET
-                };
-
-        MatrixCursor matrixCursor = new MatrixCursor(columns);
-
-        for (Address address : addresses) {
-            matrixCursor.addRow(new Object[]
-                    {
-                            address.getCity(),
-                            address.getNumber(),
-                            address.getStreet()
-                    });
-
-
-
-        }
-        return matrixCursor;
-    }
-*/
     public static Bitmap drawableToBitmap (Drawable drawable) {
     if (drawable instanceof BitmapDrawable) {
         return ((BitmapDrawable)drawable).getBitmap();
