@@ -20,24 +20,13 @@ public class CarModel implements Serializable
 
     private long engineCapacity;
 
-    private Bitmap carPic;
-
-       public Bitmap getCarPic() {
-        return carPic;
-    }
-
-    public void setCarPic(Bitmap carPic) {
-        this.carPic = carPic;
-    }
+    private String carPic;
 
 
-    public byte[] getCarPicByteArray() {
-        return Tools.imageToByte(this.carPic);
-    }
 
-    public void setCarPic(byte[] carPic) {
-        this.carPic = Tools.byteToImage(carPic);
-    }
+
+
+
 
     private TransmissionType transmissionType;
 
@@ -45,13 +34,10 @@ public class CarModel implements Serializable
 
     private CarClass carClass;
 
-   /* private String imageCarPath;
-    public String getImageCarPath() { return imageCarPath; }
 
-    public void setImageCarPath(String imageCarPath) { this.imageCarPath = imageCarPath; }*/
 
     public CarModel(long idCarModel, String compenyName, String modelName,
-                    long engineCapacity, TransmissionType transmissionType, long numOfSeats,CarClass carClass, Bitmap image) {
+                    long engineCapacity, TransmissionType transmissionType, long numOfSeats,CarClass carClass, String image) {
          setIdCarModel(idCarModel);
          setCompenyName(compenyName);
          setModelName( modelName);
@@ -62,6 +48,14 @@ public class CarModel implements Serializable
          setCarPic(image);
     }
 
+
+    public String getCarPic() {
+        return carPic;
+    }
+
+    public void setCarPic(String carPic) {
+        this.carPic = carPic;
+    }
 
     public CarClass getCarClass() {
         return carClass;

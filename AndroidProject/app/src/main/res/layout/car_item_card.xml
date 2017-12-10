@@ -145,7 +145,6 @@
                 android:layout_height="125dip"
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
-                android:scaleType="centerCrop"
                 card_view:layout_constraintBottom_toTopOf="@+id/tableLayout3"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.5"

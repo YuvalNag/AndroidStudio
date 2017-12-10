@@ -10,7 +10,7 @@ import android.database.Cursor;
 public interface DB_manager {
 
     //TODO why here?
-    boolean hasClient(long client_id);
+    boolean hasManager(long client_id);
 
     long addClient(ContentValues values);
     long addCarModel(ContentValues values);
