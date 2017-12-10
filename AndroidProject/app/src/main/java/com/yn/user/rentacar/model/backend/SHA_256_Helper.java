@@ -1,6 +1,7 @@
 package com.yn.user.rentacar.model.backend;
 
 import java.security.MessageDigest;
+import java.util.Random;
 
 /**
  * Created by USER on 19/11/2017.
@@ -21,9 +22,18 @@ public class SHA_256_Helper {
         for (int i = 0; i < byteData.length; i++) {
             stringBuffer.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
         }
-        String s=stringBuffer.toString();
         return stringBuffer.toString();
 
     }
-}
+    public static long generateSalt( ) {
+        Random random = new Random();
+        long tempSalt = random.nextLong();
+
+        while (tempSalt == 0) {
+            tempSalt = random.nextLong();
+
+        }
+        return tempSalt;
+    }
+    }
 

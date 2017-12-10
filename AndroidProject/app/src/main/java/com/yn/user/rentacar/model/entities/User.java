@@ -17,7 +17,6 @@ public class User implements Serializable {
     private String emailAdrs;
     private long id;
     private final long salt;
-    private  boolean hashed;
     private String password;
     private String phoneNum;
     //endregion
@@ -26,22 +25,9 @@ public class User implements Serializable {
     //region Constructor
     public User(String lastName, String firstName, String emailAdrs, long id, String phoneNum,String password,long salt) throws Exception {
 
-        if(salt != 0) {
-            this.password = password;
-            this.salt = salt;
-        }
-        else {
-            long tempSalt=salt;
-            while (tempSalt == 0) {
-                Random random = new Random();
-                 tempSalt= random.nextLong();
-            }
 
-            this.salt=tempSalt;
-            setPassword(password);
-        }
-
-
+        this.salt=salt;
+        setPassword(password);
         setLastName(lastName);
         setFirstName(firstName);
         setEmailAdrs(emailAdrs);
@@ -67,9 +53,7 @@ public class User implements Serializable {
 
     public void setPassword(String password) throws Exception {
 
-        if(password.isEmpty())
-            password="";//TODO no empty password
-        this.password = SHA_256_Helper.getHash256String(password,salt);
+        this.password=password;
     }
 
     public void setLastName(String lastName) {

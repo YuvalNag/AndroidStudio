@@ -109,7 +109,7 @@ public class List_DBManager  implements DB_manager {
 
     }
 
-    @Override
+
     public boolean hasClient(long client_id) {
         for (Client client:clients)
             if(client.getId()==client_id)
