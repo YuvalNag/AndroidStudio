@@ -338,6 +338,7 @@ public class LoginActivity extends AppCompatActivity  {
         @SuppressLint("StringFormatInvalid")
         @Override
         protected Boolean doInBackground(Void... params) {
+            mCursor=getContentResolver().query(AppContract.Manager.MANAGER_URI,null,null,null,null);
             mCursor.moveToFirst();
 
                 mCursor.moveToLast();

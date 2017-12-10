@@ -308,7 +308,7 @@ public class SQL_DBManager implements DB_manager {
         try {
 
             String str = PHPtools.GET(WEB_URL + "carModels.php");
-            JSONArray array = new JSONObject(str).getJSONArray("carModels");
+            JSONArray array = new JSONObject(str).getJSONArray("car_models");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
 

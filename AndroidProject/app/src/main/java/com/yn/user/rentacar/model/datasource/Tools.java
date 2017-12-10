@@ -469,7 +469,6 @@ public class Tools {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
         image.compress(compressFormat, quality, byteArrayOS);
         String  s=Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
-        System.out.println(s.length());
         return s;
     }
 
