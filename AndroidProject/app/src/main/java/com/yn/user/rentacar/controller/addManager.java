@@ -41,6 +41,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
+import com.yn.user.rentacar.model.backend.SHA_256_Helper;
 
 
 public class addManager extends AppCompatActivity {
@@ -321,17 +322,18 @@ public class addManager extends AppCompatActivity {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public void onClick(View view) {
+    public void onClick(View view) throws Exception {
         if (view == addManager) {
             final ContentValues managerValues = new ContentValues();
+            long newSalt = SHA_256_Helper.generateSalt();
             managerValues.put(AppContract.Manager.ID, ((EditText) findViewById(R.id.user_id)).getText().toString());
             managerValues.put(AppContract.Manager.BRANCH_ID, branch_id);
             managerValues.put(AppContract.Manager.PHONE_NUMBER, ((EditText) findViewById(R.id.user_phone)).getText().toString());
             managerValues.put(AppContract.Manager.EMAIL_ADDR, ((EditText) findViewById(R.id.user_email)).getText().toString());
             managerValues.put(AppContract.Manager.FIRST_NAME, ((EditText) findViewById(R.id.user_firstname)).getText().toString());
             managerValues.put(AppContract.Manager.LAST_NAME, ((EditText) findViewById(R.id.user_lastname)).getText().toString());
-            managerValues.put(AppContract.Manager.PASSWORD, ((EditText) findViewById(R.id.user_pass)).getText().toString());
-            managerValues.put(AppContract.Manager.SALT, 0);
+            managerValues.put(AppContract.Manager.PASSWORD, SHA_256_Helper.getHash256String(((EditText) findViewById(R.id.user_pass)).getText().toString(),newSalt));
+            managerValues.put(AppContract.Manager.SALT, newSalt);
 
 
 
