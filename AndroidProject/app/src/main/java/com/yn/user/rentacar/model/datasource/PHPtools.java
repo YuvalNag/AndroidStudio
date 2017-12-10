@@ -9,9 +9,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-/**
- * Created by mailo on 15/12/2016.
- */
 
 public class PHPtools {
 
