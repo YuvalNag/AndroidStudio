@@ -28,6 +28,8 @@ import static com.yn.user.rentacar.model.backend.DBManagerFactory.getManager;
 public class managerList extends AppCompatActivity {
 
 private Long manager_id;
+private Long managers_salt;
+private String managers_password;
 private GridView managerGridView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +88,10 @@ private GridView managerGridView;
                 fabDelete.setVisibility(View.VISIBLE);
                 fabEdit.setVisibility(View.VISIBLE);
                 manager_id =l;
+                Cursor cursor=(Cursor)adapterView.getAdapter().getItem(i);
+                managers_password=cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Manager.PASSWORD));
+                managers_salt=cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Manager.SALT));
+
             }
         });
         fabDelete.setOnClickListener(new View.OnClickListener() {
@@ -93,51 +99,12 @@ private GridView managerGridView;
             @Override
             public void onClick(View view) {
 
-                ShowAlertDialog();
-                try {
-                    if(isValidPassword(password)==true)
-                    Snackbar.make(view, "Are You Sure", Snackbar.LENGTH_LONG)
-                            .setAction("Yes", new View.OnClickListener() {
+                ShowAlertDialogDelete("Please enter your password:",view);
 
-                                @SuppressLint("StaticFieldLeak")
-                                @Override
-                                public void onClick(View view) {
-
-                                    final Uri uri = ContentUris.withAppendedId(AppContract.Manager.MANAGER_URI, manager_id);
-                                    new AsyncTask<Void, Void, Integer>() {
-                                        @Override
-                                        protected Integer doInBackground(Void... params) {
-                                            return getContentResolver().delete(uri, null, null);
-                                        }
-
-                                        @Override
-                                        protected void onPostExecute(Integer result) {
-                                            super.onPostExecute(result);
-
-
-                                            if (result > 0) {
-                                                //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
-                                                Snackbar.make(findViewById(android.R.id.content), "delete manager   id: " +manager_id, Snackbar.LENGTH_LONG).show();
-                                                showManagers();
-                                                fabDelete.setVisibility(View.INVISIBLE);
-                                                fabEdit.setVisibility(View.INVISIBLE);
-
-                                            } else {
-                                                //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
-                                                Snackbar.make(findViewById(android.R.id.content), "ERROR deleting manager id: " + manager_id, Snackbar.LENGTH_LONG).show();
-
-                                            }
-                                        }
-                                    }.execute();
-                                }
-                            }).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
-            private void ShowAlertDialog() {
+            private void ShowAlertDialogDelete(String title, final View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(managerList.this);
-                builder.setTitle("Please enter your password:");
+                builder.setTitle(title);
 // Set up the input
                 final EditText input = new EditText(managerList.this);
 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
@@ -149,6 +116,49 @@ private GridView managerGridView;
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         password = input.getText().toString();
+                        try {
+                            if(isValidPassword(password))
+                                Snackbar.make(view, "Are You Sure", Snackbar.LENGTH_LONG)
+                                        .setAction("Yes", new View.OnClickListener() {
+
+                                            @SuppressLint("StaticFieldLeak")
+                                            @Override
+                                            public void onClick(View view) {
+
+                                                final Uri uri = ContentUris.withAppendedId(AppContract.Manager.MANAGER_URI, manager_id);
+                                                new AsyncTask<Void, Void, Integer>() {
+                                                    @Override
+                                                    protected Integer doInBackground(Void... params) {
+                                                        return getContentResolver().delete(uri, null, null);
+                                                    }
+
+                                                    @Override
+                                                    protected void onPostExecute(Integer result) {
+                                                        super.onPostExecute(result);
+
+
+                                                        if (result > 0) {
+                                                            //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
+                                                            Snackbar.make(findViewById(android.R.id.content), "delete manager   id: " +manager_id, Snackbar.LENGTH_LONG).show();
+                                                            showManagers();
+                                                            fabDelete.setVisibility(View.INVISIBLE);
+                                                            fabEdit.setVisibility(View.INVISIBLE);
+
+                                                        } else {
+                                                            //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
+                                                            Snackbar.make(findViewById(android.R.id.content), "ERROR deleting manager id: " + manager_id, Snackbar.LENGTH_LONG).show();
+
+                                                        }
+                                                    }
+                                                }.execute();
+                                            }
+                                        }).show();
+                            else
+                                ShowAlertDialogDelete("wrong password try again",view);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ShowAlertDialogDelete("wrong password try again",view);
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -171,32 +181,41 @@ private GridView managerGridView;
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
-                ShowAlertDialog();
-                try {
-                    if(isValidPassword(password)==true) {
-                        Intent intent = new Intent(managerList.this, UpdateManager.class);
-                        intent.putExtra(AppContract.Manager.ID, manager_id);
-                        startActivityForResult(intent, 1);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                ShowAlertDialogUpdate("Please enter your password:");
+
             }
 
-            private void ShowAlertDialog() {
+            private void ShowAlertDialogUpdate(String title) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(managerList.this);
-                builder.setTitle("Please enter your password:");
-// Set up the input
+                builder.setTitle(title);
+
+               // Set up the input
                 final EditText input = new EditText(managerList.this);
-// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 builder.setView(input);
 
-// Set up the buttons
+                // Set up the buttons
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         password = input.getText().toString();
+                        try {
+                            if(isValidPassword(password)==true) {
+                                Intent intent = new Intent(managerList.this, UpdateManager.class);
+                                intent.putExtra(AppContract.Manager.ID, manager_id);
+                                startActivityForResult(intent, 1);
+                            }
+                            else
+                                ShowAlertDialogUpdate("wrong passowrd try again");
+
+                        } catch (Exception e) {
+
+                            ShowAlertDialogUpdate("wrong passowrd try again");
+
+                            e.printStackTrace();
+                        }
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -240,16 +259,18 @@ private GridView managerGridView;
     }
 
 
-    private boolean isValidPassword(String password) throws Exception {
-        Cursor cursorManager= getManager().getManager(manager_id);
-        String managerPassword=cursorManager.getString(cursorManager.getColumnIndexOrThrow(AppContract.Manager.PASSWORD));
-        long managerSalt=cursorManager.getLong(cursorManager.getColumnIndexOrThrow(AppContract.Manager.SALT));
-        Cursor cursorBigManager= getManager().getManager(0);
-        String bigManagerPassword=cursorBigManager.getString(cursorBigManager.getColumnIndexOrThrow(AppContract.Manager.PASSWORD));
-        long bigManagerSalt=cursorBigManager.getLong(cursorBigManager.getColumnIndexOrThrow(AppContract.Manager.SALT));
-        return (managerPassword.contentEquals(SHA_256_Helper.getHash256String(password,managerSalt)))||(bigManagerPassword.contentEquals(SHA_256_Helper.getHash256String(password,bigManagerSalt)));
+    @SuppressLint("StaticFieldLeak")
+    private boolean isValidPassword( String password)  {
+
+        try {
+            return SHA_256_Helper.getHash256String(password,managers_salt).contentEquals(managers_password);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
     }
+
 }
 
 

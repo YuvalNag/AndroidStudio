@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
@@ -111,7 +112,10 @@ public class addCarActivity extends AppCompatActivity {
                 if (id > 0) {
                     //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
                     Snackbar.make(findViewById(android.R.id.content), "insert car   id: " + id, Snackbar.LENGTH_LONG).show();
-
+                    Intent data=new Intent();
+                    data.putExtra(AppContract.Car.ID_CAR_NUMBER,id);
+                    setResult(1,data);
+                    finish();
                 }
                 else {
                     //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();

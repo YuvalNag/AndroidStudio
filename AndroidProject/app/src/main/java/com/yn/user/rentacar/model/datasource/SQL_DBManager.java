@@ -172,7 +172,7 @@ public class SQL_DBManager implements DB_manager {
         try {
             ContentValues contentValues=new ContentValues();
             contentValues.put(AppContract.Manager.ID,id);
-            String result=PHPtools.POST(WEB_URL + "deleteBranches.php", contentValues);
+            String result=PHPtools.POST(WEB_URL + "deleteManager.php", contentValues);
             printLog("removeManager:\n" + result);
             return true;
         } catch (Exception e) {
@@ -287,7 +287,7 @@ public class SQL_DBManager implements DB_manager {
             ContentValues where=new ContentValues();
             where.put(AppContract.CarModel.ID_CAR_MODEL,id);
             String str = PHPtools.POST(WEB_URL + "carModels.php",where);
-            JSONArray array = new JSONObject(str).getJSONArray("carModels");
+            JSONArray array = new JSONObject(str).getJSONArray("car_models");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
 

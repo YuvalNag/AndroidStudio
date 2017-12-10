@@ -213,7 +213,7 @@ public class UpdateCarModel extends AppCompatActivity {
                 super.onPostExecute(result);
 
 
-                Toast toast;
+
                 if (result == 1) {
                     //Toast.makeText(getApplicationContext(), "insert car model  id: " + id, Toast.LENGTH_LONG).show();
                    setResult(1);

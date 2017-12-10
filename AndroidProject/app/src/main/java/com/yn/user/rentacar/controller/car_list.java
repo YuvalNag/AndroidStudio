@@ -141,7 +141,7 @@ public class car_list extends AppCompatActivity {
                             engine.setText(String.valueOf(carModel.getEngineCapacity()));
                             //imageView.setImageBitmap(carModel.getCarPic());
                             GlideApp.with(car_list.this)
-                                    .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
+                                    .load(carModel.getCarPic())
                                     .placeholder(R.drawable.progress_animation)
                                     .centerCrop()
                                     .into(imageView);
@@ -259,8 +259,9 @@ public class car_list extends AppCompatActivity {
             final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
             fabDelete.setVisibility(View.INVISIBLE);
             fabEdit.setVisibility(View.INVISIBLE);
-        } else if (requestCode==2&&resultCode==1) {
-            data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0);
+        }
+        else if (requestCode==2&&resultCode==1) {
+            data.getLongExtra(AppContract.Car.ID_CAR_NUMBER,0);
             Snackbar.make(findViewById(android.R.id.content), "update car   id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
             showCars();
             final FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab);
