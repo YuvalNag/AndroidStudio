@@ -24,6 +24,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
@@ -35,20 +37,25 @@ import java.io.InputStream;
 
 public class addCarModel extends AppCompatActivity implements View.OnClickListener {
     final int REQUEST_CODE_GALLERY = 999;
+    Spinner classSpinner;
+    Spinner transSpinner;
+    ImageView modelImageView;
+    MKLoader progress;
+    Button addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addmodel);
 
-        ((Button)findViewById(R.id.model_add)).setOnClickListener(this);
+        findViews();
 
         //populate the spinners
-        ((Spinner)findViewById(R.id.model_spin_class)).setAdapter(new ArrayAdapter<CarClass>(this, android.R.layout.simple_list_item_1, CarClass.values()));
-        ((Spinner)findViewById(R.id.model_spin_trans)).setAdapter(new ArrayAdapter<TransmissionType>(this, android.R.layout.simple_list_item_1, TransmissionType.values()));
+        classSpinner.setAdapter(new ArrayAdapter<CarClass>(this, android.R.layout.simple_list_item_1, CarClass.values()));
+        transSpinner.setAdapter(new ArrayAdapter<TransmissionType>(this, android.R.layout.simple_list_item_1, TransmissionType.values()));
 
         //check permission
-        ((ImageView)findViewById(R.id.model_image)).setOnClickListener(new View.OnClickListener() {
+        modelImageView.setOnClickListener(new View.OnClickListener() {
 
            @Override
             public void onClick(View view) {
@@ -62,7 +69,17 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
 
 
 
-    }//check permission
+    }
+
+    private void findViews()
+    {
+         classSpinner=((Spinner)findViewById(R.id.model_spin_class));
+         transSpinner=((Spinner)findViewById(R.id.model_spin_trans));
+         modelImageView=((ImageView)findViewById(R.id.model_image));
+         progress=(MKLoader)findViewById(R.id.MKLoader);
+         addButton=((Button)findViewById(R.id.model_add));
+        addButton.setOnClickListener(this);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -125,6 +142,12 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
         new AsyncTask<Bitmap, Void, Uri>() {
 
             @Override
+            protected void onPreExecute() {
+                progress.setVisibility(View.VISIBLE);
+                addButton.setEnabled(false);
+            }
+
+            @Override
             protected Uri doInBackground(Bitmap... bitmaps) {
                 modelcontentValues.put(AppContract.CarModel.IMG, Tools.encodeToBase64(bitmaps[0], Bitmap.CompressFormat.PNG,50));
                 return getContentResolver().insert(AppContract.CarModel.CAR_MODEL_URI, modelcontentValues);
@@ -135,22 +158,19 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
                 super.onPostExecute(uriResult);
 
                 long id = ContentUris.parseId(uriResult);
-                Toast toast;
+
                 if (id > 0) {
-                    //Toast.makeText(getApplicationContext(), "insert car model  id: " + id, Toast.LENGTH_LONG).show();
 
                     Intent data=new Intent();
                     data.putExtra(AppContract.CarModel.ID_CAR_MODEL, id);
-
                     setResult(1,data);
                     finish();
-
-
 
                 }
                 else {
                     Snackbar.make(findViewById(android.R.id.content), "ERROR inserting car model  " , Snackbar.LENGTH_LONG).show();
-                    //toast.show();
+                    progress.setVisibility(View.GONE);
+                    addButton.setEnabled(true);
                 }
             }
         }.execute(bitmap);

@@ -52,6 +52,7 @@ public class addCarActivity extends AppCompatActivity {
     MKLoader progress_branch;
     Long branch_id;
     Long carModel_id;
+    Button addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class addCarActivity extends AppCompatActivity {
         progress = (MKLoader) findViewById(R.id.MKLoader);
         progress_car = (MKLoader) findViewById(R.id.MKLoader_carModel);
         progress_branch = (MKLoader) findViewById(R.id.MKLoader_branche);
+        addButton=(Button)findViewById(R.id.car_button);
 
     }
 
@@ -103,6 +105,13 @@ public class addCarActivity extends AppCompatActivity {
             carContentValues.put(AppContract.Car.CAR_MODEL_ID, carModel_id);
 
             new AsyncTask<Void, Void, Uri>() {
+
+                @Override
+                protected void onPreExecute() {
+                    progress.setVisibility(View.VISIBLE);
+                    addButton.setEnabled(false);
+                }
+
                 @Override
                 protected Uri doInBackground(Void... params) {
                     return getContentResolver().insert(AppContract.Car.CAR_URI, carContentValues);
@@ -115,19 +124,16 @@ public class addCarActivity extends AppCompatActivity {
 
                     long id = ContentUris.parseId(uriResult);
                     if (id > 0) {
-                        //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
-                        //Snackbar.make(findViewById(android.R.id.content), "Inserted car id: " + id, Snackbar.LENGTH_LONG).show();
                         Intent data = new Intent();
                         data.putExtra(AppContract.Car.ID_CAR_NUMBER, id);
                         setResult(1, data);
                         finish();
                     } else {
-                        //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
                         Snackbar.make(findViewById(android.R.id.content), "ERROR inserting car.", Snackbar.LENGTH_LONG).show();
 
                     }
 
-
+                    addButton.setEnabled(true);
                     progress.setVisibility(View.GONE);
                 }
             }.execute();
@@ -169,7 +175,7 @@ public class addCarActivity extends AppCompatActivity {
 
                             numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
                             trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
-                            description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
+                            description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME))+" "+cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
                             classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
                             engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
 

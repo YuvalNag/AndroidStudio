@@ -53,6 +53,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
@@ -71,12 +72,20 @@ public class UpdateCar extends AppCompatActivity {
     Long branch_id;
     Long carModel_id;
     Long car_id;
+    MKLoader progress;
+    MKLoader progress_carmodel;
+    MKLoader progress_branch;
+    Button addButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_car);
+
+
         findViews();
+
         populateViews();
 
         branchListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
@@ -96,23 +105,29 @@ public class UpdateCar extends AppCompatActivity {
         });
     }
 
+
     private void findViews() {
         branchListView = (ListView) findViewById(R.id.branch_listview);
         carModelListView = (ListView) findViewById(R.id.model_listview);
         idCar = (TextInputLayout) findViewById(R.id.textInputLayout_car_id);
         kilometers = (TextInputLayout) findViewById(R.id.textInputLayout_kilo);
-
+        progress= ((MKLoader)findViewById(R.id.MKLoader));
+        progress_branch= ((MKLoader)findViewById(R.id.MKLoader_branche));
+        progress_carmodel= ((MKLoader)findViewById(R.id.MKLoader_carModel));
+        addButton=(Button)findViewById(R.id.car_button);
     }
 
 
     @SuppressLint("StaticFieldLeak")
     private void populateViews() {
-        //populate the spinners
+
 
         final Intent intent = getIntent();
         car_id = intent.getLongExtra(AppContract.Car.ID_CAR_NUMBER, -1);
+
         //TODO check if -1
         new AsyncTask<Long, Void, Cursor>() {
+            
             @Override
             protected Cursor doInBackground(Long... longs) {
 
@@ -132,9 +147,8 @@ public class UpdateCar extends AppCompatActivity {
                     showBranches();
                     showCarModel();
 
-                    //classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
                     kilometers.getEditText().setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Car.KILOMETRERS)));
-                    //modelImage.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+
                     idCar.getEditText().setText(String.valueOf(car_id));
 
                 }
@@ -145,8 +159,7 @@ public class UpdateCar extends AppCompatActivity {
     }
 
 
-    private int findPosition(CursorAdapter cursorAdapter,long id)
-    {
+    private int findPosition(CursorAdapter cursorAdapter,long id) {
         for(int i=0;i<cursorAdapter.getCount();i++)
         if(cursorAdapter.getItemId(i)==id)
             return i;
@@ -169,6 +182,13 @@ public class UpdateCar extends AppCompatActivity {
 
 
         new AsyncTask<Void, Void, Integer>() {
+
+            @Override
+            protected void onPreExecute() {
+                progress.setVisibility(View.VISIBLE);
+                addButton.setEnabled(false);
+            }
+
             @Override
             protected Integer doInBackground(Void... params) {
                 return getContentResolver().update(ContentUris.withAppendedId(AppContract.Car.CAR_URI,car_id),carContentValues,null,null );
@@ -190,15 +210,23 @@ public class UpdateCar extends AppCompatActivity {
                 else {
                     //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
                     Snackbar.make(findViewById(android.R.id.content), "ERROR updating car" , Snackbar.LENGTH_LONG).show();
-
+                    progress.setVisibility(View.GONE);
+                    addButton.setEnabled(true);
                 }
 
             }
         }.execute();
     }
+
+
     @SuppressLint("StaticFieldLeak")
     private void showCarModel() {
         new AsyncTask<Void, Void, Cursor>() {
+            @Override
+            protected void onPreExecute() {
+                progress_carmodel.setVisibility(View.VISIBLE);
+            }
+
             @Override
             protected Cursor doInBackground(Void... params) {
                 return   getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
@@ -234,10 +262,11 @@ public class UpdateCar extends AppCompatActivity {
 
                             numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
                             trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
-                            description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
+                            description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME))+" "+cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
+
                             classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
                             engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                           // imageView.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+
                             GlideApp.with(UpdateCar.this)
                                     .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
                                     .placeholder(R.drawable.progress_animation)
@@ -249,18 +278,15 @@ public class UpdateCar extends AppCompatActivity {
                     };
                     adapterCarModel.changeCursor(cursor);
                     carModelListView.setAdapter(adapterCarModel);
-                  final int position=findPosition(adapterCarModel,carModel_id);
-               /* adapterCarModel.notifyDataSetChanged();
-                carModelListView.setSelection(position);
-                carModelListView.setItemChecked(position,true);
-*/
 
+                //find the chosen car and choose it
+                final int position=findPosition(adapterCarModel,carModel_id);
                 carModelListView.post(new Runnable() {
                     @Override
                     public void run() {
                         carModelListView.requestFocusFromTouch();
                         carModelListView.setSelection(position);
-                        ((ProgressBar)findViewById(R.id.carmodel_pb)).setVisibility(View.GONE);
+                       progress_carmodel.setVisibility(View.GONE);
                     }
                 });
 
@@ -271,6 +297,11 @@ public class UpdateCar extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private void showBranches() {
         new AsyncTask<Void, Void, Cursor>() {
+            @Override
+            protected void onPreExecute() {
+                progress_branch.setVisibility(View.VISIBLE);
+            }
+
             @Override
             protected Cursor doInBackground(Void... params) {
                 return getContentResolver().query(AppContract.Branch.BRANCH_URI, null, null, null, null, null);
@@ -299,10 +330,7 @@ public class UpdateCar extends AppCompatActivity {
                         final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
 
 
-
-                        //view.setTag(cursor.getString((cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID))));
-
-
+                        //map butten
                         map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
                         map_button.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -329,13 +357,13 @@ public class UpdateCar extends AppCompatActivity {
                                                 Geocoder geocoder=new Geocoder(UpdateCar.this);
 
                                                 Address addresses= geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(),1).get(0);////your lat lng
-                                                LatLng posisiabsen=new LatLng(addresses.getLatitude(),addresses.getLongitude());
-                                                googleMap.addMarker(new MarkerOptions().position(posisiabsen).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
-                                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
+                                                LatLng position=new LatLng(addresses.getLatitude(),addresses.getLongitude());
+                                                googleMap.addMarker(new MarkerOptions().position(position).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
+                                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(position));
                                                 googleMap.getUiSettings().setAllGesturesEnabled(true);
                                                 googleMap.getUiSettings().setMapToolbarEnabled(true);
                                                 googleMap.getUiSettings().setZoomControlsEnabled(true);
-                                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posisiabsen,14), 1000, null);
+                                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,14), 1000, null);
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
@@ -352,32 +380,12 @@ public class UpdateCar extends AppCompatActivity {
 
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
-                        switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
-                            case "Hadera":
-                                branch_imageView.setImageResource(R.drawable.hadera);
-                                break;
-                            case "Ashdod":
-                                branch_imageView.setImageResource(R.drawable.ashdod);
-                                break;
-                            case "Tel Aviv":
-                                branch_imageView.setImageResource(R.drawable.tel_aviv);
-                                break;
-                            case "Petah Tikva":
 
-                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.pt),4096,true));
-                                branch_imageView.setImageResource(R.drawable.pt);
-                                break;
-                            case "Netanya":
-                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                branch_imageView.setImageResource(R.drawable.netanya2);
-
-                                break;
-                            default:
-                                //  branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                branch_imageView.setImageResource(R.drawable.netanya);
-
-                                break;
-                        }
+                        GlideApp.with(UpdateCar.this)
+                                .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.IMAGE_URL)))
+                                .placeholder(R.drawable.progress_animation)
+                                .centerCrop()
+                                .into(branch_imageView);
                     }
                 };
 
@@ -386,16 +394,13 @@ public class UpdateCar extends AppCompatActivity {
                 branchListView.setAdapter(adapterBranch);
                 branchListView.setItemChecked(findPosition(adapterBranch,branch_id),true);
                 final int position=findPosition(adapterBranch,carModel_id);
-               /* adapterBranch.notifyDataSetChanged();
-                branchListView.setSelection(position);
-                branchListView.setItemChecked(position,true);*/
-                //branchListView.clearFocus();
+
                branchListView.post(new Runnable() {
                     @Override
                     public void run() {
                         branchListView.requestFocusFromTouch();
                         branchListView.setSelection(position);
-                        ((ProgressBar)findViewById(R.id.branch_pb)).setVisibility(View.GONE);
+                        progress_branch.setVisibility(View.GONE);
                     }
                 });
 
