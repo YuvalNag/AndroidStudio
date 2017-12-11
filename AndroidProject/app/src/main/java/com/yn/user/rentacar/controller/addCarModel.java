@@ -35,6 +35,7 @@ import java.io.InputStream;
 
 public class addCarModel extends AppCompatActivity implements View.OnClickListener {
     final int REQUEST_CODE_GALLERY = 999;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,7 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
 
 
     }//check permission
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -104,10 +106,6 @@ public class addCarModel extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
-
-
-
-
 
     @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
