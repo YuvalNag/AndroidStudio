@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -38,10 +39,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class car_list extends AppCompatActivity {
+public class car_list extends AppCompatActivity implements View.OnClickListener{
     private  Map<Long,CarModel> carModelMap;
 
-
+//TODO onstate..
     Long car_id;
     ListView carListView;
     ProgressBar carProgressBar;
@@ -50,7 +51,7 @@ public class car_list extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_list);
         carListView=((ListView) findViewById(R.id.car_grid_view));
-
+        ((Button)findViewById(R.id.button_addcar)).setOnClickListener(this);
         carProgressBar = (ProgressBar)findViewById(R.id.car_pb);
 
         showCars();
@@ -139,13 +140,14 @@ public class car_list extends AppCompatActivity {
                             description.setText(carModel.getCompenyName() + " " + carModel.getModelName());
                             classa.setText(carModel.getCarClass().toString());
                             engine.setText(String.valueOf(carModel.getEngineCapacity()));
-                            //imageView.setImageBitmap(carModel.getCarPic());
+
                             GlideApp.with(car_list.this)
                                     .load(carModel.getCarPic())
                                     .placeholder(R.drawable.progress_animation)
                                     .centerCrop()
                                     .into(imageView);
                         }
+
                         TextView carid = (TextView) view.findViewById(R.id.car_id);
                         TextView carkilo = (TextView) view.findViewById(R.id.car_kilo);
                         TextView branch = (TextView) view.findViewById(R.id.car_branch);
@@ -234,14 +236,8 @@ public class car_list extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
-
                 Intent intent=new Intent(car_list.this,UpdateCar.class);
                 intent.putExtra(AppContract.Car.ID_CAR_NUMBER,car_id);
-
-
-
                 startActivityForResult(intent,1);
 
             }
@@ -262,7 +258,7 @@ public class car_list extends AppCompatActivity {
         }
         else if (requestCode==2&&resultCode==1) {
             data.getLongExtra(AppContract.Car.ID_CAR_NUMBER,0);
-            Snackbar.make(findViewById(android.R.id.content), "update car   id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(android.R.id.content), "add car   id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
             showCars();
             final FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab);
             final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
@@ -273,7 +269,10 @@ public class car_list extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        Intent intent=new Intent(this,addCarActivity.class);
-        startActivityForResult(intent,2);
+        if(view.getId()==R.id.button_addcar) {
+            Intent intent = new Intent(this, addCarActivity.class);
+            startActivityForResult(intent, 2);
+            //startActivity(intent);
+        }
     }
 }

@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.yn.user.rentacar.controller.managerList"
-    >
+    tools:context="com.yn.user.rentacar.controller.managerList">
 
     <Button
-        android:id="@+id/button_addmanager"
+        android:id="@+id/button_addcar"
 
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -27,13 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <GridView
-        android:drawSelectorOnTop="false"
-        android:choiceMode="singleChoice"
-        android:listSelector="@drawable/rounded_list_selector"
-        android:background="@drawable/rounded_corners"
-        android:backgroundTint="@color/cardview_dark_background"
         android:id="@+id/manager_listview"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -41,13 +34,18 @@
         android:layout_marginEnd="8dip"
         android:layout_marginStart="8dip"
         android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/cardview_dark_background"
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="false"
         android:horizontalSpacing="5dp"
+        android:listSelector="@drawable/rounded_list_selector"
         android:numColumns="auto_fit"
         android:verticalSpacing="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_addmanager" />
+        app:layout_constraintTop_toBottomOf="@+id/button_addcar" />
 
 
     <android.support.design.widget.FloatingActionButton
@@ -74,4 +72,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fab"
         app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/MKLoader"
+        android:layout_width="250dip"
+        android:layout_height="250dip"
+        android:layout_marginBottom="8dp"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/manager_listview"
+        app:layout_constraintEnd_toEndOf="@+id/manager_listview"
+        app:layout_constraintStart_toStartOf="@+id/manager_listview"
+        app:layout_constraintTop_toTopOf="@+id/manager_listview"
+        app:layout_constraintVertical_bias="0.501"
+        app:mk_color="@color/colorAccent"
+        app:mk_type="ClassicSpinner" />
 </android.support.constraint.ConstraintLayout>

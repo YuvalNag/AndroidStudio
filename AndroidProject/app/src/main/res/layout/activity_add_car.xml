@@ -15,11 +15,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@android:color/darker_gray"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="5dip"
-        android:drawSelectorOnTop="true"
-        android:listSelector="@drawable/ic_select1"
+        android:drawSelectorOnTop="false"
+        android:listSelector="@drawable/rounded_list_selector"
         app:layout_constraintBottom_toTopOf="@id/textInputLayout_car_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,17 +70,17 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@android:color/darker_gray"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="5dip"
-        android:drawSelectorOnTop="true"
+
+        android:drawSelectorOnTop="false"
         android:fadingEdge="vertical"
-        android:listSelector="@drawable/ic_select1"
-        app:layout_constraintBottom_toTopOf="@id/car_button"
+        android:listSelector="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/car_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout_kilo" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_kilo" />
 
 
     <Button
@@ -114,6 +114,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/model_listview" />
 
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/MKLoader"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mk_color="@color/colorAccent"
+        app:mk_type="ClassicSpinner" />
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/MKLoader_carModel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout_car_id"
+        app:layout_constraintEnd_toEndOf="@+id/model_listview"
+        app:layout_constraintStart_toStartOf="@+id/model_listview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mk_color="@color/colorAccent"
+        app:mk_type="ClassicSpinner" />
+
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -125,5 +159,22 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/branch_listview"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_kilo" />
+
+    <com.tuyenmonkey.mkloader.MKLoader
+        android:id="@+id/MKLoader_branche"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/car_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/branch_listview"
+        app:mk_color="@color/colorAccent"
+        app:mk_type="ClassicSpinner" />
 
 </android.support.constraint.ConstraintLayout>

@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.SimpleCursorAdapter;
 
+import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.backend.SHA_256_Helper;
@@ -31,9 +32,11 @@ private Long manager_id;
 private Long managers_salt;
 private String managers_password;
 private GridView managerGridView;
+private MKLoader progress;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_list);
+        progress=(MKLoader)findViewById(R.id.MKLoader);
         managerGridView =(GridView)findViewById(R.id.manager_listview);
        showManagers();
         manageDeleteOrEdit();
@@ -61,6 +64,11 @@ private GridView managerGridView;
 
         new AsyncTask<Void, Void, Cursor>() {
             @Override
+            protected void onPreExecute() {
+                progress.setVisibility(View.VISIBLE);
+            }
+
+            @Override
             protected Cursor doInBackground(Void... params) {
                 return getContentResolver().query(AppContract.Manager.MANAGER_URI, null, null, null, null, null);
 
@@ -70,9 +78,11 @@ private GridView managerGridView;
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
                 adapter.changeCursor(cursor);
+                managerGridView.setAdapter(adapter);
+                progress.setVisibility(View.GONE);
             }
         }.execute();
-        managerGridView.setAdapter(adapter);
+
     }
 
     private  void manageDeleteOrEdit() {

@@ -115,7 +115,7 @@ public class SQL_DBManager implements DB_manager {
         try {
             ContentValues contentValues=new ContentValues();
             contentValues.put(AppContract.Client.ID,id);
-            String result=PHPtools.POST(WEB_URL + "deleteClient.php", contentValues);
+            String result=PHPtools.POST(WEB_URL + "deleteclient.php", contentValues);
             printLog("removeClient:\n" + result);
             return true;
         } catch (Exception e) {

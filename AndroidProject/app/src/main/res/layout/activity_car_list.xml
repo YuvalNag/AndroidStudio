@@ -7,7 +7,7 @@
     tools:context="com.yn.user.rentacar.controller.car_list">
 
     <Button
-        android:id="@+id/button_addmanager"
+        android:id="@+id/button_addcar"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_addmanager" />
+        app:layout_constraintTop_toBottomOf="@+id/button_addcar" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

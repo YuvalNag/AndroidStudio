@@ -16,16 +16,24 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 
 
 public class client_list extends AppCompatActivity {
-private long client_id;
+
+    private long client_id;
+
+    private MKLoader progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_list);
+
+        progress=(MKLoader)findViewById(R.id.MKLoader);
+
        showclient();
        manageDeleteOrEdit();
 
@@ -45,6 +53,12 @@ private void showclient()
             );
 
     new AsyncTask<Void, Void, Cursor>() {
+
+        @Override
+        protected void onPreExecute() {
+            progress.setVisibility(View.VISIBLE);
+        }
+
         @Override
         protected Cursor doInBackground(Void... params) {
             Cursor cursor = getContentResolver().query(AppContract.Client.CLIENT_URI, null, null, null, null, null);
@@ -55,6 +69,8 @@ private void showclient()
         protected void onPostExecute(Cursor cursor) {
             super.onPostExecute(cursor);
             adapter.changeCursor(cursor);
+            progress.setVisibility(View.GONE);
+
         }
     }.execute();
     ((GridView)findViewById(R.id.client_listview)).setAdapter(adapter);
@@ -95,7 +111,7 @@ private void showclient()
 
                                         if (result > 0) {
                                             //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
-                                            Snackbar.make(findViewById(android.R.id.content), "delete car   id: " + client_id, Snackbar.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "deleted client   id: " + client_id, Snackbar.LENGTH_LONG).show();
                                             showclient();
                                             fabDelete.setVisibility(View.INVISIBLE);
 
@@ -103,7 +119,7 @@ private void showclient()
                                         }
                                         else {
                                             //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
-                                            Snackbar.make(findViewById(android.R.id.content), "ERROR deleting car" , Snackbar.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "ERROR deleting client" , Snackbar.LENGTH_LONG).show();
 
                                         }
                                     }

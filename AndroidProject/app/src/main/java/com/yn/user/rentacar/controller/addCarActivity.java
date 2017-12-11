@@ -34,6 +34,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
@@ -45,6 +46,9 @@ public class addCarActivity extends AppCompatActivity {
     ListView carModelListView;
     TextInputLayout idCar;
     TextInputLayout kilometers;
+    MKLoader progress;
+    MKLoader progress_car;
+    MKLoader progress_branch;
     Long branch_id;
     Long carModel_id;
 
@@ -56,6 +60,7 @@ public class addCarActivity extends AppCompatActivity {
                 findViews();
                 showBranches();
                 showCarModel();
+
                 branchListView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
                 branchListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
                 {
@@ -80,6 +85,9 @@ public class addCarActivity extends AppCompatActivity {
         carModelListView = (ListView) findViewById(R.id.model_listview);
         idCar = (TextInputLayout) findViewById(R.id.textInputLayout_car_id);
         kilometers = (TextInputLayout) findViewById(R.id.textInputLayout_kilo);
+        progress=(MKLoader)findViewById(R.id.MKLoader);
+        progress_car=(MKLoader)findViewById(R.id.MKLoader_carModel);
+       progress_branch=(MKLoader)findViewById(R.id.MKLoader_branche);
 
     }
 
@@ -100,6 +108,12 @@ public class addCarActivity extends AppCompatActivity {
 
         new AsyncTask<Void, Void, Uri>() {
             @Override
+            protected void onPreExecute() {
+                progress.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
             protected Uri doInBackground(Void... params) {
                 return getContentResolver().insert(AppContract.Car.CAR_URI, carContentValues);
             }
@@ -112,6 +126,7 @@ public class addCarActivity extends AppCompatActivity {
                 if (id > 0) {
                     //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
                     Snackbar.make(findViewById(android.R.id.content), "insert car   id: " + id, Snackbar.LENGTH_LONG).show();
+
                     Intent data=new Intent();
                     data.putExtra(AppContract.Car.ID_CAR_NUMBER,id);
                     setResult(1,data);
@@ -122,6 +137,7 @@ public class addCarActivity extends AppCompatActivity {
                     Snackbar.make(findViewById(android.R.id.content), "ERROR inserting car" , Snackbar.LENGTH_LONG).show();
 
                 }
+                progress.setVisibility(View.GONE);
             }
         }.execute();
     }
@@ -129,6 +145,11 @@ public class addCarActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private void showCarModel() {
         new AsyncTask<Void, Void, Cursor>() {
+            @Override
+            protected void onPreExecute() {
+                progress_car.setVisibility(View.VISIBLE);
+            }
+
             @Override
             protected Cursor doInBackground(Void... params) {
                 return getContentResolver().query(AppContract.CarModel.CAR_MODEL_URI, null, null, null, null, null);
@@ -155,14 +176,13 @@ public class addCarActivity extends AppCompatActivity {
                         final ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
 
 
-                        //view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
 
                         numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
                         trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
                         description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
                         classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
                         engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                        //imageView.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+
                         GlideApp.with(addCarActivity.this)
                                 .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
                                 .placeholder(R.drawable.progress_animation)
@@ -174,6 +194,8 @@ public class addCarActivity extends AppCompatActivity {
                 };
                 adapter.changeCursor(cursor);
                 carModelListView.setAdapter(adapter);
+                progress_car.setVisibility(View.GONE);
+
             }
 
         }.execute();
@@ -182,6 +204,12 @@ public class addCarActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private void showBranches() {
         new AsyncTask<Void, Void, Cursor>() {
+            @Override
+            protected void onPreExecute() {
+                progress_branch.setVisibility(View.VISIBLE);
+
+            }
+
             @Override
             protected Cursor doInBackground(Void... params) {
                 Cursor cursor = getContentResolver().query(AppContract.Branch.BRANCH_URI, null, null, null, null, null);
@@ -192,10 +220,7 @@ public class addCarActivity extends AppCompatActivity {
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
                 CursorAdapter adapter = new CursorAdapter(addCarActivity.this, cursor, 0) {
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        return super.getView(position, convertView, parent);
-                    }
+
 
                     @Override
                     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -263,40 +288,21 @@ public class addCarActivity extends AppCompatActivity {
 
                         address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
                         parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
-                        switch (cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))) {
-                            case "Hadera":
-                                branch_imageView.setImageResource(R.drawable.hadera);
-                                break;
-                            case "Ashdod":
-                                branch_imageView.setImageResource(R.drawable.ashdod);
-                                break;
-                            case "Tel Aviv":
-                                branch_imageView.setImageResource(R.drawable.tel_aviv);
-                                break;
-                            case "Petah Tikva":
-
-                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.pt),4096,true));
-                                branch_imageView.setImageResource(R.drawable.pt);
-                                break;
-                            case "Netanya":
-                                // branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                branch_imageView.setImageResource(R.drawable.netanya2);
-
-                                break;
-                            default:
-                                //  branch_imageView.setImageBitmap(Tools.scaleDown(BitmapFactory.decodeResource(getResources(),R.drawable.netanya2),4096,true));
-                                branch_imageView.setImageResource(R.drawable.netanya);
-
-                                break;
-                        }
+                        GlideApp.with(addCarActivity.this)
+                                .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.IMAGE_URL)))
+                                .placeholder(R.drawable.progress_animation)
+                                .centerCrop()
+                                .into(branch_imageView);
                     }
                 };
 
                         adapter.changeCursor(cursor);
 
                         branchListView.setAdapter(adapter);
+                progress_branch.setVisibility(View.GONE);
 
-                    }
+
+            }
                 }.execute();
 
 

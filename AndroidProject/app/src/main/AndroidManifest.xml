@@ -51,7 +51,7 @@
         <activity
             android:name=".controller.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".controller.addCarActivity" android:label="Add Car Model" />
+        <activity android:name=".controller.addCarActivity" android:label="Add Car" android:launchMode = "singleTask"/>
         <activity android:name=".controller.managerList" android:label="Manager"/>
         <activity android:name=".controller.LoginActivity" android:label="Login" />
         <activity android:name=".controller.StartActivity">
