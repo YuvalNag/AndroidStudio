@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -83,50 +84,47 @@ public class addCarActivity extends AppCompatActivity {
 
     }
 
-
-
     @SuppressLint("StaticFieldLeak")
     public void onClick(View view) {
 
 
+        if ( view == findViewById(R.id.car_button)) {
+            final ContentValues carContentValues = new ContentValues();
+            carContentValues.put(AppContract.Car.ID_CAR_NUMBER, idCar.getEditText().getText().toString());
+            carContentValues.put(AppContract.Car.KILOMETRERS, kilometers.getEditText().getText().toString());
+            carContentValues.put(AppContract.Car.BRANCH_NUM, branch_id);
+            carContentValues.put(AppContract.Car.CAR_MODEL_ID, carModel_id);
 
-        final ContentValues carContentValues= new ContentValues();
-        carContentValues.put(AppContract.Car.ID_CAR_NUMBER,idCar.getEditText().getText().toString());
-        carContentValues.put(AppContract.Car.KILOMETRERS,kilometers.getEditText().getText().toString());
-        carContentValues.put(AppContract.Car.BRANCH_NUM,branch_id);
-        carContentValues.put(AppContract.Car.CAR_MODEL_ID,carModel_id);
-
-
-
-        new AsyncTask<Void, Void, Uri>() {
-            @Override
-            protected Uri doInBackground(Void... params) {
-                return getContentResolver().insert(AppContract.Car.CAR_URI, carContentValues);
-            }
-
-            @Override
-            protected void onPostExecute(Uri uriResult) {
-                super.onPostExecute(uriResult);
-
-                long id = ContentUris.parseId(uriResult);
-                if (id > 0) {
-                    //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
-                    Snackbar.make(findViewById(android.R.id.content), "insert car   id: " + id, Snackbar.LENGTH_LONG).show();
-                    Intent data=new Intent();
-                    data.putExtra(AppContract.Car.ID_CAR_NUMBER,id);
-                    setResult(1,data);
-                    finish();
+            new AsyncTask<Void, Void, Uri>() {
+                @Override
+                protected Uri doInBackground(Void... params) {
+                    return getContentResolver().insert(AppContract.Car.CAR_URI, carContentValues);
                 }
-                else {
-                    //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
-                    Snackbar.make(findViewById(android.R.id.content), "ERROR inserting car" , Snackbar.LENGTH_LONG).show();
 
+                @Override
+                protected void onPostExecute(Uri uriResult) {
+                    super.onPostExecute(uriResult);
+
+                    long id = ContentUris.parseId(uriResult);
+                    if (id > 0) {
+                        //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
+                        //Snackbar.make(findViewById(android.R.id.content), "Inserted car id: " + id, Snackbar.LENGTH_LONG).show();
+                        Intent data = new Intent();
+                        data.putExtra(AppContract.Car.ID_CAR_NUMBER,id);
+                        setResult(1,data);
+                        finish();
+                    }
+                    else {
+                        //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(android.R.id.content), "ERROR inserting car.", Snackbar.LENGTH_LONG).show();
+
+                    }
                 }
-            }
-        }.execute();
+            }.execute();
+        }
     }
 
-    @SuppressLint("StaticFieldLeak")
+      @SuppressLint("StaticFieldLeak")
     private void showCarModel() {
         new AsyncTask<Void, Void, Cursor>() {
             @Override
@@ -211,7 +209,7 @@ public class addCarActivity extends AppCompatActivity {
 
 
 
-                       // view.setTag(cursor.getString((cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID))));
+                        // view.setTag(cursor.getString((cursor.getColumnIndexOrThrow(AppContract.Branch.BRANCH_ID))));
 
 
                         map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
@@ -292,17 +290,17 @@ public class addCarActivity extends AppCompatActivity {
                     }
                 };
 
-                        adapter.changeCursor(cursor);
+                adapter.changeCursor(cursor);
 
-                        branchListView.setAdapter(adapter);
+                branchListView.setAdapter(adapter);
 
-                    }
-                }.execute();
-
-
+            }
+        }.execute();
 
 
-     }
+
+
+    }
 
 
 

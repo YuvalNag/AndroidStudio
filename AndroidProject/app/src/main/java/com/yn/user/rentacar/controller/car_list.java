@@ -254,7 +254,7 @@ public class car_list extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==1&&resultCode==1) {
             showCars();
-            Snackbar.make(findViewById(android.R.id.content), "update car   id: " + car_id, Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(android.R.id.content), "Updated car id: " + car_id, Snackbar.LENGTH_LONG).show();
             final FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab);
             final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);
             fabDelete.setVisibility(View.INVISIBLE);
@@ -262,7 +262,7 @@ public class car_list extends AppCompatActivity {
         }
         else if (requestCode==2&&resultCode==1) {
             data.getLongExtra(AppContract.Car.ID_CAR_NUMBER,0);
-            Snackbar.make(findViewById(android.R.id.content), "update car   id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(android.R.id.content), "Inserted car id: "+data.getLongExtra(AppContract.CarModel.ID_CAR_MODEL,0), Snackbar.LENGTH_LONG).show();
             showCars();
             final FloatingActionButton fabDelete = (FloatingActionButton) findViewById(R.id.fab);
             final FloatingActionButton fabEdit = (FloatingActionButton) findViewById(R.id.fabEdit);

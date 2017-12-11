@@ -79,9 +79,8 @@ public class PHPtools {
             if(results.equals("")){
                 throw new Exception("An error occurred on the server's side");
             }
-            if (results.length()>5&&
-                    (results.substring(0, 5).equalsIgnoreCase("error") ||
-                results.substring(0, 8).equalsIgnoreCase("exception"))) {
+            if (results.length()>5 && results.substring(0, 5).equalsIgnoreCase("error") ||
+                    results.length()>8 &&results.substring(0, 8).equalsIgnoreCase("exception")) {
                 throw new Exception(results.substring(5));
             }
             return results;
