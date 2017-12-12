@@ -55,6 +55,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
+import com.yn.user.rentacar.controller.Adapters.BranchCurserAdapter;
+import com.yn.user.rentacar.controller.Adapters.CarModelCurserAdapter;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
 import com.yn.user.rentacar.model.entities.CarClass;
@@ -127,7 +129,8 @@ public class UpdateCar extends AppCompatActivity {
 
         //TODO check if -1
         new AsyncTask<Long, Void, Cursor>() {
-            
+
+
             @Override
             protected Cursor doInBackground(Long... longs) {
 
@@ -187,6 +190,7 @@ public class UpdateCar extends AppCompatActivity {
             protected void onPreExecute() {
                 progress.setVisibility(View.VISIBLE);
                 addButton.setEnabled(false);
+                
             }
 
             @Override
@@ -237,45 +241,10 @@ public class UpdateCar extends AppCompatActivity {
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
 
+                CursorAdapter adapterCarModel = new CarModelCurserAdapter(UpdateCar.this, cursor, 0);
 
 
 
-                    CursorAdapter adapterCarModel = new CursorAdapter(UpdateCar.this, cursor, 0) {
-                        @Override
-                        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                            return LayoutInflater.from(context).inflate(R.layout.carmodel_card, parent, false);
-                        }
-
-                        @Override
-                        public void bindView(View view, Context context, Cursor cursor) {
-                            TextView trans = (TextView) view.findViewById(R.id.cars_transmition);
-                            TextView description = (TextView) view.findViewById(R.id.cars_name_description);
-                            TextView classa = (TextView) view.findViewById(R.id.cars_class);
-                            TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
-                            TextView numseats = (TextView) view.findViewById(R.id.cars_numofseats);
-                            final ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
-
-
-
-
-                            //view.setTag(cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.CarModel.ID_CAR_MODEL)));
-
-                            numseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
-                            trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
-                            description.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME))+" "+cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
-
-                            classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
-                            engine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-
-                            GlideApp.with(UpdateCar.this)
-                                    .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
-                                    .placeholder(R.drawable.progress_animation)
-                                    .centerCrop()
-                                    .into(imageView);
-                        }
-
-
-                    };
                     adapterCarModel.changeCursor(cursor);
                     carModelListView.setAdapter(adapterCarModel);
 
@@ -311,83 +280,8 @@ public class UpdateCar extends AppCompatActivity {
             @Override
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
-                CursorAdapter adapterBranch = new CursorAdapter(UpdateCar.this, cursor, 0) {
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        return super.getView(position, convertView, parent);
-                    }
+                CursorAdapter adapterBranch = new BranchCurserAdapter(UpdateCar.this, cursor, 0) ;
 
-                    @Override
-                    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                        return LayoutInflater.from(context).inflate(R.layout.branch_item, parent, false);
-                    }
-
-                    @Override
-                    public void bindView(View view, Context context, final Cursor cursor) {
-                        TextView address = (TextView) view.findViewById(R.id.branch_address);
-                        TextView parking_spaces = (TextView) view.findViewById(R.id.branch_parking_spaces);
-                        final ImageButton map_button = (ImageButton) view.findViewById(R.id.branch_button);
-                        final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
-
-
-                        //map butten
-                        map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
-                        map_button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(final View view) {
-                                if (view == map_button) {
-                                    Dialog dialog = new Dialog(UpdateCar.this);
-                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                    dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-                                    dialog.setContentView(R.layout.dialogmap);
-                                    dialog.show();
-                                    GoogleMap googleMap;
-
-
-                                    MapView mMapView = (MapView) dialog.findViewById(R.id.mapView);
-                                    MapsInitializer.initialize(UpdateCar.this);
-
-                                    mMapView = (MapView) dialog.findViewById(R.id.mapView);
-                                    mMapView.onCreate(dialog.onSaveInstanceState());
-                                    mMapView.onResume();// needed to get the map to display immediately
-                                    mMapView.getMapAsync(new OnMapReadyCallback() {
-                                        @Override
-                                        public void onMapReady(final GoogleMap googleMap) {
-                                            try {
-                                                Geocoder geocoder=new Geocoder(UpdateCar.this);
-
-                                                Address addresses= geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(),1).get(0);////your lat lng
-                                                LatLng position=new LatLng(addresses.getLatitude(),addresses.getLongitude());
-                                                googleMap.addMarker(new MarkerOptions().position(position).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
-                                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(position));
-                                                googleMap.getUiSettings().setAllGesturesEnabled(true);
-                                                googleMap.getUiSettings().setMapToolbarEnabled(true);
-                                                googleMap.getUiSettings().setZoomControlsEnabled(true);
-                                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position,14), 1000, null);
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    });
-                                }
-
-                            }
-
-
-                        });
-
-
-
-                        address.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + "    " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + "  #:" + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER)));
-                        parking_spaces.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.NUMBER_OF_PARKING_SPACES)));
-
-                        GlideApp.with(UpdateCar.this)
-                                .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Branch.IMAGE_URL)))
-                                .placeholder(R.drawable.progress_animation)
-                                .centerCrop()
-                                .into(branch_imageView);
-                    }
-                };
 
                 adapterBranch.changeCursor(cursor);
 
