@@ -1,46 +1,28 @@
 package com.yn.user.rentacar.controller;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
-import com.yn.user.rentacar.controller.Adapters.BranchCurserAdapter;
-import com.yn.user.rentacar.controller.Adapters.CarModelCurserAdapter;
+import com.yn.user.rentacar.controller.Adapters.BranchCursorAdapter;
+import com.yn.user.rentacar.controller.Adapters.CarModelCursorAdapter;
 import com.yn.user.rentacar.model.backend.AppContract;
-import com.yn.user.rentacar.model.datasource.Tools;
 
 
 public class addCarActivity extends AppCompatActivity {
@@ -158,7 +140,7 @@ public class addCarActivity extends AppCompatActivity {
                 protected void onPostExecute(Cursor cursor) {
                     super.onPostExecute(cursor);
 
-                    CursorAdapter adapter = new CarModelCurserAdapter(addCarActivity.this, cursor, 0);
+                    CursorAdapter adapter = new CarModelCursorAdapter(addCarActivity.this, cursor, 0);
 
 
                     adapter.changeCursor(cursor);
@@ -189,7 +171,7 @@ public class addCarActivity extends AppCompatActivity {
                 protected void onPostExecute(Cursor cursor) {
                     super.onPostExecute(cursor);
 
-                    CursorAdapter adapter = new BranchCurserAdapter(addCarActivity.this, cursor, 0);
+                    CursorAdapter adapter = new BranchCursorAdapter(addCarActivity.this, cursor, 0);
 
 
                     adapter.changeCursor(cursor);

@@ -21,10 +21,10 @@ import java.util.Map;
  * Created by nissy34 on 12/12/2017.
  */
 
-public class CarCurserAdapter extends CursorAdapter {
+public class CarCursorAdapter extends CursorAdapter {
 
     private Map<Long,CarModel> carModelMap;
-    public CarCurserAdapter(Context context, Cursor c, int flags, Map<Long,CarModel> carModelMap) {
+    public CarCursorAdapter(Context context, Cursor c, int flags, Map<Long,CarModel> carModelMap) {
         super(context, c, flags);
         this.carModelMap=carModelMap;
     }

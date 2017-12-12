@@ -32,9 +32,9 @@ import com.yn.user.rentacar.model.backend.AppContract;
  * Created by nissy34 on 12/12/2017.
  */
 
-public class CarModelCurserAdapter extends CursorAdapter {
+public class CarModelCursorAdapter extends CursorAdapter {
 
-    public CarModelCurserAdapter(Context context, Cursor c, int flags) {
+    public CarModelCursorAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }
 

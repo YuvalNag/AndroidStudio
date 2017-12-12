@@ -7,37 +7,24 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.util.LongSparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.yn.user.rentacar.R;
-import com.yn.user.rentacar.controller.Adapters.CarCurserAdapter;
+import com.yn.user.rentacar.controller.Adapters.CarCursorAdapter;
 import com.yn.user.rentacar.model.backend.AppContract;
-import com.yn.user.rentacar.model.datasource.Tools;
 import com.yn.user.rentacar.model.entities.CarClass;
 import com.yn.user.rentacar.model.entities.CarModel;
 import com.yn.user.rentacar.model.entities.TransmissionType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class car_list extends AppCompatActivity implements View.OnClickListener{
@@ -113,7 +100,7 @@ public class car_list extends AppCompatActivity implements View.OnClickListener{
 
                 Cursor cursorCar=cursor;
 
-                CursorAdapter adapter = new CarCurserAdapter(car_list.this, cursorCar, 0,carModelMap);
+                CursorAdapter adapter = new CarCursorAdapter(car_list.this, cursorCar, 0,carModelMap);
 
                 adapter.changeCursor(cursorCar);
                 carListView.setAdapter(adapter);

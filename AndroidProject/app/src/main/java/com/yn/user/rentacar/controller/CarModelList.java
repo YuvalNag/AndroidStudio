@@ -2,9 +2,7 @@ package com.yn.user.rentacar.controller;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,23 +10,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.yn.user.rentacar.R;
-import com.yn.user.rentacar.controller.Adapters.CarModelCurserAdapter;
+import com.yn.user.rentacar.controller.Adapters.CarModelCursorAdapter;
 import com.yn.user.rentacar.model.backend.AppContract;
-import com.yn.user.rentacar.model.datasource.Tools;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class CarModelList extends AppCompatActivity {
@@ -75,7 +65,7 @@ public class CarModelList extends AppCompatActivity {
             @Override
             protected void onPostExecute(final Cursor cursor) {
                 super.onPostExecute(cursor);
-                CursorAdapter adapter = new CarModelCurserAdapter(CarModelList.this, cursor, 0);
+                CursorAdapter adapter = new CarModelCursorAdapter(CarModelList.this, cursor, 0);
 
 
 

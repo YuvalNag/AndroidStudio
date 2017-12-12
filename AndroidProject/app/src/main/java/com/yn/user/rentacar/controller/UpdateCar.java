@@ -1,69 +1,27 @@
 package com.yn.user.rentacar.controller;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CursorAdapter;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
-import com.yn.user.rentacar.controller.Adapters.BranchCurserAdapter;
-import com.yn.user.rentacar.controller.Adapters.CarModelCurserAdapter;
+import com.yn.user.rentacar.controller.Adapters.BranchCursorAdapter;
+import com.yn.user.rentacar.controller.Adapters.CarModelCursorAdapter;
 import com.yn.user.rentacar.model.backend.AppContract;
-import com.yn.user.rentacar.model.datasource.Tools;
-import com.yn.user.rentacar.model.entities.CarClass;
-import com.yn.user.rentacar.model.entities.TransmissionType;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 public class UpdateCar extends AppCompatActivity {
 
@@ -190,7 +148,7 @@ public class UpdateCar extends AppCompatActivity {
             protected void onPreExecute() {
                 progress.setVisibility(View.VISIBLE);
                 addButton.setEnabled(false);
-                
+
             }
 
             @Override
@@ -241,12 +199,10 @@ public class UpdateCar extends AppCompatActivity {
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
 
-                CursorAdapter adapterCarModel = new CarModelCurserAdapter(UpdateCar.this, cursor, 0);
+                CursorAdapter adapterCarModel = new CarModelCursorAdapter(UpdateCar.this, cursor, 0);
 
-
-
-                    adapterCarModel.changeCursor(cursor);
-                    carModelListView.setAdapter(adapterCarModel);
+                adapterCarModel.changeCursor(cursor);
+                carModelListView.setAdapter(adapterCarModel);
 
                 //find the chosen car and choose it
                 final int position=findPosition(adapterCarModel,carModel_id);
@@ -280,11 +236,10 @@ public class UpdateCar extends AppCompatActivity {
             @Override
             protected void onPostExecute(Cursor cursor) {
                 super.onPostExecute(cursor);
-                CursorAdapter adapterBranch = new BranchCurserAdapter(UpdateCar.this, cursor, 0) ;
 
+                CursorAdapter adapterBranch = new BranchCursorAdapter(UpdateCar.this, cursor, 0) ;
 
                 adapterBranch.changeCursor(cursor);
-
                 branchListView.setAdapter(adapterBranch);
                 branchListView.setItemChecked(findPosition(adapterBranch,branch_id),true);
                 final int position=findPosition(adapterBranch,carModel_id);
