@@ -126,7 +126,8 @@ public class Tools {
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RENT  ),
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RETURN),
                 contentValues.getAsBoolean(AppContract.Order.FOULED               ),
-                status, contentValues.getAsLong(AppContract.Order.AMOUNT_OF_FOUL   ),
+                 contentValues.getAsBoolean(AppContract.Order.ORDER_STATUS),
+                contentValues.getAsLong(AppContract.Order.AMOUNT_OF_FOUL   ),
                 contentValues.getAsLong(AppContract.Order.FINAL_AMOUNT      )
         );
     }

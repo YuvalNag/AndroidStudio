@@ -74,7 +74,7 @@ public class AppContract {
 
         public static final String ORDER_ID="_id";
         public static final String CLIENT_ID="Client_Id";
-        public static final String ORDER_STATUS="Order_Status";
+        public static final String ORDER_STATUS="order_Status";
         public static final String CAR_NUM="carNumber";
         public static final String RENT_DATE="rentDate";
         public static final String RETURN_DATE="returnDate";
