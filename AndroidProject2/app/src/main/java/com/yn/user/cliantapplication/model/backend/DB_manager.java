@@ -22,6 +22,8 @@ public interface DB_manager {
     Cursor getClient(long id);
     Cursor getOrder(long id);
 
+
+    Cursor getOrders();
     Cursor getCarModels();
     Cursor getClients();
     Cursor getBranches();

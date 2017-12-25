@@ -222,7 +222,12 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public boolean orderClosedIn10sec() {
-        return false;
+        Cursor orders = getOrders();
+        orders.moveToLast();
+        for(int i=mCursor.getCount();i>0;i--,mCursor.moveToPrevious())
+        {
+
+        }
     }
 
     @Override
@@ -232,6 +237,11 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public Cursor getOrder(long id) {
+        return null;
+    }
+
+    @Override
+    public Cursor getOrders() {
         return null;
     }
 
