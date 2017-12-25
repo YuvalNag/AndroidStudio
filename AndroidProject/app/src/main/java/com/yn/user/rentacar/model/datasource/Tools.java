@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.res.ResourcesCompat;
 import android.util.Base64;
 
 import com.yn.user.rentacar.model.backend.AppContract;
@@ -26,10 +25,8 @@ import com.yn.user.rentacar.model.entities.TransmissionType;
 
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.sql.Date;
 import java.util.List;
-import com.yn.user.rentacar.R;
 
 
 /**
@@ -129,7 +126,7 @@ public class Tools {
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RENT  ),
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RETURN),
                 contentValues.getAsBoolean(AppContract.Order.FOULED               ),
-                contentValues.getAsLong(AppContract.Order.AMOUNT_OF_FOUL   ),
+                status, contentValues.getAsLong(AppContract.Order.AMOUNT_OF_FOUL   ),
                 contentValues.getAsLong(AppContract.Order.FINAL_AMOUNT      )
         );
     }

@@ -81,7 +81,7 @@ public class PHPtools {
             }
             if (results.length()>5 && results.substring(0, 5).equalsIgnoreCase("error") ||
                     results.length()>8 &&results.substring(0, 8).equalsIgnoreCase("exception")) {
-                throw new Exception(results.substring(5));
+                throw new Exception(results);
             }
             return results;
         }

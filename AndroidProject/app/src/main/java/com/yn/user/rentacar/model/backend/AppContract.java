@@ -74,9 +74,10 @@ public class AppContract {
 
         public static final String ORDER_ID="_id";
         public static final String CLIENT_ID="Client_Id";
+        public static final String ORDER_STATUS="Order_Status";
         public static final String CAR_NUM="carNumber";
-        public static final String RENT_DATE="_id";
-        public static final String RETURN_DATE="_id";
+        public static final String RENT_DATE="rentDate";
+        public static final String RETURN_DATE="returnDate";
         public static final String KILOMETERS_AT_RENT="kilometersAtRent";
         public static final String KILOMETERS_AT_RETURN="kilometersAtReturn";
         public static final String FOULED="fouled";
