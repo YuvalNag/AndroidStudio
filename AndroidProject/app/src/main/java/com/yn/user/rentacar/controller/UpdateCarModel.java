@@ -57,8 +57,11 @@ public class UpdateCarModel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_car_model);
+
         findViews();
+
         populateViews();
+
         //populate the spinners
         ((Spinner) findViewById(R.id.model_spin_class)).setAdapter(new ArrayAdapter<CarClass>(this, android.R.layout.simple_list_item_1, CarClass.values()));
         ((Spinner) findViewById(R.id.model_spin_trans)).setAdapter(new ArrayAdapter<TransmissionType>(this, android.R.layout.simple_list_item_1, TransmissionType.values()));
@@ -103,19 +106,21 @@ public class UpdateCarModel extends AppCompatActivity {
 
                   modelSpinTrans.setAdapter(new ArrayAdapter<TransmissionType>(UpdateCarModel.this, android.R.layout.simple_list_item_1, TransmissionType.values()));
                   modelSpinTrans.setSelection(((ArrayAdapter)modelSpinTrans.getAdapter()).getPosition(TransmissionType.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)))));
+
                   modelNumofseats.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.NUM_OF_SEATS)));
-                 // trans.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.TRANSMISSION_TYPE)));
+
                   modelName.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.MODEL_NAME)));
+
                   modelComname.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.COMPENY_NAME)));
-                  //classa.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.CLASS_OF_CAR)));
+
                   modelEngine.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.ENGINE_COPACITY)));
-                  //modelImage.setImageBitmap(Tools.byteToImage(cursor.getBlob(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG))));
+
                   GlideApp.with(UpdateCarModel.this)
                           .load(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.CarModel.IMG)))
                           .placeholder(R.drawable.progress_animation)
-                          .centerCrop()
                           .into(modelImage);
                   modelId.setText(String.valueOf(carModel_id));
+
                   ((ProgressBar)findViewById(R.id.updtecar_pb)).setVisibility(View.GONE);
               }
             }

@@ -114,8 +114,8 @@
 
     <com.tuyenmonkey.mkloader.MKLoader
         android:id="@+id/MKLoader"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="250dip"
+        android:layout_height="250dip"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"

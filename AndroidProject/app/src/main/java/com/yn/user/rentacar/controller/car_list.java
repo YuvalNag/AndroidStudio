@@ -7,36 +7,24 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.util.LongSparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
-import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.yn.user.rentacar.R;
+import com.yn.user.rentacar.controller.Adapters.CarCursorAdapter;
 import com.yn.user.rentacar.model.backend.AppContract;
-import com.yn.user.rentacar.model.datasource.Tools;
 import com.yn.user.rentacar.model.entities.CarClass;
 import com.yn.user.rentacar.model.entities.CarModel;
 import com.yn.user.rentacar.model.entities.TransmissionType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class car_list extends AppCompatActivity implements View.OnClickListener{
@@ -112,53 +100,8 @@ public class car_list extends AppCompatActivity implements View.OnClickListener{
 
                 Cursor cursorCar=cursor;
 
-                CursorAdapter adapter = new CursorAdapter(car_list.this, cursorCar, 0) {
+                CursorAdapter adapter = new CarCursorAdapter(car_list.this, cursorCar, 0,carModelMap);
 
-
-                    @Override
-                    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                        return LayoutInflater.from(context).inflate(R.layout.car_item_card, parent, false);
-                    }
-
-                    @Override
-                    public void bindView(View view, Context context, Cursor cursor) {
-                        long modelid=cursor.getLong(cursor.getColumnIndexOrThrow(AppContract.Car.CAR_MODEL_ID));
-
-                        CarModel carModel=carModelMap.get(modelid);
-                        if(carModel != null) {
-
-                            TextView trans = (TextView) view.findViewById(R.id.cars_transmition);
-                            TextView description = (TextView) view.findViewById(R.id.cars_name_description);
-                            TextView classa = (TextView) view.findViewById(R.id.cars_class);
-                            TextView engine = (TextView) view.findViewById(R.id.cars_engineCapacity);
-                            TextView numseats = (TextView) view.findViewById(R.id.cars_numofseats);
-                            ImageView imageView = (ImageView) view.findViewById(R.id.cars_carImage);
-
-
-                            numseats.setText(String.valueOf(carModel.getNumOfSeats()));
-                            trans.setText(carModel.getTransmissionType().toString());
-                            description.setText(carModel.getCompenyName() + " " + carModel.getModelName());
-                            classa.setText(carModel.getCarClass().toString());
-                            engine.setText(String.valueOf(carModel.getEngineCapacity()));
-
-                            GlideApp.with(car_list.this)
-                                    .load(carModel.getCarPic())
-                                    .placeholder(R.drawable.progress_animation)
-                                    .centerCrop()
-                                    .into(imageView);
-                        }
-
-                        TextView carid = (TextView) view.findViewById(R.id.car_id);
-                        TextView carkilo = (TextView) view.findViewById(R.id.car_kilo);
-                        TextView branch = (TextView) view.findViewById(R.id.car_branch);
-
-                        carid.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Car.ID_CAR_NUMBER)));
-                        carkilo.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Car.KILOMETRERS)));
-                        branch.setText(cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Car.BRANCH_NUM)));
-                    }
-
-
-                };
                 adapter.changeCursor(cursorCar);
                 carListView.setAdapter(adapter);
                 carProgressBar.setVisibility(View.GONE);

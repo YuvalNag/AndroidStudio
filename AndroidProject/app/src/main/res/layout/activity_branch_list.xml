@@ -14,9 +14,8 @@
         android:layout_marginStart="8dip"
         android:layout_marginTop="8dip"
 
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="3dip"
-        android:background="@drawable/rounded_corners"
+        android:background="@android:color/darker_gray"
+
         android:choiceMode="singleChoice"
         android:drawSelectorOnTop="false"
         android:listSelector="@color/colorAccent"
