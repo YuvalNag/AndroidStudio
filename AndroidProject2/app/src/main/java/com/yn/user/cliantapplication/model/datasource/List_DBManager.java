@@ -4,14 +4,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.yn.user.rentacar.model.backend.DB_manager;
-import com.yn.user.rentacar.model.entities.Address;
-import com.yn.user.rentacar.model.entities.Branch;
-import com.yn.user.rentacar.model.entities.Car;
-import com.yn.user.rentacar.model.entities.CarModel;
-import com.yn.user.rentacar.model.entities.Client;
-import com.yn.user.rentacar.model.entities.Manager;
-import com.yn.user.rentacar.model.entities.Order;
+import com.yn.user.cliantapplication.model.backend.DB_manager;
+import com.yn.user.cliantapplication.model.entities.Address;
+import com.yn.user.cliantapplication.model.entities.Branch;
+import com.yn.user.cliantapplication.model.entities.Car;
+import com.yn.user.cliantapplication.model.entities.CarModel;
+import com.yn.user.cliantapplication.model.entities.Client;
+import com.yn.user.cliantapplication.model.entities.Manager;
+import com.yn.user.cliantapplication.model.entities.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +131,7 @@ public class List_DBManager  implements DB_manager {
                 return true;
         return false;
     }
-    @Override
+    //@Override
     public long addClient(ContentValues values){
         try {
             Client client = Tools.ContentValuesToClient(values);
@@ -152,7 +152,12 @@ public class List_DBManager  implements DB_manager {
 
     }
 
-    @Override
+    //@Override
+    public long addOrder(ContentValues contentValues) {
+        return 0;
+    }
+
+    //@Override
     public long addCarModel(ContentValues values) {
 
 
@@ -175,7 +180,7 @@ public class List_DBManager  implements DB_manager {
 
 
 
-    @Override
+    //@Override
     public long addCar(ContentValues values) {
         try {
             Car car = Tools.ContentValuesToCar(values);
@@ -194,7 +199,7 @@ public class List_DBManager  implements DB_manager {
             }
     }
 
-    @Override
+    //@Override
     public long addBranch(ContentValues values) {
         try {
             Branch branch = Tools.ContentValuesToBranch(values);
@@ -213,7 +218,7 @@ public class List_DBManager  implements DB_manager {
         }
     }
 
-    @Override
+    //@Override
     public long addManager(ContentValues contentValues) {
         try {
             Manager manager = Tools.ContentValuesToManager(contentValues);
@@ -232,7 +237,7 @@ public class List_DBManager  implements DB_manager {
         }
     }
 
-    @Override
+    //@Override
     public boolean removeClient(long id) {
         Client client = null;
         for (Client item : clients)
@@ -244,7 +249,7 @@ public class List_DBManager  implements DB_manager {
         return clients.remove(client);
     }
 
-    @Override
+    //@Override
     public boolean removeCarModel(long id) {
         CarModel carModel = null;
         for (CarModel item : carModels)
@@ -256,7 +261,7 @@ public class List_DBManager  implements DB_manager {
         return carModels.remove(carModel);
     }
 
-    @Override
+    //@Override
     public boolean removeCar(long id) {
         Car car = null;
         for (Car item : cars)
@@ -269,7 +274,7 @@ public class List_DBManager  implements DB_manager {
     }
 
 
-    @Override
+    //@Override
     public boolean removeBranch(long id) {
         Branch branch = null;
         for (Branch item : branches)
@@ -281,7 +286,7 @@ public class List_DBManager  implements DB_manager {
         return branches.remove(branch);
     }
 
-    @Override
+    //@Override
     public boolean removeManager(long id) {
         Manager manager = null;
         for (Manager item : managers)
@@ -293,7 +298,7 @@ public class List_DBManager  implements DB_manager {
         return managers.remove(manager);
     }
 
-    @Override
+    //@Override
     public boolean updateClient(long id, ContentValues values) {
         try {
             Client client = Tools.ContentValuesToClient(values);
@@ -309,7 +314,7 @@ public class List_DBManager  implements DB_manager {
         return false;
     }
 
-    @Override
+    //@Override
     public boolean updateCar(long id, ContentValues values) {
         try {
             Car car = Tools.ContentValuesToCar(values);
@@ -325,7 +330,32 @@ public class List_DBManager  implements DB_manager {
         return false;
     }
 
-    @Override
+    //@Override
+    public boolean closeOrder(long id, ContentValues values) {
+        return false;
+    }
+
+    //@Override
+    public boolean orderClosedIn10sec() {
+        return false;
+    }
+
+    //@Override
+    public Cursor getClient(long id) {
+        return null;
+    }
+
+    //@Override
+    public Cursor getOrder(long id) {
+        return null;
+    }
+
+    //@Override
+    public Cursor getOrders() {
+        return null;
+    }
+
+    //@Override
     public boolean updateCarModel(long id, ContentValues values) {
         try {
             CarModel carModel = Tools.ContentValuesToCarModel(values);
@@ -341,7 +371,7 @@ public class List_DBManager  implements DB_manager {
         return false;
     }
 
-    @Override
+    //@Override
     public boolean updateBranch(long id, ContentValues values) {
         try {
             Branch branch = Tools.ContentValuesToBranch(values);
@@ -357,7 +387,7 @@ public class List_DBManager  implements DB_manager {
         return false;
     }
 
-    @Override
+    //@Override
     public boolean updateManager(long id, ContentValues values) {
         try {
             Manager manager = Tools.ContentValuesToManager(values);
@@ -373,7 +403,7 @@ public class List_DBManager  implements DB_manager {
         return false;
     }
 
-    @Override
+    //@Override
     public Cursor getManager(long id) {
         for (Manager manager:managers)
             if(manager.getId()==id)
@@ -387,7 +417,7 @@ public class List_DBManager  implements DB_manager {
         return null;
     }
 
-    @Override
+    //@Override
     public Cursor getCar(long id) {
         for (Car car:cars)
             if(car.getIdCarNumber()==id)
@@ -401,7 +431,7 @@ public class List_DBManager  implements DB_manager {
         return null;
     }
 
-    @Override
+    //@Override
     public Cursor getCarModel(long id) {
 
         for (CarModel carMOde:carModels)
@@ -416,28 +446,53 @@ public class List_DBManager  implements DB_manager {
         return null;
     }
 
-    @Override
+    //@Override
     public Cursor getCarModels()  {
         return Tools.carModelsListToCursor(carModels);
     }
 
 
-    @Override
+    //@Override
     public Cursor getClients() {
         return Tools.clientListToCursor(clients);
     }
 
-    @Override
+    //@Override
     public Cursor getBranches() {
         return Tools.branchListToCursor(branches);
     }
 
-    @Override
+    //@Override
+    public Cursor getAvailableCars() {
+        return null;
+    }
+
+    //@Override
+    public Cursor getAvailableCarsByBranche() {
+        return null;
+    }
+
+    //@Override
+    public Cursor getAvailableCarsFromPlace() {
+        return null;
+    }
+
+    //@Override
+    public Cursor getBrancheOfAvailableCarsByCarModel() {
+        return null;
+    }
+
+    //@Override
+    public Cursor getOpenOrders() {
+        return null;
+    }
+
+    //@Override
     public Cursor getCars() {
         return Tools.CarListToCursor(cars);
     }
 
-    @Override
+    //@Override
     public Cursor getManagers() {
         return Tools.managerListToCursor(managers);
     }

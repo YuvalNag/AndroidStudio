@@ -1,6 +1,6 @@
 package com.yn.user.cliantapplication.model.backend;
 
-import com.yn.user.rentacar.model.datasource.SQL_DBManager;
+import com.yn.user.cliantapplication.model.datasource.SQL_DBManager;
 
 /**
  * Created by USER on 12/11/2017.

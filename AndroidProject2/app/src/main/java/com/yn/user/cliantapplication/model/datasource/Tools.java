@@ -10,16 +10,16 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
 
-import com.yn.user.rentacar.model.backend.AppContract;
-import com.yn.user.rentacar.model.entities.Address;
-import com.yn.user.rentacar.model.entities.Branch;
-import com.yn.user.rentacar.model.entities.Car;
-import com.yn.user.rentacar.model.entities.CarClass;
-import com.yn.user.rentacar.model.entities.CarModel;
-import com.yn.user.rentacar.model.entities.Client;
-import com.yn.user.rentacar.model.entities.Manager;
-import com.yn.user.rentacar.model.entities.Order;
-import com.yn.user.rentacar.model.entities.TransmissionType;
+import com.yn.user.cliantapplication.model.backend.AppContract;
+import com.yn.user.cliantapplication.model.entities.Address;
+import com.yn.user.cliantapplication.model.entities.Branch;
+import com.yn.user.cliantapplication.model.entities.Car;
+import com.yn.user.cliantapplication.model.entities.CarClass;
+import com.yn.user.cliantapplication.model.entities.CarModel;
+import com.yn.user.cliantapplication.model.entities.Client;
+import com.yn.user.cliantapplication.model.entities.Manager;
+import com.yn.user.cliantapplication.model.entities.Order;
+import com.yn.user.cliantapplication.model.entities.TransmissionType;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Date;

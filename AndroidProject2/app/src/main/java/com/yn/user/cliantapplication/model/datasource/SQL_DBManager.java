@@ -11,11 +11,16 @@ import com.yn.user.cliantapplication.model.entities.Car;
 import com.yn.user.cliantapplication.model.entities.CarModel;
 import com.yn.user.cliantapplication.model.entities.Client;
 import com.yn.user.cliantapplication.model.entities.Manager;
+import com.yn.user.cliantapplication.model.entities.Order;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -222,21 +227,70 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public boolean orderClosedIn10sec() {
-        Cursor orders = getOrders();
-        orders.moveToLast();
-        for(int i=mCursor.getCount();i>0;i--,mCursor.moveToPrevious())
-        {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd' HH:mm:ss");
+        String date = df.format(Calendar.getInstance().getTime());
+        List<Order> result = new ArrayList<>();
 
-        }
+        try {
+            ContentValues where=new ContentValues();
+            where.put(AppContract.Order.RETURN_DATE,date);
+            String str = PHPtools.POST(WEB_URL + "orderClosedIn10sec.php",where);
+            JSONArray array = new JSONObject(str).getJSONArray("orderClosedIn10sec");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                result.add(Tools.ContentValuesToOrder(contentValues));
+
+            }
+            return (Tools.ordresListToCursor(result)).getCount()>0;
+        } catch (Exception e) {
+            e.printStackTrace();     }
+        return false;
     }
 
     @Override
     public Cursor getClient(long id) {
+        List<Client> result = new ArrayList<>();
+
+        try {
+            ContentValues where=new ContentValues();
+            where.put(AppContract.Client.ID,id);
+            String str = PHPtools.POST(WEB_URL + "clients.php",where);
+            JSONArray array = new JSONObject(str).getJSONArray("clients");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                result.add(Tools.ContentValuesToClient(contentValues));
+
+            }
+            return Tools.clientListToCursor(result);
+        } catch (Exception e) {
+            e.printStackTrace();     }
         return null;
     }
 
+
     @Override
-    public Cursor getOrder(long id) {
+    public Cursor getOrder(long id){
+        List<Order> result = new ArrayList<>();
+
+        try {
+            ContentValues where=new ContentValues();
+            where.put(AppContract.Order.ORDER_ID,id);
+            String str = PHPtools.POST(WEB_URL + "orders.php",where);
+            JSONArray array = new JSONObject(str).getJSONArray("orders");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                result.add(Tools.ContentValuesToClient(contentValues));
+
+            }
+            return Tools.clientListToCursor(result);
+        } catch (Exception e) {
+            e.printStackTrace();     }
         return null;
     }
 
