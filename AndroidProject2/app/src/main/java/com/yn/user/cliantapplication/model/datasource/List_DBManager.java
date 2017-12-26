@@ -1,3 +1,4 @@
+/*
 package com.yn.user.cliantapplication.model.datasource;
 
 import android.content.ContentValues;
@@ -16,9 +17,11 @@ import com.yn.user.cliantapplication.model.entities.Order;
 import java.util.ArrayList;
 import java.util.List;
 
+*/
 /**
  * Created by USER on 07/11/2017.
- */
+ *//*
+
 
 public class List_DBManager  implements DB_manager {
     final String TAG = "List_DBManager";
@@ -40,6 +43,7 @@ public class List_DBManager  implements DB_manager {
          orders=new ArrayList<>();
          branches=new ArrayList<>();
          managers=new ArrayList<>();
+*/
 /*
         Bitmap bitmap = BitmapFactory.decodeResource(Resources.getSystem(),R.drawable.kia_rio);
         Resources res = MainActivity.mMainActivity.getResources();
@@ -48,7 +52,8 @@ public class List_DBManager  implements DB_manager {
 
 
         carModels.add(new CarModel(12,"KIA","RIO",1600, TransmissionType.AUTOMATIC,5, CarClass.C,bitmap));
-     */
+     *//*
+
         try {
             managers.add(new Manager("Mangaer","Big","n@gmail.com",0,"9999","1234",0,0));
             managers.add(new Manager("Mangaer","Big","nr@gmail.com",1,"9999","1234",0,0));
@@ -498,3 +503,4 @@ public class List_DBManager  implements DB_manager {
     }
 
 }
+*/

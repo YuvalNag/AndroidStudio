@@ -24,11 +24,21 @@ public class Order implements Serializable{
 
     private  Boolean fouled;
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    private  Boolean status;
+
     private  long amountOfFoul;
 
     private  long finalAmount;
 
-    public Order(long idOrderNum, long clientId, long carNumber, Date rentDate, Date returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, long amountOfFoul, long finalAmount) {
+    public Order(long idOrderNum, long clientId, long carNumber, Date rentDate, Date returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, Boolean status, long amountOfFoul, long finalAmount) {
         this.idOrderNum = idOrderNum;
         this.clientId = clientId;
         this.carNumber = carNumber;
@@ -37,6 +47,7 @@ public class Order implements Serializable{
         this.kilometersAtRent = kilometersAtRent;
         this.kilometersAtReturn = kilometersAtReturn;
         this.fouled = fouled;
+        this.status = status;
         this.amountOfFoul = amountOfFoul;
         this.finalAmount = finalAmount;
     }

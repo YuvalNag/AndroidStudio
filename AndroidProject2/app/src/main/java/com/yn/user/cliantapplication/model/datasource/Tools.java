@@ -54,6 +54,7 @@ public class Tools {
         contentValues.put(AppContract.Order.FOULED,               order.getFouled());
         contentValues.put(AppContract.Order.AMOUNT_OF_FOUL,       order.getAmountOfFoul());
         contentValues.put(AppContract.Order.FINAL_AMOUNT,         order.getFinalAmount());
+        contentValues.put(AppContract.Order.ORDER_STATUS,         order.getStatus());
         return contentValues;
     }
 
@@ -123,6 +124,7 @@ public class Tools {
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RENT  ),
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RETURN),
                 contentValues.getAsBoolean(AppContract.Order.FOULED               ),
+                contentValues.getAsBoolean(AppContract.Order.ORDER_STATUS),
                 contentValues.getAsLong(AppContract.Order.AMOUNT_OF_FOUL   ),
                 contentValues.getAsLong(AppContract.Order.FINAL_AMOUNT      )
         );
@@ -249,7 +251,8 @@ public class Tools {
                         AppContract.Order.KILOMETERS_AT_RETURN,
                         AppContract.Order.FOULED,
                         AppContract.Order.AMOUNT_OF_FOUL,
-                        AppContract.Order.FINAL_AMOUNT
+                        AppContract.Order.FINAL_AMOUNT,
+                        AppContract.Order.ORDER_STATUS
                 };
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
@@ -266,7 +269,8 @@ public class Tools {
                             order.getKilometersAtReturn(),
                             order.getFouled(),
                             order.getAmountOfFoul(),
-                            order.getFinalAmount()
+                            order.getFinalAmount(),
+                            order.getStatus()
                     });
         }
 
