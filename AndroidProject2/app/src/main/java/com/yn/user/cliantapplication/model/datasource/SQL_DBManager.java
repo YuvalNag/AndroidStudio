@@ -50,6 +50,31 @@ public class SQL_DBManager implements DB_manager {
     }
 
     @Override
+    public void updateCarlist() {
+
+    }
+
+    @Override
+    public void updateCarModellist() {
+
+    }
+
+    @Override
+    public void updateOrderList() {
+
+    }
+
+    @Override
+    public void updateAvailablecarList() {
+
+    }
+
+    @Override
+    public void updateBranchesList() {
+
+    }
+
+    @Override
     public boolean hasClient(long client_id) {
         try {
             printLog("has client");
@@ -302,10 +327,10 @@ public class SQL_DBManager implements DB_manager {
                 JSONObject jsonObject = array.getJSONObject(i);
 
                 ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToClient(contentValues));
+                result.add(Tools.ContentValuesToOrder(contentValues));
 
             }
-            return Tools.clientListToCursor(result);
+            return Tools.ordresListToCursor(result);
         } catch (Exception e) {
             e.printStackTrace();     }
         return null;
@@ -316,30 +341,9 @@ public class SQL_DBManager implements DB_manager {
         return null;
     }
 
-    @Override
-    public boolean updateCarModel(long id, ContentValues values) {
-        try {
-            String result=PHPtools.POST(WEB_URL + "updateCarModel.php", values);
-            printLog("updateCarModel:\n" + result);
-            return true;
-        } catch (Exception e) {
-            printLog("updateCarModel Exception:\n" + e);
-            return false;
-        }
-    }
 
-    @Override
-    public boolean updateBranch(long id, ContentValues values) {
-        /*try {
-            String result=PHPtools.POST(WEB_URL + "updateBranch.php", values);
-            printLog("updateCarModel:\n" + result);
-            return true;
-        } catch (Exception e) {
-            printLog("updateCarModel Exception:\n" + e);
-            return false;
-        }*/
-        return false;
-    }
+/*
+
 
     @Override
     public boolean updateManager(long id, ContentValues values) {
@@ -351,9 +355,9 @@ public class SQL_DBManager implements DB_manager {
             printLog("updateManager Exception:\n" + e);
             return false;
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Cursor getManager(long id) {
         List<Manager> result = new ArrayList<>();
 
@@ -373,9 +377,10 @@ public class SQL_DBManager implements DB_manager {
         } catch (Exception e) {
             e.printStackTrace();     }
         return null;
-    }
+    }*/
 
 
+/*
     @Override
     public Cursor getCar(long id) {
         List<Car> result = new ArrayList<>();
@@ -397,8 +402,9 @@ public class SQL_DBManager implements DB_manager {
             e.printStackTrace();     }
         return null;
     }
+*/
 
-    @Override
+  /*  @Override
     public Cursor getCarModel(long id) {
         List<CarModel> result = new ArrayList<>();
         try {
@@ -418,7 +424,7 @@ public class SQL_DBManager implements DB_manager {
             e.printStackTrace();     }
         return null;
     }
-
+*/
     @Override
     public Cursor getCarModels() {
         List<CarModel> result = new ArrayList<>();
@@ -489,12 +495,12 @@ public class SQL_DBManager implements DB_manager {
     }
 
     @Override
-    public Cursor getAvailableCarsByBranche() {
+    public Cursor getAvailableCarsByBranche(long branch_id) {
         return null;
     }
 
     @Override
-    public Cursor getAvailableCarsFromPlace() {
+    public Cursor getAvailableCarsFromPlace(long distance) {
         return null;
     }
 
@@ -529,24 +535,5 @@ public class SQL_DBManager implements DB_manager {
         return null;
     }
 
-    @Override
-    public Cursor getManagers() {
-        List<Manager> result = new ArrayList<>();
 
-        try {
-
-            String str = PHPtools.GET(WEB_URL + "managers.php");
-            JSONArray array = new JSONObject(str).getJSONArray("managers");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToManager(contentValues));
-
-            }
-            return Tools.managerListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
-        return null;
-    }
 }

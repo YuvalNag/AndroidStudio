@@ -96,6 +96,7 @@ public class Tools {
         contentValues.put(AppContract.Client.PHONE_NUMBER, client.getPhoneNum());
         contentValues.put(AppContract.Client.CRADIT_NUMBER,client.getCraditNumber());
         contentValues.put(AppContract.Client.PASSWORD,client.getPassword());
+        contentValues.put(AppContract.Manager.SALT,client.getSalt());
 
         return contentValues;
     }
@@ -317,7 +318,8 @@ public class Tools {
                         AppContract.Client.FIRST_NAME,
                         AppContract.Client.LAST_NAME,
                         AppContract.Client.PHONE_NUMBER,
-                        AppContract.Client.PASSWORD
+                        AppContract.Client.PASSWORD,
+                        AppContract.Client.SALT
 
 
                 };
@@ -333,7 +335,8 @@ public class Tools {
                             client.getFirstName(),
                             client.getLastName(),
                             client.getPhoneNum(),
-                            client.getPassword()
+                            client.getPassword(),
+                            client.getSalt()
                     });
         }
 
