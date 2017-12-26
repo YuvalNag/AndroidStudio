@@ -21,7 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by nissy34 on 10/12/2017.
@@ -30,13 +32,12 @@ import java.util.List;
 public class SQL_DBManager implements DB_manager {
 
 
-    static List<Car> cars;
     static List<Car> availableCars;
     static List<CarModel> carModels;
     static List<Client> clients;
     static List<Order> orders;
     static List<Branch> branches;
-
+    static  final int  EVERY10SEC=10;
 
     private final String WEB_URL="http://nheifetz.vlab.jct.ac.il/TakeAndGo/";
 
@@ -50,39 +51,112 @@ public class SQL_DBManager implements DB_manager {
     }
 
     @Override
-    public void updateCarlist() {
-
-    }
-
-    @Override
     public void updateCarModellist() {
 
-    }
+        carModels = new ArrayList<>();
+        try {
+            ContentValues where=new ContentValues();
+            String str = PHPtools.POST(WEB_URL + "carModels.php",where);
+            JSONArray array = new JSONObject(str).getJSONArray("car_models");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
 
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                carModels.add(Tools.ContentValuesToCarModel(contentValues));
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();     }
+    }
     @Override
     public void updateOrderList() {
+        orders = new ArrayList<>();
 
+        try {
+            String str = PHPtools.GET(WEB_URL + "orders.php");
+            JSONArray array = new JSONObject(str).getJSONArray("orders");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                orders.add(Tools.ContentValuesToOrder(contentValues));
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();     }
     }
-
     @Override
     public void updateAvailablecarList() {
 
-    }
+        availableCars = new ArrayList<>();
 
+        try {
+
+            String str = PHPtools.GET(WEB_URL + "availableCars.php");
+            JSONArray array = new JSONObject(str).getJSONArray("cars");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                availableCars.add(Tools.ContentValuesToCar(contentValues));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();     }
+
+    }
     @Override
     public void updateBranchesList() {
 
-    }
+        branches = new ArrayList<>();
+
+        try {
+
+            String str = PHPtools.GET(WEB_URL + "branches.php");
+            JSONArray array = new JSONObject(str).getJSONArray("branches");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                branches.add(Tools.ContentValuesToBranch(contentValues));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();     }
+   }
+    @Override
+    public void updateClientList() {
+        clients = new ArrayList<>();
+
+        try {
+
+            String str = PHPtools.GET(WEB_URL + "clients.php");
+            JSONArray array = new JSONObject(str).getJSONArray("clients");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                clients.add(Tools.ContentValuesToClient(contentValues));
+
+            }
+            } catch (Exception e) {
+            e.printStackTrace();     }
+        }
+
 
     @Override
     public boolean hasClient(long client_id) {
         try {
             printLog("has client");
-            return getClient(client_id).getCount() > 0;
+            return (getClient(client_id) != null);
         } catch (Exception e) {
             printLog(e);
-            return false;
-        }}
+
+        }
+        return false;
+    }
 
     @Override
     public long addClient(ContentValues values) {
@@ -110,58 +184,6 @@ public class SQL_DBManager implements DB_manager {
         }
     }
 
-   /* @Override
-    public long addCarModel(ContentValues values) {
-        try {
-            String result = PHPtools.POST(WEB_URL + "addCarModel.php", values);
-            long id = Long.parseLong(result);
-            printLog("addCarModel:\n" + result);
-            return id;
-        } catch (Exception e) {
-            printLog("addCarModel Exception:\n" + e);
-            return -1;
-        }
-    }
-*/
-  /*  @Override
-    public long addCar(ContentValues values) {
-        try {
-            String result = PHPtools.POST(WEB_URL + "addCar.php", values);
-            long id = Long.parseLong(result);
-            printLog("addCar:\n" + result);
-            return id;
-        } catch (Exception e) {
-            printLog("addCar Exception:\n" + e);
-            return -1;
-        }
-    }
-*/
-  /*  @Override
-    public long addBranch(ContentValues values) {
-        try {
-            String result = PHPtools.POST(WEB_URL + "addBranch.php", values);
-            long id = Long.parseLong(result);
-            printLog("addBranch:\n" + result);
-            return id;
-        } catch (Exception e) {
-            printLog("addBranch Exception:\n" + e);
-            return -1;
-        }
-    }
-*/
-  /*  @Override
-    public long addManager(ContentValues values) {
-        try {
-            String result = PHPtools.POST(WEB_URL + "addManager.php", values);
-            long id = Long.parseLong(result);
-            printLog("addManager:\n" + result);
-            return id;
-        } catch (Exception e) {
-            printLog("addManager Exception:\n" + e);
-            return -1;
-        }
-    }
-*/
     @Override
     public boolean removeClient(long id) {
         try {
@@ -175,54 +197,6 @@ public class SQL_DBManager implements DB_manager {
             return false;
         }
     }
-
-
-  /*  @Override
-    public boolean removeCarModel(long id) {
-        try {
-            ContentValues contentValues=new ContentValues();
-            contentValues.put(AppContract.CarModel.ID_CAR_MODEL,id);
-            String result=PHPtools.POST(WEB_URL + "deleteCarModel.php", contentValues);
-            printLog("removeCarModel:\n" + result);
-            return true;
-        } catch (Exception e) {
-            printLog("removeCarModel Exception:\n" + e);
-            return false;
-        }
-    }
-*/
-/*
-    @Override
-    public boolean removeCar(long id) {
-        try {
-            ContentValues contentValues=new ContentValues();
-            contentValues.put(AppContract.Car.ID_CAR_NUMBER,id);
-            String result=PHPtools.POST(WEB_URL + "deleteCar.php", contentValues);
-            printLog("removeCar:\n" + result);
-            return true;
-        } catch (Exception e) {
-            printLog("removeCar Exception:\n" + e);
-            return false;
-        }
-    }
-*/
-
-/*
-    @Override
-    public boolean removeBranch(long id) {
-        try {
-            ContentValues contentValues=new ContentValues();
-            contentValues.put(AppContract.Branch.BRANCH_ID,id);
-            String result=PHPtools.POST(WEB_URL + "deleteBranches.php", contentValues);
-            printLog("removeBranch:\n" + result);
-            return true;
-        } catch (Exception e) {
-            printLog("removeBranch Exception:\n" + e);
-            return false;
-        }
-    }
-*/
-
 
     @Override
     public boolean updateClient(long id, ContentValues values) {
@@ -248,6 +222,60 @@ public class SQL_DBManager implements DB_manager {
         }
     }
 
+    @Override
+    public List<Car> getAvailableCars() {
+        return availableCars;
+    }
+
+    @Override
+    public List<CarModel> getCarModels() {
+        return null;
+    }
+
+    @Override
+    public List<Client> getClients() {
+        return null;
+    }
+
+    @Override
+    public List<Branch> getBranches() {
+        return null;
+    }
+
+    @Override
+    public List<Car> getAvailableCarsByBranche(long branch_id) {
+        return null;
+    }
+
+    @Override
+    public List<Car> getAvailableCarsFromPlace(long distance) {
+        return null;
+    }
+
+    @Override
+    public List<Branch> getBrancheOfAvailableCarsByCarModel(long carModel_id) {
+    }
+
+    @Override
+    public Map<Long, List<Car>> mapCarsByBranch() {
+        Map<Long, List<Car>> mapCarsByBranch = new HashMap<>();
+        for (Branch branch : branches) {
+            mapCarsByBranch.put(branch.getBranchID(), getAvailableCarsByBranche(branch.getBranchID()));
+        }
+        return mapCarsByBranch;
+
+    }
+
+    @Override
+    public Map<Long, List<Branch>> mapBranchsByCarModel() {
+        Map<Long, List<Branch>> mapBranchsByCarModel = new HashMap<>();
+        for (CarModel carModel : carModels) {
+            mapBranchsByCarModel.put(carModel.getIdCarModel(), getBrancheOfAvailableCarsByCarModel(carModel.getIdCarModel()));
+
+        }
+        return mapBranchsByCarModel;
+    }
+
     /**
      * needs
      * return date
@@ -258,7 +286,7 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public boolean closeOrder(long id, ContentValues values) {
         try {
-            String result=PHPtools.POST(WEB_URL + "closeOrder.php", values);
+            String result=PHPtools.POST(WEB_URL + "CloseOrder.php", values);
             printLog("closeOrder:\n" + result);
             return true;
         } catch (Exception e) {
@@ -269,271 +297,49 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public boolean orderClosedIn10sec() {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd' HH:mm:ss");
-        String date = df.format(Calendar.getInstance().getTime());
-        List<Order> result = new ArrayList<>();
 
         try {
             ContentValues where=new ContentValues();
-            where.put(AppContract.Order.RETURN_DATE,date);
-            String str = PHPtools.POST(WEB_URL + "orderClosedIn10sec.php",where);
-            JSONArray array = new JSONObject(str).getJSONArray("orderClosedIn10sec");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToOrder(contentValues));
-
-            }
-            return (Tools.ordresListToCursor(result)).getCount()>0;
+            where.put("interval",EVERY10SEC);
+            String str = PHPtools.POST(WEB_URL + "orderChangedStatus.php",where);
+            return (Integer.valueOf(str)) > 0;
         } catch (Exception e) {
             e.printStackTrace();     }
         return false;
     }
 
     @Override
-    public Cursor getClient(long id) {
-        List<Client> result = new ArrayList<>();
-
-        try {
-            ContentValues where=new ContentValues();
-            where.put(AppContract.Client.ID,id);
-            String str = PHPtools.POST(WEB_URL + "clients.php",where);
-            JSONArray array = new JSONObject(str).getJSONArray("clients");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToClient(contentValues));
-
-            }
-            return Tools.clientListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
-        return null;
-    }
-
-
-    @Override
-    public Cursor getOrder(long id){
-        List<Order> result = new ArrayList<>();
-
-        try {
-            ContentValues where=new ContentValues();
-            where.put(AppContract.Order.ORDER_ID,id);
-            String str = PHPtools.POST(WEB_URL + "orders.php",where);
-            JSONArray array = new JSONObject(str).getJSONArray("orders");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToOrder(contentValues));
-
-            }
-            return Tools.ordresListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
-        return null;
-    }
-
-    @Override
-    public Cursor getOrders() {
-        return null;
-    }
-
-
-/*
-
-
-    @Override
-    public boolean updateManager(long id, ContentValues values) {
-        try {
-            String result=PHPtools.POST(WEB_URL + "updateManager.php", values);
-            printLog("updateManager:\n" + result);
-            return true;
-        } catch (Exception e) {
-            printLog("updateManager Exception:\n" + e);
-            return false;
+    public Client getClient(long id) {
+        for (Client client:clients) {
+            if(client.getId()==id)
+                return client;
         }
-    }*/
-
-    /*@Override
-    public Cursor getManager(long id) {
-        List<Manager> result = new ArrayList<>();
-
-        try {
-            ContentValues where=new ContentValues();
-            where.put(AppContract.Manager.ID,id);
-            String str = PHPtools.POST(WEB_URL + "managers.php",where);
-            JSONArray array = new JSONObject(str).getJSONArray("managers");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToManager(contentValues));
-
-            }
-            return Tools.managerListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
-        return null;
-    }*/
-
-
-/*
-    @Override
-    public Cursor getCar(long id) {
-        List<Car> result = new ArrayList<>();
-
-        try {
-            ContentValues where=new ContentValues();
-            where.put(AppContract.Car.ID_CAR_NUMBER,id);
-            String str = PHPtools.POST(WEB_URL + "cars.php",where);
-            JSONArray array = new JSONObject(str).getJSONArray("cars");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToCar(contentValues));
-
-            }
-            return Tools.CarListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
-        return null;
-    }
-*/
-
-  /*  @Override
-    public Cursor getCarModel(long id) {
-        List<CarModel> result = new ArrayList<>();
-        try {
-            ContentValues where=new ContentValues();
-            where.put(AppContract.CarModel.ID_CAR_MODEL,id);
-            String str = PHPtools.POST(WEB_URL + "carModels.php",where);
-            JSONArray array = new JSONObject(str).getJSONArray("car_models");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToCarModel(contentValues));
-
-            }
-            return Tools.carModelsListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
-        return null;
-    }
-*/
-    @Override
-    public Cursor getCarModels() {
-        List<CarModel> result = new ArrayList<>();
-
-        try {
-
-            String str = PHPtools.GET(WEB_URL + "carModels.php");
-            JSONArray array = new JSONObject(str).getJSONArray("car_models");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToCarModel(contentValues));
-
-            }
-            return Tools.carModelsListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
         return null;
     }
 
-    @Override
-    public Cursor getClients() {
-        List<Client> result = new ArrayList<>();
-
-        try {
-
-            String str = PHPtools.GET(WEB_URL + "clients.php");
-            JSONArray array = new JSONObject(str).getJSONArray("clients");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToClient(contentValues));
-
-            }
-            return Tools.clientListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
-        return null;
-    }
 
     @Override
-    public Cursor getBranches() {
-        List<Branch> result = new ArrayList<>();
-
-        try {
-
-        String str = PHPtools.GET(WEB_URL + "branches.php");
-        JSONArray array = new JSONObject(str).getJSONArray("branches");
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject jsonObject = array.getJSONObject(i);
-
-            ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-            result.add(Tools.ContentValuesToBranch(contentValues));
-
+    public Order getOrder(long id) {
+        for (Order order:orders) {
+            if(order.getIdOrderNum()==id)
+                return order;
         }
-        return Tools.branchListToCursor(result);
-    } catch (Exception e) {
-        e.printStackTrace();     }
-        return null;
-
-    }
-
-    @Override
-    public Cursor getAvailableCars() {
         return null;
     }
 
     @Override
-    public Cursor getAvailableCarsByBranche(long branch_id) {
-        return null;
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override
-    public Cursor getAvailableCarsFromPlace(long distance) {
-        return null;
+    public List<Order> getOpenOrders() {
+        List<Order> openOrders = new ArrayList<>();
+        for (Order order : orders) {
+            if (order.getStatus() == true)
+                openOrders.add(order);
+        }
+        return openOrders;
     }
-
-    @Override
-    public Cursor getBrancheOfAvailableCarsByCarModel() {
-        return null;
-    }
-
-    @Override
-    public Cursor getOpenOrders() {
-        return null;
-    }
-
-    @Override
-    public Cursor getCars() {
-        List<Car> result = new ArrayList<>();
-
-        try {
-
-            String str = PHPtools.GET(WEB_URL + "cars.php");
-            JSONArray array = new JSONObject(str).getJSONArray("cars");
-            for (int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-
-                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
-                result.add(Tools.ContentValuesToCar(contentValues));
-
-            }
-            return Tools.CarListToCursor(result);
-        } catch (Exception e) {
-            e.printStackTrace();     }
-        return null;
-    }
-
 
 }

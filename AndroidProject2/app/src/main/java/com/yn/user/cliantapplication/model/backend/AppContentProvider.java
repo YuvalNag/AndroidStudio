@@ -1,3 +1,4 @@
+/*
 package com.yn.user.cliantapplication.model.backend;
 
 import android.content.ContentProvider;
@@ -12,9 +13,11 @@ import android.util.Log;
 
 import static com.yn.user.cliantapplication.model.backend.DBManagerFactory.getManager;
 
+*/
 /**
  * Created by USER on 07/11/2017.
- */
+ *//*
+
 
 public class AppContentProvider extends ContentProvider {
 
@@ -204,3 +207,4 @@ public class AppContentProvider extends ContentProvider {
         return 0;
     }
 }
+*/
