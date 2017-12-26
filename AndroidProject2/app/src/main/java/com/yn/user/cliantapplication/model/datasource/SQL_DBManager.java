@@ -11,6 +11,7 @@ import com.yn.user.cliantapplication.model.entities.Car;
 import com.yn.user.cliantapplication.model.entities.CarModel;
 import com.yn.user.cliantapplication.model.entities.Client;
 import com.yn.user.cliantapplication.model.entities.Manager;
+import com.yn.user.cliantapplication.model.entities.Order;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,7 +25,17 @@ import java.util.List;
 
 public class SQL_DBManager implements DB_manager {
 
+
+    static List<Car> cars;
+    static List<Car> availableCars;
+    static List<CarModel> carModels;
+    static List<Client> clients;
+    static List<Order> orders;
+    static List<Branch> branches;
+
+
     private final String WEB_URL="http://nheifetz.vlab.jct.ac.il/TakeAndGo/";
+
     public void printLog(String message)
     {
         Log.d(this.getClass().getName(),"\n"+message);
@@ -208,6 +219,13 @@ public class SQL_DBManager implements DB_manager {
         }
     }
 
+    /**
+     * needs
+     * return date
+     * fouled? if yes also amount
+     * total amount to pay
+     * kilometars
+     */
     @Override
     public boolean closeOrder(long id, ContentValues values) {
         try {

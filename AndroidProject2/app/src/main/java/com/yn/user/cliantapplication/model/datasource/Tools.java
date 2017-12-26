@@ -10,16 +10,16 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
 
-import com.yn.user.rentacar.model.backend.AppContract;
-import com.yn.user.rentacar.model.entities.Address;
-import com.yn.user.rentacar.model.entities.Branch;
-import com.yn.user.rentacar.model.entities.Car;
-import com.yn.user.rentacar.model.entities.CarClass;
-import com.yn.user.rentacar.model.entities.CarModel;
-import com.yn.user.rentacar.model.entities.Client;
-import com.yn.user.rentacar.model.entities.Manager;
-import com.yn.user.rentacar.model.entities.Order;
-import com.yn.user.rentacar.model.entities.TransmissionType;
+import com.yn.user.cliantapplication.model.backend.AppContract;
+import com.yn.user.cliantapplication.model.entities.Address;
+import com.yn.user.cliantapplication.model.entities.Branch;
+import com.yn.user.cliantapplication.model.entities.Car;
+import com.yn.user.cliantapplication.model.entities.CarClass;
+import com.yn.user.cliantapplication.model.entities.CarModel;
+import com.yn.user.cliantapplication.model.entities.Client;
+import com.yn.user.cliantapplication.model.entities.Manager;
+import com.yn.user.cliantapplication.model.entities.Order;
+import com.yn.user.cliantapplication.model.entities.TransmissionType;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Date;
@@ -54,6 +54,7 @@ public class Tools {
         contentValues.put(AppContract.Order.FOULED,               order.getFouled());
         contentValues.put(AppContract.Order.AMOUNT_OF_FOUL,       order.getAmountOfFoul());
         contentValues.put(AppContract.Order.FINAL_AMOUNT,         order.getFinalAmount());
+        contentValues.put(AppContract.Order.ORDER_STATUS,         order.getStatus());
         return contentValues;
     }
 
@@ -123,6 +124,7 @@ public class Tools {
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RENT  ),
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RETURN),
                 contentValues.getAsBoolean(AppContract.Order.FOULED               ),
+                contentValues.getAsBoolean(AppContract.Order.ORDER_STATUS),
                 contentValues.getAsLong(AppContract.Order.AMOUNT_OF_FOUL   ),
                 contentValues.getAsLong(AppContract.Order.FINAL_AMOUNT      )
         );
@@ -249,7 +251,8 @@ public class Tools {
                         AppContract.Order.KILOMETERS_AT_RETURN,
                         AppContract.Order.FOULED,
                         AppContract.Order.AMOUNT_OF_FOUL,
-                        AppContract.Order.FINAL_AMOUNT
+                        AppContract.Order.FINAL_AMOUNT,
+                        AppContract.Order.ORDER_STATUS
                 };
 
         MatrixCursor matrixCursor = new MatrixCursor(columns);
@@ -266,7 +269,8 @@ public class Tools {
                             order.getKilometersAtReturn(),
                             order.getFouled(),
                             order.getAmountOfFoul(),
-                            order.getFinalAmount()
+                            order.getFinalAmount(),
+                            order.getStatus()
                     });
         }
 
