@@ -37,6 +37,7 @@ public class SQL_DBManager implements DB_manager {
     static List<Client> clients;
     static List<Order> orders;
     static List<Branch> branches;
+
     static  final int  EVERY10SEC=10;
 
     private final String WEB_URL="http://nheifetz.vlab.jct.ac.il/TakeAndGo/";
@@ -49,6 +50,8 @@ public class SQL_DBManager implements DB_manager {
     {
         Log.d(this.getClass().getName(),"Exception-->\n"+message);
     }
+
+
 
     @Override
     public void updateCarModellist() {
@@ -228,18 +231,23 @@ public class SQL_DBManager implements DB_manager {
     }
 
     @Override
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    @Override
     public List<CarModel> getCarModels() {
-        return null;
+        return carModels;
     }
 
     @Override
     public List<Client> getClients() {
-        return null;
+        return clients;
     }
 
     @Override
     public List<Branch> getBranches() {
-        return null;
+        return branches;
     }
 
     @Override
@@ -254,6 +262,7 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Branch> getBrancheOfAvailableCarsByCarModel(long carModel_id) {
+        return null;
     }
 
     @Override
@@ -327,10 +336,7 @@ public class SQL_DBManager implements DB_manager {
         return null;
     }
 
-    @Override
-    public List<Order> getOrders() {
-        return orders;
-    }
+
 
     @Override
     public List<Order> getOpenOrders() {
