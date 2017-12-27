@@ -291,17 +291,35 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Car> getAvailableCarsByBranche(long branch_id) {
-        return null;
+        List<Car> availableCarsByBranche  = new ArrayList<>();
+        for (Car car:availableCars) {
+            if(car.getBranchNum()==branch_id)
+                availableCarsByBranche.add(car);
+        }
+        return availableCarsByBranche;
     }
 
     @Override
     public List<Car> getAvailableCarsFromPlace(long distance) {
-        return null;
+
     }
 
     @Override
     public List<Branch> getBrancheOfAvailableCarsByCarModel(long carModel_id) {
-        return null;
+        List<Long> branchesIdByModel = new ArrayList<>();
+        List<Branch> branchesByModel  = new ArrayList<>();
+        for (Car car:availableCars) {
+            if(car.getCarModelID() == carModel_id)
+                branchesIdByModel.add(car.getBranchNum());
+        }
+        for (long id: branchesIdByModel) {
+            for (Branch branch:branches) {
+                if(id == branch.getBranchID())
+                    branchesByModel.add(branch);
+            }
+
+        }
+        return branchesByModel;
     }
 
     @Override
