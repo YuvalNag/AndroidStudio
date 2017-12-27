@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.out;
+
 /**
  * Created by nissy34 on 10/12/2017.
  */
@@ -38,9 +40,15 @@ public class SQL_DBManager implements DB_manager {
     static List<Order> orders;
     static List<Branch> branches;
 
-    static  final int  EVERY10SEC=10;
+    private boolean isUpdatedClient;
+    private boolean isUpdatedOrder;
+    private boolean isUpdatedCar;
+
+    static  final int  TIMEINTERVAL=10;
+
 
     private final String WEB_URL="http://nheifetz.vlab.jct.ac.il/TakeAndGo/";
+
 
     public void printLog(String message)
     {
@@ -56,6 +64,7 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public void updateCarModellist() {
 
+        List<CarModel> temp=carModels;
         carModels = new ArrayList<>();
         try {
             ContentValues where=new ContentValues();
@@ -70,10 +79,14 @@ public class SQL_DBManager implements DB_manager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();     }
+            e.printStackTrace();
+           carModels=temp;
+        }
     }
     @Override
     public void updateOrderList() {
+
+        List<Order> temp=orders;
         orders = new ArrayList<>();
 
         try {
@@ -88,11 +101,14 @@ public class SQL_DBManager implements DB_manager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();     }
+            e.printStackTrace();
+            isUpdatedOrder=true;
+           orders=temp;
+        }
     }
     @Override
     public void updateAvailablecarList() {
-
+         List<Car> temp=availableCars;
         availableCars = new ArrayList<>();
 
         try {
@@ -107,12 +123,15 @@ public class SQL_DBManager implements DB_manager {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();     }
+            e.printStackTrace();
+            isUpdatedCar=true;
+            availableCars=temp;}
 
     }
     @Override
     public void updateBranchesList() {
 
+        List<Branch> temp=branches;
         branches = new ArrayList<>();
 
         try {
@@ -127,10 +146,15 @@ public class SQL_DBManager implements DB_manager {
 
             }
         } catch (Exception e) {
-            e.printStackTrace();     }
+            e.printStackTrace();
+            branches=temp;
+        }
    }
     @Override
     public void updateClientList() {
+
+        List<Client> temp=clients;
+
         clients = new ArrayList<>();
 
         try {
@@ -145,7 +169,10 @@ public class SQL_DBManager implements DB_manager {
 
             }
             } catch (Exception e) {
-            e.printStackTrace();     }
+            e.printStackTrace();
+            clients=temp;
+            isUpdatedClient=true;
+        }
         }
 
 
@@ -156,7 +183,6 @@ public class SQL_DBManager implements DB_manager {
             return (getClient(client_id) != null);
         } catch (Exception e) {
             printLog(e);
-
         }
         return false;
     }
@@ -167,6 +193,7 @@ public class SQL_DBManager implements DB_manager {
             String result = PHPtools.POST(WEB_URL + "addClient.php", values);
             long id = Long.parseLong(result);
             printLog("addClient:\n" + result);
+            isUpdatedClient=true;
             return id;
         } catch (Exception e) {
             printLog("addClient Exception:\n" + e);
@@ -180,6 +207,7 @@ public class SQL_DBManager implements DB_manager {
             String result = PHPtools.POST(WEB_URL + "addOrder.php", values);
             long id = Long.parseLong(result);
             printLog("addOrder:\n" + result);
+            isUpdatedOrder=true;
             return id;
         } catch (Exception e) {
             printLog("addOrder Exception:\n" + e);
@@ -193,6 +221,7 @@ public class SQL_DBManager implements DB_manager {
             ContentValues contentValues=new ContentValues();
             contentValues.put(AppContract.Client.ID,id);
             String result=PHPtools.POST(WEB_URL + "deleteclient.php", contentValues);
+            isUpdatedClient=true;
             printLog("removeClient:\n" + result);
             return true;
         } catch (Exception e) {
@@ -206,6 +235,7 @@ public class SQL_DBManager implements DB_manager {
         try {
             String result=PHPtools.POST(WEB_URL + "updateClient.php", values);
             printLog("updateClient:\n" + result);
+            isUpdatedClient=true;
             return true;
         } catch (Exception e) {
             printLog("updateClient Exception:\n" + e);
@@ -218,6 +248,7 @@ public class SQL_DBManager implements DB_manager {
         try {
             String result=PHPtools.POST(WEB_URL + "updateCar.php", values);
             printLog("updateCar:\n" + result);
+            isUpdatedCar=true;
             return true;
         } catch (Exception e) {
             printLog("updateCar Exception:\n" + e);
@@ -227,11 +258,14 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Car> getAvailableCars() {
+       
         return availableCars;
     }
 
     @Override
     public List<Order> getOrders() {
+        if(isUpdated(isUpdatedOrder))
+            updateOrderList();
         return orders;
     }
 
@@ -242,6 +276,8 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Client> getClients() {
+        if(isUpdated(isUpdatedClient))
+            updateClientList();
         return clients;
     }
 
@@ -297,6 +333,7 @@ public class SQL_DBManager implements DB_manager {
         try {
             String result=PHPtools.POST(WEB_URL + "CloseOrder.php", values);
             printLog("closeOrder:\n" + result);
+            isUpdatedOrder=true;
             return true;
         } catch (Exception e) {
             printLog("closeOrder Exception:\n" + e);
@@ -309,7 +346,7 @@ public class SQL_DBManager implements DB_manager {
 
         try {
             ContentValues where=new ContentValues();
-            where.put("interval",EVERY10SEC);
+            where.put("interval",TIMEINTERVAL);
             String str = PHPtools.POST(WEB_URL + "orderChangedStatus.php",where);
             return (Integer.valueOf(str)) > 0;
         } catch (Exception e) {
@@ -347,5 +384,17 @@ public class SQL_DBManager implements DB_manager {
         }
         return openOrders;
     }
+    @Override
+    public boolean isUpdated(boolean  update) {
 
+        if(update)
+        {
+            update = false;
+            return  true;
+        }
+
+        return  false;
+
+
+    }
 }

@@ -19,6 +19,8 @@ import java.util.Map;
 public interface DB_manager {
 
     //update lists
+
+    boolean isUpdated(boolean update);
 //    void updateCarlist();
     void updateCarModellist();
     void updateOrderList();
