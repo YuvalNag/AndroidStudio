@@ -258,14 +258,15 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Car> getAvailableCars() {
-       
         return availableCars;
     }
 
     @Override
     public List<Order> getOrders() {
-        if(isUpdated(isUpdatedOrder))
+        if(isUpdatedOrder) {
             updateOrderList();
+            isUpdatedOrder=false;
+        }
         return orders;
     }
 
@@ -276,8 +277,10 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Client> getClients() {
-        if(isUpdated(isUpdatedClient))
+        if(isUpdatedClient) {
             updateClientList();
+            isUpdatedClient=false;
+        }
         return clients;
     }
 
