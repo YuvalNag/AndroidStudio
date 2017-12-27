@@ -1,6 +1,8 @@
 package com.yn.user.cliantapplication.model.datasource;
 
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -301,7 +303,7 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Branch> getBrancheOfAvailableCarsByCarModel(long carModel_id) {
-        return null;
+
     }
 
     @Override
