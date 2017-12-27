@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
+import android.widget.ImageButton;
 
 import com.yn.user.cliantapplication.model.backend.AppContract;
 import com.yn.user.cliantapplication.model.backend.DB_manager;
+import com.yn.user.cliantapplication.model.backend.SimpleLocation;
 import com.yn.user.cliantapplication.model.entities.Branch;
 import com.yn.user.cliantapplication.model.entities.Car;
 import com.yn.user.cliantapplication.model.entities.CarModel;
@@ -18,6 +22,7 @@ import com.yn.user.cliantapplication.model.entities.Order;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -302,7 +307,39 @@ public class SQL_DBManager implements DB_manager {
     }
 
     @Override
-    public List<Car> getAvailableCarsFromPlace(long distance) {
+    public List<Car> getAvailableCarsFromPlace(Context context,long distance) {
+        List<Branch> branchesInDiastance=new ArrayList<>();
+
+        // construct a new instance of SimpleLocation
+        SimpleLocation location = new SimpleLocation(context);
+
+        // if we can't access the location yet
+        if (!location.hasLocationEnabled()) {
+            // ask the user to enable location access
+            SimpleLocation.openSettings(context);
+        }
+
+        double startLatitude = location.getLatitude();
+        double startLongitude = location.getLongitude();
+
+        Geocoder geocoder = new Geocoder(context);
+        Address addresses;
+        for (Branch branch:branches)
+        {
+            try {
+                addresses = geocoder.getFromLocationName(branch.getBranchAddress().getCity()+" "+branch.getBranchAddress().getStreet()+" "+branch.getBranchAddress().getNumber(), 1).get(0);
+                if(((int)(SimpleLocation.calculateDistance(startLatitude,startLongitude,addresses.getLatitude(),addresses.getLongitude())/1000))<=distance)
+                    branchesInDiastance.add(branch);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+
+
+
        return null;
     }
 

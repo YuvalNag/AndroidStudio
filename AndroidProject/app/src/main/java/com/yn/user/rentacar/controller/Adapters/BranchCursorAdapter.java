@@ -47,7 +47,7 @@ public class BranchCursorAdapter extends CursorAdapter {
         TextView parking_spaces = (TextView) view.findViewById(R.id.branch_parking_spaces);
         final ImageButton map_button = (ImageButton) view.findViewById(R.id.branch_button);
         final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
-        map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY))/* + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
+        map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) /*  + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
 
 
         map_button.setOnClickListener(new View.OnClickListener() {
@@ -73,15 +73,14 @@ public class BranchCursorAdapter extends CursorAdapter {
                         public void onMapReady(final GoogleMap googleMap) {
                             try {
                                 Geocoder geocoder = new Geocoder(context);
-
                                 Address addresses = geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(), 1).get(0);////your lat lng
-                                LatLng posisiabsen = new LatLng(addresses.getLatitude(), addresses.getLongitude());
-                                googleMap.addMarker(new MarkerOptions().position(posisiabsen).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
-                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(posisiabsen));
+                                LatLng position = new LatLng(addresses.getLatitude(), addresses.getLongitude());
+                                googleMap.addMarker(new MarkerOptions().position(position).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
+                                googleMap.moveCamera(CameraUpdateFactory.newLatLng(position));
                                 googleMap.getUiSettings().setAllGesturesEnabled(true);
                                 googleMap.getUiSettings().setMapToolbarEnabled(true);
                                 googleMap.getUiSettings().setZoomControlsEnabled(true);
-                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(posisiabsen, 14), 1000, null);
+                                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14), 1000, null);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

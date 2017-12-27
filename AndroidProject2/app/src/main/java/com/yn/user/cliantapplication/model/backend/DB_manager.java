@@ -1,6 +1,7 @@
 package com.yn.user.cliantapplication.model.backend;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 
 import com.yn.user.cliantapplication.model.entities.Branch;
@@ -75,7 +76,7 @@ public interface DB_manager {
     List<Branch> getBranches();
 
     List<Car> getAvailableCarsByBranche(long branch_id);
-    List<Car> getAvailableCarsFromPlace(long distance);
+    List<Car> getAvailableCarsFromPlace(Context context,long distance);
     List<Branch> getBrancheOfAvailableCarsByCarModel(long carModel_id);
     Map<Long,List<Car>> mapCarsByBranch();
     Map<Long,List<Branch>> mapBranchsByCarModel();
