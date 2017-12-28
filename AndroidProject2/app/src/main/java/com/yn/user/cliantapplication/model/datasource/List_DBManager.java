@@ -142,15 +142,15 @@ public class List_DBManager  implements DB_manager {
             Client client = Tools.ContentValuesToClient(values);
 
             if (hasClient(client.getId())) {
-                Log.i(TAG, "addManager: exist"+client.getId());
+                Log.i(TAG, "RegisterClient: exist"+client.getId());
                 return -2;
             }
             clients.add(client);
-            Log.d(TAG, "addManager: "+client.getId());
+            Log.d(TAG, "RegisterClient: "+client.getId());
             return client.getId();
         }catch (Exception e)
         {
-            Log.e(TAG, "addManager: "+e.getMessage(),e);
+            Log.e(TAG, "RegisterClient: "+e.getMessage(),e);
             return -1;
 
         }
@@ -224,19 +224,19 @@ public class List_DBManager  implements DB_manager {
     }
 
     //@Override
-    public long addManager(ContentValues contentValues) {
+    public long RegisterClient(ContentValues contentValues) {
         try {
             Manager manager = Tools.ContentValuesToManager(contentValues);
             if (hasBranch(manager.getId())) {
-                Log.d(TAG, "addManager: exist"+manager.getId());
+                Log.d(TAG, "RegisterClient: exist"+manager.getId());
                 return -2;
             }
             managers.add(manager);
-            Log.d(TAG, "addManager: "+manager.getId());
+            Log.d(TAG, "RegisterClient: "+manager.getId());
             return manager.getId();
         }catch (Exception e)
         {
-            Log.e(TAG, "addManager: "+e.getMessage(),e );
+            Log.e(TAG, "RegisterClient: "+e.getMessage(),e );
             return -1;
 
         }
