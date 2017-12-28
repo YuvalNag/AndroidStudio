@@ -25,13 +25,13 @@
             android:label="Sing in"></activity>
         <activity
             android:name=".controller.StartActivity"
-            android:label="Wellcome :)"></activity>
+            android:label="Wellcome :)">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-
+        </activity>
     </application>
 
 </manifest>

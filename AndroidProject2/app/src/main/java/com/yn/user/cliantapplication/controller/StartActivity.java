@@ -16,6 +16,7 @@ public class StartActivity extends AppCompatActivity {
 
 
     SharedPreferences mSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +55,12 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                 DBManagerFactory.getManager();
+                DBManagerFactory.getManager();
                 return null;
             }
         };
     }
 
 
-
-    }
 }
+
