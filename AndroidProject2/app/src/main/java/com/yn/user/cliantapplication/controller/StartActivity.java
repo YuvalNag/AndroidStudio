@@ -8,13 +8,16 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.yn.user.cliantapplication.R;
 import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
+
 public class StartActivity extends AppCompatActivity {
 
-
+    SmoothProgressBar smoothProgressBar;
     SharedPreferences mSharedPreferences;
 
     @Override
@@ -23,6 +26,7 @@ public class StartActivity extends AppCompatActivity {
         //Remove title bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        smoothProgressBar = (SmoothProgressBar)findViewById(R.id.pb_start);
 
 //Remove notification bar
         // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -34,6 +38,7 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             protected void onPreExecute() {
+                smoothProgressBar.setVisibility(View.VISIBLE);
                 super.onPreExecute();
             }
 
@@ -58,7 +63,7 @@ public class StartActivity extends AppCompatActivity {
                 DBManagerFactory.getManager();
                 return null;
             }
-        };
+        }.execute();
     }
 
 
