@@ -20,10 +20,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //check permission
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED )
         ActivityCompat.requestPermissions(
                 MainActivity.this,
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}
                 , REQUEST_CODE_LOCATION);
+        else openLocActivity();
 
 
     }
@@ -33,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_LOCATION) {
             if (grantResults.length > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent=new Intent(this,Main2Activity.class);
-                startActivity(intent);
+                openLocActivity();
             } else {
                 Toast.makeText(getApplicationContext(), "You don't have permission to access your location!", Toast.LENGTH_SHORT).show();
             }
@@ -42,5 +43,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void openLocActivity() {
+        Intent intent=new Intent(this,Main2Activity.class);
+        startActivity(intent);
     }
 }
