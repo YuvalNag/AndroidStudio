@@ -53,7 +53,14 @@ public class SQL_DBManager implements DB_manager {
 
     static  final int  TIMEINTERVAL=10;
 
+    static {
 
+        availableCars = new ArrayList<>();
+        carModels = new ArrayList<>();
+        clients = new ArrayList<>();
+        orders = new ArrayList<>();
+        branches = new ArrayList<>();
+    }
     private final String WEB_URL="http://nheifetz.vlab.jct.ac.il/TakeAndGo/";
 
 
@@ -66,7 +73,13 @@ public class SQL_DBManager implements DB_manager {
         Log.d(this.getClass().getName(),"Exception-->\n"+message);
     }
 
-
+    public SQL_DBManager() {
+         updateCarModellist();
+         updateOrderList();
+         updateAvailablecarList();
+         updateBranchesList();
+         updateClientList();
+    }
 
     @Override
     public void updateCarModellist() {

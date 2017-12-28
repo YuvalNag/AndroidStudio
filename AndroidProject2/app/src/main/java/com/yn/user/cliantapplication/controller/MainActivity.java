@@ -1,7 +1,9 @@
-package com.yn.user.cliantapplication;
+package com.yn.user.cliantapplication.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.yn.user.cliantapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 
