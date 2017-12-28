@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.controller.GlideApp;
 import com.yn.user.rentacar.model.backend.AppContract;
+
+import java.util.Locale;
 
 /**
  * Created by nissy34 on 12/12/2017.
@@ -48,7 +51,7 @@ public class BranchCursorAdapter extends CursorAdapter {
         final ImageButton map_button = (ImageButton) view.findViewById(R.id.branch_button);
         final ImageView branch_imageView = (ImageView) view.findViewById(R.id.branch_image);
         map_button.setTag(R.id.branch_button, cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.CITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.STREET)) /*  + cursor.getString(cursor.getColumnIndexOrThrow(AppContract.Address.NUMBER))*/);
-
+        System.out.println(map_button.getTag(R.id.branch_button));
 
         map_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +75,7 @@ public class BranchCursorAdapter extends CursorAdapter {
                         @Override
                         public void onMapReady(final GoogleMap googleMap) {
                             try {
-                                Geocoder geocoder = new Geocoder(context);
+                                Geocoder geocoder = new Geocoder(context, Locale.getDefault());
                                 Address addresses = geocoder.getFromLocationName(((ImageButton) view).getTag(R.id.branch_button).toString(), 1).get(0);////your lat lng
                                 LatLng position = new LatLng(addresses.getLatitude(), addresses.getLongitude());
                                 googleMap.addMarker(new MarkerOptions().position(position).title(((ImageButton) view).getTag(R.id.branch_button).toString()));
