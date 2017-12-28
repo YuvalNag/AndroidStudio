@@ -17,7 +17,7 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
 public class StartActivity extends AppCompatActivity {
 
-    SmoothProgressBar smoothProgressBar;
+
     SharedPreferences mSharedPreferences;
 
     @Override

@@ -1,34 +1,29 @@
 package com.yn.user.cliantapplication.controller;
 
-import android.annotation.SuppressLint;
-
-import android.content.ContentValues;
-import android.content.Intent;
-
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
-
+import android.view.ViewGroup;
 import android.widget.Button;
-
 import android.widget.EditText;
-
 
 import com.yn.user.cliantapplication.R;
 
-import com.yn.user.cliantapplication.model.backend.AppContract;
-import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
-import com.yn.user.cliantapplication.model.backend.SHA_256_Helper;
+/**
+ * Created by USER on 28/12/2017.
+ */
 
+public class EditProfileFragment extends Fragment {
 
-public class RegisterClient extends AppCompatActivity {
-
+    SharedPreferences mSharedPreferences;
     private TextInputLayout textInputLayout;
     private EditText userFirstname;
     private TextInputLayout textInputLayout3;
@@ -43,30 +38,39 @@ public class RegisterClient extends AppCompatActivity {
     private EditText userPhone;
     private TextInputLayout textInputLayoutuserPassword;
     private TextInputLayout textInputLayoutuserConfrimPassword;
-    private Button addManager;
-
+    private Button updateClient;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_client);
-        findViews();
-
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
     }
 
-    /**
-     * find views and check all input text
-     */
-    private void findViews() {
-        textInputLayoutuserPassword = (TextInputLayout) findViewById(R.id.user_password);
-        textInputLayoutuserConfrimPassword= (TextInputLayout) findViewById(R.id.user_password_confrim);
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    View view=     inflater.inflate(R.layout.activity_register_client,container,false);
+    findView(view);
+    populatView();
+    return view;
+    }
+
+    private void populatView() {
+        userEmail.setText(mSharedPreferences.getString(getString(R.string.login_user_email),"Can't find your email"));
+        userLastname.setText(mSharedPreferences.getString(getString(R.string.login_user_name),"Can't find your name"));
+    }
+
+    private void findView(View view){
+        textInputLayoutuserPassword = (TextInputLayout) view.findViewById(R.id.user_password);
+        textInputLayoutuserConfrimPassword= (TextInputLayout) view.findViewById(R.id.user_password_confrim);
         textInputLayoutuserConfrimPassword.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-           public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().contentEquals(textInputLayoutuserPassword.getEditText().getText().toString())) {
                     textInputLayoutuserConfrimPassword.setErrorEnabled(false);
                     textInputLayoutuserPassword.setErrorEnabled(false);
@@ -81,27 +85,27 @@ public class RegisterClient extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
-        textInputLayoutuserCrediCard=findViewById(R.id.textInputLayout_user_creditCard);
+        textInputLayoutuserCrediCard=view.findViewById(R.id.textInputLayout_user_creditCard);
         textInputLayoutuserCrediCard.getEditText().addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                                                                              @Override
+                                                                              public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
+                                                                              }
 
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(charSequence.toString().trim().length()<9)
-                {
-                    textInputLayoutuserCrediCard.setErrorEnabled(true);
-                    textInputLayoutuserCrediCard.setError("min length is 8 numbers");
+                                                                              @Override
+                                                                              public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                                                                                  if(charSequence.toString().trim().length()<9)
+                                                                                  {
+                                                                                      textInputLayoutuserCrediCard.setErrorEnabled(true);
+                                                                                      textInputLayoutuserCrediCard.setError("min length is 8 numbers");
 
-                }
-            }
+                                                                                  }
+                                                                              }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
+                                                                              @Override
+                                                                              public void afterTextChanged(Editable editable) {
 
-            }
+                                                                              }
                                                                           }
         );
         textInputLayoutuserPassword.getEditText().addTextChangedListener(new TextWatcher() {
@@ -125,14 +129,14 @@ public class RegisterClient extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {}
         });
 
-        textInputLayout = (TextInputLayout) findViewById(R.id.textInputLayout);
-        userFirstname = (EditText) findViewById(R.id.user_firstname);
-        textInputLayout3 = (TextInputLayout) findViewById(R.id.textInputLayout3);
-        userLastname = (EditText) findViewById(R.id.user_lastname);
+        textInputLayout = (TextInputLayout) view.findViewById(R.id.textInputLayout);
+        userFirstname = (EditText) view.findViewById(R.id.user_firstname);
+        textInputLayout3 = (TextInputLayout) view.findViewById(R.id.textInputLayout3);
+        userLastname = (EditText) view.findViewById(R.id.user_lastname);
 
-        textInputLayoutuserEmail = (TextInputLayout) findViewById(R.id.textInputLayout_user_email);
+        textInputLayoutuserEmail = (TextInputLayout) view.findViewById(R.id.textInputLayout_user_email);
 
-        userEmail = (EditText) findViewById(R.id.user_email);
+        userEmail = (EditText) view.findViewById(R.id.user_email);
 
 
         userEmail.addTextChangedListener(new TextWatcher() {
@@ -160,8 +164,8 @@ public class RegisterClient extends AppCompatActivity {
             }
         });
 
-        textInputLayoutuserPhone = (TextInputLayout) findViewById(R.id.textInputLayout_user_phone);
-        userPhone = (EditText) findViewById(R.id.user_phone);
+        textInputLayoutuserPhone = (TextInputLayout) view.findViewById(R.id.textInputLayout_user_phone);
+        userPhone = (EditText) view.findViewById(R.id.user_phone);
         userPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -185,8 +189,8 @@ public class RegisterClient extends AppCompatActivity {
             }
         });
 
-        textInputLayoutuserId = (TextInputLayout) findViewById(R.id.textInputLayout_user_id);
-        userId = (EditText) findViewById(R.id.user_id);
+        textInputLayoutuserId = (TextInputLayout) view.findViewById(R.id.textInputLayout_user_id);
+        userId = (EditText) view.findViewById(R.id.user_id);
         userId.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -211,64 +215,10 @@ public class RegisterClient extends AppCompatActivity {
         });
 
 
-        addManager = (Button) findViewById(R.id.add_manager);
-
-
-
+        updateClient = (Button) view.findViewById(R.id.add_manager);
+        updateClient.setText("update");
     }
 
-
-
-
-
-
-
-    @SuppressLint("StaticFieldLeak")
-    public void onClick(View view) throws Exception {
-        if (view == addManager) {
-            final ContentValues managerValues = new ContentValues();
-            long newSalt = SHA_256_Helper.generateSalt();
-            managerValues.put(AppContract.Client.ID, ((EditText) findViewById(R.id.user_id)).getText().toString());
-            managerValues.put(AppContract.Client.CRADIT_NUMBER, textInputLayoutuserCrediCard.getEditText().getText().toString());
-            managerValues.put(AppContract.Client.PHONE_NUMBER, ((EditText) findViewById(R.id.user_phone)).getText().toString());
-            managerValues.put(AppContract.Client.EMAIL_ADDR, ((EditText) findViewById(R.id.user_email)).getText().toString());
-            managerValues.put(AppContract.Client.FIRST_NAME, ((EditText) findViewById(R.id.user_firstname)).getText().toString());
-            managerValues.put(AppContract.Client.LAST_NAME, ((EditText) findViewById(R.id.user_lastname)).getText().toString());
-            managerValues.put(AppContract.Client.PASSWORD, SHA_256_Helper.getHash256String(((EditText) findViewById(R.id.user_pass)).getText().toString(),newSalt));
-            managerValues.put(AppContract.Client.SALT, newSalt);
-
-
-
-
-            new AsyncTask<Void, Void, Long>() {
-                @Override
-                protected Long doInBackground(Void... params) {
-                    return DBManagerFactory.getManager().addClient(managerValues);
-                }
-
-                @Override
-                protected void onPostExecute(Long id) {
-                    super.onPostExecute(id);
-
-
-                    if (id > 0) {
-                        // Toast.makeText(getBaseContext(), "insert id: " + id, Toast.LENGTH_LONG).show();
-                        Intent data=new Intent(RegisterClient.this,LoginActivity.class);
-                        startActivity(data);
-
-
-                    } else {
-
-                        //Toast.makeText(getBaseContext(), "error insert id: " + id, Toast.LENGTH_LONG).show();
-                        Snackbar.make(findViewById(android.R.id.content), "ERROR registering user " + id, Snackbar.LENGTH_LONG).show();
-
-                    }
-                }
-            }.execute();
-        }
-
-    }
 
 
 }
-

@@ -20,6 +20,10 @@
             android:name=".controller.LoginActivity"
             android:label="Sing in"></activity>
         <activity
+            android:name=".controller.RegisterClient"
+            android:label="Sing in"></activity>
+
+        <activity
             android:name=".controller.StartActivity"
             android:label="Wellcome :)">
         <intent-filter>

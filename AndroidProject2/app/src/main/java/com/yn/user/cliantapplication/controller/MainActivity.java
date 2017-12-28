@@ -1,11 +1,17 @@
 package com.yn.user.cliantapplication.controller;
 
 import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,11 +31,14 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
+    FragmentTransaction fragmentTransactio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
+
+
     }
 
     private void findViews() {
@@ -69,11 +78,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+     /*   //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-
+    }
+*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -83,18 +92,38 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_branches) {
         }
-        else if (id == R.id.nav_gallery) {
+        else if (id == R.id.nav_car_models) {
         }
-        else if (id == R.id.nav_slideshow) {
+        else if (id == R.id.nav_open_orders) {
         }
-        else if (id == R.id.nav_manage) {
+        else if (id == R.id.nav_edit_profile) {
+
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            Fragment editProfileFragment =new EditProfileFragment();
+
+
+            fragmentTransaction.replace(R.id.f, editProfileFragment).addToBackStack(null);
+
+            fragmentTransaction.commit();
+
         }
-        else if (id == R.id.nav_share) {
+        else if (id == R.id.nav_log_out) {
+            SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+            Intent mainIntent = new Intent(this,LoginActivity.class);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(mainIntent);
         }
-        else if (id == R.id.nav_send) {
+        else if (id == R.id.nav_about) {
         }
+        else if (id == R.id.nav_email) {
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

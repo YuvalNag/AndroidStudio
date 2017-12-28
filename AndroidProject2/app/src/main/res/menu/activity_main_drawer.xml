@@ -3,35 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
+        <item android:title="Order by:">
+            <menu>
+                <group android:checkableBehavior="single">
 
-    <item android:title="Communicate">
+                <item
+                    android:id="@+id/nav_branches"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="Branches" />
+                <item
+                    android:id="@+id/nav_car_models"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="Car models" />
+                </group>
+
+            </menu>
+        </item>
+    <item android:title="Profile">
         <menu>
+            <group android:checkableBehavior="single">
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_open_orders"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Open orders" />
+            <item
+                android:id="@+id/nav_edit_profile"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Edit profile" />
+            </group>
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_log_out"
+                android:icon="@drawable/ic_login"
+                android:title="Log out" />
+
+        </menu>
+    </item>
+    <item android:title="Us:">
+        <menu>
+            <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="About" />
+            </group>
+            <item
+                android:id="@+id/nav_email"
+                android:icon="@drawable/ic_email"
+                android:title="Email" />
         </menu>
     </item>
 
