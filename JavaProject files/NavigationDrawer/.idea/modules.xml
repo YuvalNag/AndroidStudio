@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Application/Application.iml" filepath="$PROJECT_DIR$/Application/Application.iml" />
+      <module fileurl="file://C:\Users\USER\Documents\GitHub\AndroidStudio\JavaProject files\NavigationDrawer\Application\Application.iml" filepath="C:\Users\USER\Documents\GitHub\AndroidStudio\JavaProject files\NavigationDrawer\Application\Application.iml" />
       <module fileurl="file://$PROJECT_DIR$/NavigationDrawer.iml" filepath="$PROJECT_DIR$/NavigationDrawer.iml" />
+      <module fileurl="file://C:\Users\USER\Documents\GitHub\AndroidStudio\JavaProject files\NavigationDrawer\NavigationDrawer.iml" filepath="C:\Users\USER\Documents\GitHub\AndroidStudio\JavaProject files\NavigationDrawer\NavigationDrawer.iml" />
     </modules>
   </component>
 </project>

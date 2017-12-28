@@ -50,6 +50,7 @@ int i=0;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +64,7 @@ int i=0;
                         }).show();
             }
         });
+*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -105,7 +107,7 @@ int i=0;
 
         return super.onOptionsItemSelected(item);
     }
-    AlertDialog.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+  /*  AlertDialog.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
@@ -123,7 +125,7 @@ int i=0;
 
                     break;
             }
-        }};
+        }};*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

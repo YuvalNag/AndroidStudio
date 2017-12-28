@@ -24,9 +24,9 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Remove title bar
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-        smoothProgressBar = (SmoothProgressBar)findViewById(R.id.pb_start);
+       // ActionBar actionBar = getSupportActionBar();
+       // actionBar.hide();
+       // smoothProgressBar = (SmoothProgressBar)findViewById(R.id.pb_start);
 
 //Remove notification bar
         // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -38,7 +38,7 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             protected void onPreExecute() {
-                smoothProgressBar.setVisibility(View.VISIBLE);
+               // smoothProgressBar.setVisibility(View.VISIBLE);
                 super.onPreExecute();
             }
 
