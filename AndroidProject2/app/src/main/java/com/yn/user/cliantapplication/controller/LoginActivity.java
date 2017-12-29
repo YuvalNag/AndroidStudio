@@ -258,6 +258,12 @@ public class LoginActivity extends AppCompatActivity  {
                 editor.putLong(getString(R.string.login_user_id),mClient.getId());
                 editor.putString(getString(R.string.login_user_email),mClient.getEmailAdrs());
                 editor.putString(getString(R.string.login_user_name),mClient.getFirstName()+" "+ mClient.getLastName());
+                editor.putString(getString(R.string.login_user_first_name),mClient.getFirstName());
+                editor.putString(getString(R.string.login_user_last_name), mClient.getLastName());
+                editor.putString(getString(R.string.login_user_password), mClient.getPassword());
+                editor.putString(getString(R.string.login_user_phone_number), mClient.getPhoneNum());
+                editor.putLong(getString(R.string.login_user_salt), mClient.getSalt());
+                editor.putLong(getString(R.string.login_user_credit_card), mClient.getCraditNumber());
                 editor.putBoolean(getString(R.string.is_login),true);
                 editor.commit();
                 Intent mainIntent =new Intent(LoginActivity.this,MainActivity.class);

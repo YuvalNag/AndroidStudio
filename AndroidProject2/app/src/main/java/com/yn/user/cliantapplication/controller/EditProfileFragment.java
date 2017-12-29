@@ -59,7 +59,12 @@ public class EditProfileFragment extends Fragment {
 
     private void populatView() {
         userEmail.setText(mSharedPreferences.getString(getString(R.string.login_user_email),"Can't find your email"));
-        userLastname.setText(mSharedPreferences.getString(getString(R.string.login_user_name),"Can't find your name"));
+        userLastname.setText(mSharedPreferences.getString(getString(R.string.login_user_last_name),"Can't find your name"));
+        userFirstname.setText(mSharedPreferences.getString(getString(R.string.login_user_first_name),"Can't find your name"));
+        userId.setText(String.valueOf(mSharedPreferences.getLong(getString(R.string.login_user_id),0)));
+        userPhone.setText(mSharedPreferences.getString(getString(R.string.login_user_phone_number),""));
+        textInputLayoutuserCrediCard.getEditText().setText(String.valueOf(mSharedPreferences.getLong(getString(R.string.login_user_credit_card),0)));
+
     }
 
     private void findView(View view){

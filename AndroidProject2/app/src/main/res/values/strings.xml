@@ -21,5 +21,11 @@
     <string name="login_user_id">logedin</string>
     <string name="login_user_email">user_email</string>
     <string name="login_user_name">user_name</string>
+    <string name="login_user_first_name">user_first_name</string>
+    <string name="login_user_last_name">user_last_name</string>
+    <string name="login_user_password">user_password</string>
+    <string name="login_user_salt">user_salt</string>
+    <string name="login_user_credit_card">user_credit_card</string>
+    <string name="login_user_phone_number">user_phone_number</string>
     <string name="is_login">loged</string>
 </resources>

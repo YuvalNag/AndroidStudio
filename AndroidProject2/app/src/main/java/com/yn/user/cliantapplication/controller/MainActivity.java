@@ -1,5 +1,6 @@
 package com.yn.user.cliantapplication.controller;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -24,24 +25,41 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.model.backend.SHA_256_Helper;
 
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
     FragmentTransaction fragmentTransactio;
+    TextView headerName;
+    TextView headerEmail;
+    SharedPreferences sharedPreferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
+       // populateUser();
 
 
     }
 
+    private void populateUser() {
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+       // SharedPreferences.Editor editor = sharedPreferences.edit();
+        headerName.setText(sharedPreferences.getString(getString(R.string.login_user_name),"unknown"));
+        headerEmail.setText(sharedPreferences.getString(getString(R.string.login_user_email),"unknown"));
+
+    }
+
     private void findViews() {
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -51,6 +69,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        navigationView.setCheckedItem(R.id.nav_edit_profile);
+        onNavigationItemSelected(navigationView.getMenu().findItem((R.id.nav_edit_profile)));
+
+
     }
 
 
@@ -68,6 +92,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        headerName=findViewById(R.id.header_name);
+        headerEmail=findViewById(R.id.header_email);
+        populateUser();
         return true;
     }
 
@@ -104,13 +131,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             Fragment editProfileFragment =new EditProfileFragment();
 
 
-            fragmentTransaction.replace(R.id.f, editProfileFragment).addToBackStack(null);
+            fragmentTransaction.replace(R.id.f, editProfileFragment);
 
             fragmentTransaction.commit();
 
         }
         else if (id == R.id.nav_log_out) {
-            SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+             sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.commit();
@@ -120,6 +147,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             startActivity(mainIntent);
         }
         else if (id == R.id.nav_about) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+            navigationView.getMenu().findItem(id).setChecked(false);
         }
         else if (id == R.id.nav_email) {
         }
@@ -130,4 +160,19 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private boolean isValidPassword( String password)  {
+
+        try {
+            sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            long salt=sharedPreferences.getLong(getString(R.string.login_user_salt),0);
+            String cPassword=sharedPreferences.getString(getString(R.string.login_user_password),"");
+
+            return SHA_256_Helper.getHash256String(password,salt).contentEquals(cPassword);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
 }
