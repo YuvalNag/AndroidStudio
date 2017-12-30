@@ -120,6 +120,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         int id = item.getItemId();
 
         if (id == R.id.nav_branches) {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            Fragment branchesFragment =new BranchesFragment();
+
+
+            fragmentTransaction.replace(R.id.f, branchesFragment);
+
+            fragmentTransaction.commit();
         }
         else if (id == R.id.nav_car_models) {
         }
@@ -152,6 +159,11 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             navigationView.getMenu().findItem(id).setChecked(false);
         }
         else if (id == R.id.nav_email) {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto","yuval.nag.91@gmail.com", null));
+            //emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            //emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
+            startActivity(Intent.createChooser(emailIntent, "Send email..."));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
