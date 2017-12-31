@@ -55,17 +55,18 @@ public class  BranchesFragment extends Fragment {
     }
 
     private void buildAdapter() {
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, ExpandableListAdapter>() {
             @Override
-            protected Void doInBackground(Void... voids) {
-                listAdapter = new BranchesExpandableListAdapter(getActivity(),DBManagerFactory.getManager().getBranches(),DBManagerFactory.getManager().mapCarsByBranch());
-                return null ;
+            protected ExpandableListAdapter doInBackground(Void... voids) {
+               return new BranchesExpandableListAdapter(getActivity(),DBManagerFactory.getManager().getBranches(),DBManagerFactory.getManager().mapCarsByBranch());
+
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(ExpandableListAdapter expandableListAdapter) {
                 // setting list adapter
-                super.onPostExecute(aVoid);
+                super.onPostExecute(expandableListAdapter);
+                listAdapter=expandableListAdapter;
                 expListView.setAdapter(listAdapter);
             }
         }.execute();

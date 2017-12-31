@@ -65,7 +65,7 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
     {
         buttonCloseorder.setVisibility(visibility);
         textInputLayoutKilo.setVisibility(visibility);
-        textInputLayoutFouled.setVisibility(visibility);n
+        textInputLayoutFouled.setVisibility(visibility);
     }
     /**
      * Handle button click events<br />

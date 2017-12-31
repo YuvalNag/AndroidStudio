@@ -317,7 +317,7 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public List<Car> getAvailableCarsByBranche(long branch_id) {
         List<Car> availableCarsByBranche  = new ArrayList<>();
-        for (Car car:availableCars) {
+        for (Car car:getAvailableCars()) {
             if(car.getBranchNum()==branch_id)
                 availableCarsByBranche.add(car);
         }
