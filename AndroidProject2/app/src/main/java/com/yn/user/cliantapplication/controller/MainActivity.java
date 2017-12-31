@@ -69,11 +69,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-        navigationView.setCheckedItem(R.id.nav_edit_profile);
-        onNavigationItemSelected(navigationView.getMenu().findItem((R.id.nav_edit_profile)));
-
+        //navigationView.setCheckedItem(R.id.nav_branches);
+       // onNavigationItemSelected(navigationView.getMenu().findItem((R.id.nav_branches)));
 
     }
 
@@ -137,7 +134,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             Fragment editProfileFragment =new EditProfileFragment();
 
-
             fragmentTransaction.replace(R.id.f, editProfileFragment);
 
             fragmentTransaction.commit();
@@ -154,10 +150,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             startActivity(mainIntent);
         }
         else if (id == R.id.nav_about) {
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-
-            navigationView.getMenu().findItem(id).setChecked(false);
-        }
+          }
         else if (id == R.id.nav_email) {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                     "mailto","yuval.nag.91@gmail.com", null));

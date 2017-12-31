@@ -31,7 +31,7 @@ public class BranchesFragment extends Fragment {
     private void findView(View view) {
         // get the listview
         expListView = (ExpandableListView) view.findViewById(R.id.branch_expandable_list_view);
-        listAdapter = new BranchesExpandableListAdapter(getActivity().getBaseContext());
+        listAdapter = new BranchesExpandableListAdapter(getActivity());
         // setting list adapter
         expListView.setAdapter(listAdapter);
     }
@@ -50,6 +50,17 @@ public class BranchesFragment extends Fragment {
                         "chid id: "+listAdapter.getChildId(groupPosition,childPosition), Toast.LENGTH_SHORT)
                         .show();
                 return false;
+            }
+        });
+
+        // Listview Group expanded listener
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getActivity().getBaseContext(),
+                        "group id: "+ listAdapter.getGroupId(groupPosition) + " Expanded",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

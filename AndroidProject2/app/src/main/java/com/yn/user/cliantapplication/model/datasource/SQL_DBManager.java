@@ -438,6 +438,15 @@ public class SQL_DBManager implements DB_manager {
         return null;
     }
 
+    @Override
+    public CarModel getCarModel(long id) {
+        for (CarModel carModel:carModels) {
+            if(carModel.getIdCarModel()==id)
+                return carModel;
+        }
+        return null;
+    }
+
 
     @Override
     public Order getOrder(long id) {

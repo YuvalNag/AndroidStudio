@@ -46,4 +46,9 @@ public class Address implements Serializable {
         setStreet(street);
         setNumber(number);
     }
+
+    @Override
+    public String toString() {
+        return city + " " + street + " "+ number ;
+    }
 }

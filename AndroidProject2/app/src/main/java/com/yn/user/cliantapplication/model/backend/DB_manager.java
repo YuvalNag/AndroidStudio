@@ -37,7 +37,7 @@ public interface DB_manager {
 
     //Cursor getClient(long id);
     Client getClient(long id);
-
+    CarModel getCarModel(long id);
 
     //order
     long addOrder(ContentValues contentValues);
