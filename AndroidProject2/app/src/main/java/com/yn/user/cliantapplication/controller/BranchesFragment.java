@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -55,18 +56,19 @@ public class BranchesFragment extends Fragment {
     }
 
     private void buildAdapter() {
-        new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, ExpandableListAdapter>() {
             @Override
-            protected Void doInBackground(Void... voids) {
-                listAdapter = new BranchesExpandableListAdapter(getActivity(),DBManagerFactory.getManager().getBranches(),DBManagerFactory.getManager().mapCarsByBranch());
-                return null ;
+            protected ExpandableListAdapter doInBackground(Void... voids) {
+                return  new BranchesExpandableListAdapter(getActivity(),DBManagerFactory.getManager().getBranches(),DBManagerFactory.getManager().mapCarsByBranch());
             }
 
             @Override
-            protected void onPostExecute(Void aVoid) {
+            protected void onPostExecute(ExpandableListAdapter expandableListAdapter) {
                 // setting list adapter
-                super.onPostExecute(aVoid);
-                expListView.setAdapter(listAdapter);
+                super.onPostExecute(expandableListAdapter);
+                listAdapter=expandableListAdapter;
+                
+                expListView.setAdapter(expandableListAdapter);
             }
         }.execute();
 
