@@ -443,15 +443,16 @@ public class SQL_DBManager implements DB_manager {
      * kilometars
      */
     @Override
-    public boolean closeOrder(long id, ContentValues values) {
+    public double closeOrder(long id, ContentValues values) {
         try {
+            values.put(AppContract.Order.FINAL_AMOUNT,100);
             String result=PHPtools.POST(WEB_URL + "CloseOrder.php", values);
             printLog("closeOrder:\n" + result);
             isUpdatedOrder=true;
-            return true;
+            return 100;
         } catch (Exception e) {
             printLog("closeOrder Exception:\n" + e);
-            return false;
+            return -1;
         }
     }
 
@@ -501,8 +502,8 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public List<Order> getOpenOrders(long client_id) {
         List<Order> openOrders = new ArrayList<>();
-        for (Order order : orders) {
-            if (order.getStatus() == true && order.getClientId()==client_id)
+        for (Order order : getOrders()) {
+            if (order.getStatus() == false && order.getClientId()==client_id)
                 openOrders.add(order);
         }
         return openOrders;

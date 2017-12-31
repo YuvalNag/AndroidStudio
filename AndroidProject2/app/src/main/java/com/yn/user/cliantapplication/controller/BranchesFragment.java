@@ -55,23 +55,23 @@ public class  BranchesFragment extends Fragment {
         fab = (FloatingActionButton) view.findViewById(R.id.open_order_floatingActionButton);
         fab.setVisibility(View.INVISIBLE);
         buildAdapter();
-        expListView.expandGroup(listAdapter.getGroupPositionById(getArguments().getLong(BRANCH_ID)));
+     //   expListView.expandGroup(listAdapter.getGroupPositionById(getArguments().getLong(BRANCH_ID)));
     }
 
     private void buildAdapter() {
-        new AsyncTask<Void, Void, ExpandableListAdapter>() {
+        new AsyncTask<Void, Void, BranchesExpandableListAdapter>() {
             @Override
-            protected ExpandableListAdapter doInBackground(Void... voids) {
+            protected BranchesExpandableListAdapter doInBackground(Void... voids) {
 
                 return new BranchesExpandableListAdapter(getActivity(), DBManagerFactory.getManager().getBranches(), DBManagerFactory.getManager().mapCarsByBranch());
             }
 
             @Override
-            protected void onPostExecute(ExpandableListAdapter expandableListAdapter) {
+            protected void onPostExecute(BranchesExpandableListAdapter branchesExpandableListAdapter) {
                 // setting list adapter
-                super.onPostExecute(expandableListAdapter);
-                listAdapter=(BranchesExpandableListAdapter)expandableListAdapter;
-                expListView.setAdapter(expandableListAdapter);
+                super.onPostExecute(branchesExpandableListAdapter);
+                listAdapter=branchesExpandableListAdapter;
+                expListView.setAdapter(branchesExpandableListAdapter);
 
             }
         }.execute();

@@ -36,7 +36,7 @@ public class Order implements Serializable{
 
     private  long amountOfFoul;
 
-    private  long finalAmount;
+    private double finalAmount;
 
     public Order(long idOrderNum, long clientId, long carNumber, Timestamp rentDate, Timestamp returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, Boolean status, long amountOfFoul, long finalAmount) {
         this.idOrderNum = idOrderNum;
@@ -125,11 +125,11 @@ public class Order implements Serializable{
         this.amountOfFoul = amountOfFoul;
     }
 
-    public long getFinalAmount() {
+    public double getFinalAmount() {
         return finalAmount;
     }
 
-    public void setFinalAmount(long finalAmount) {
+    public void setFinalAmount(double finalAmount) {
         this.finalAmount = finalAmount;
     }
 }

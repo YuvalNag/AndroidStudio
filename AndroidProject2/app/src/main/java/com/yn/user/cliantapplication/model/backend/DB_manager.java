@@ -42,7 +42,7 @@ public interface DB_manager {
 
     //order
     long addOrder(ContentValues contentValues);
-    boolean closeOrder(long id, ContentValues values);
+    double closeOrder(long id, ContentValues values);
     boolean orderClosedIn10sec();
     //Cursor getOrder(long id);
     //Cursor getOrders();

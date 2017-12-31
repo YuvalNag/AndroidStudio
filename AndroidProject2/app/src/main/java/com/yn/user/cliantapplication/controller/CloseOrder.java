@@ -1,22 +1,33 @@
 package com.yn.user.cliantapplication.controller;
 
 import android.app.Fragment;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.model.backend.AppContract;
 import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
+import com.yn.user.cliantapplication.model.entities.Order;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /**
  * Created by nissy34 on 31/12/2017.
@@ -30,6 +41,8 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
     private Button button_closeorder;
     private TextInputLayout textInputLayoutKilo;
     private TextInputLayout textInputLayoutFouled;
+    private Order order;
+    private boolean fouled;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +65,13 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                visibiltyopenOrders(View.GONE);
+            }
+
+            @Override
+            protected ArrayAdapter doInBackground(Void... voids) {
+                return new OrderAdapter(CloseOrder.this.getActivity(), DBManagerFactory.getManager().getCars(),DBManagerFactory.getManager().getOpenOrders(mSharedPreferences.getLong(getString(R.string.login_user_id),-1)),DBManagerFactory.getManager().getCarModels());
+
             }
 
             @Override
@@ -60,11 +80,7 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
                 carGridView.setAdapter(arrayAdapter);
             }
 
-            @Override
-            protected ArrayAdapter doInBackground(Void... voids) {
-              return new OrderAdapter(CloseOrder.this.getActivity(), DBManagerFactory.getManager().getCars(),DBManagerFactory.getManager().getOpenOrders(mSharedPreferences.getLong(getString(R.string.login_user_id),-1)),DBManagerFactory.getManager().getCarModels());
 
-            }
         }.execute();
     }
 
@@ -77,10 +93,50 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
     private void findViews(View view) {
         carGridView = (ListView)view.findViewById( R.id.car_grid_view );
 
-        button_closeorder = (Button)view.findViewById( R.id.button_closeorder );
+        carGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                visibiltyopenOrders(View.VISIBLE);
+                order=(Order)adapterView.getItemAtPosition(i);
+            }
+        });
         textInputLayoutKilo = (TextInputLayout)view.findViewById( R.id.textInputLayout_kilo );
+
+        textInputLayoutKilo.getEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+               try
+               {
+                   Long.valueOf(charSequence.toString().trim());
+                   textInputLayoutKilo.setErrorEnabled(false);
+                   button_closeorder.setEnabled(true);
+
+               }
+               catch (Exception e)
+               {
+                   textInputLayoutKilo.setErrorEnabled(true);
+                   textInputLayoutKilo.setError("you must enter your kilo");
+                   button_closeorder.setEnabled(false);
+
+               }
+
+            }
+        });
         textInputLayoutFouled = (TextInputLayout)view.findViewById( R.id.textInputLayout_fouled );
 
+
+        button_closeorder = (Button)view.findViewById( R.id.button_closeorder );
         button_closeorder.setOnClickListener( this );
     }
 
@@ -97,9 +153,52 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
      * (http://www.buzzingandroid.com/tools/android-layout-finder)
      */
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         if ( v == button_closeorder) {
-            // Handle clicks for button_closeorder
+
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            String datetime = dateformat.format(c.getTime());
+
+
+            final ContentValues orderContentValues= new ContentValues();
+            orderContentValues.put(AppContract.Order.ORDER_ID,order.getIdOrderNum());
+            orderContentValues.put(AppContract.Order.KILOMETERS_AT_RETURN,Long.valueOf(textInputLayoutKilo.getEditText().getText().toString())+order.getKilometersAtRent());
+            orderContentValues.put(AppContract.Order.RETURN_DATE,datetime);
+            orderContentValues.put(AppContract.Order.FOULED,textInputLayoutFouled.getEditText().getText().toString().trim().length()==0);
+            orderContentValues.put(AppContract.Order.ORDER_STATUS,String.valueOf(1));
+            orderContentValues.put(AppContract.Order.AMOUNT_OF_FOUL,textInputLayoutFouled.getEditText().getText().toString());
+
+            new AsyncTask<Void,Void,Double>()
+            {
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                }
+
+                @Override
+                protected void onPostExecute(Double aDouble) {
+                    super.onPostExecute(aDouble);
+                    if(aDouble>0) {
+                        Snackbar.make(v, "Total Amount: " + aDouble, Snackbar.LENGTH_LONG).show();
+                        populatView();
+                    }
+                    else
+                        Snackbar.make(v, "error closing order: "+order.getIdOrderNum() , Snackbar.LENGTH_LONG).show();
+
+
+                }
+
+                @Override
+                protected Double doInBackground(Void... voids) {
+                   return DBManagerFactory.getManager().closeOrder(order.getIdOrderNum(),orderContentValues);
+
+                }
+            }.execute();
+
+
+
         }
     }
 
