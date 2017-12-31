@@ -23,6 +23,8 @@ import com.yn.user.cliantapplication.model.entities.TransmissionType;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -116,12 +118,17 @@ public class Tools {
 
     public static Order ContentValuesToOrder(ContentValues contentValues)
     {
+        Timestamp timestamp=null;
+        if(!contentValues.getAsString(AppContract.Order.RETURN_DATE).contains("null"))
+            timestamp=  Timestamp.valueOf(contentValues.getAsString(AppContract.Order.RETURN_DATE));
+
+
         return   new Order(
                 contentValues.getAsLong(AppContract.Order.ORDER_ID)                 ,
                 contentValues.getAsLong(AppContract.Order.CLIENT_ID           ),
                 contentValues.getAsLong(AppContract.Order.CAR_NUM            ),
-                Date.valueOf(contentValues.getAsString(AppContract.Order.RENT_DATE)),
-                Date.valueOf(contentValues.getAsString(AppContract.Order.RETURN_DATE)),
+                Timestamp.valueOf(contentValues.getAsString(AppContract.Order.RENT_DATE)),
+                timestamp,
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RENT  ),
                 contentValues.getAsLong(AppContract.Order.KILOMETERS_AT_RETURN),
                 contentValues.getAsBoolean(AppContract.Order.FOULED               ),

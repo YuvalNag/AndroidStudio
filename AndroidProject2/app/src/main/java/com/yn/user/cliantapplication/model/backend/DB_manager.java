@@ -22,7 +22,8 @@ public interface DB_manager {
     //update lists
 
     boolean isUpdated(boolean update);
-//    void updateCarlist();
+
+    void updateCarlist();
     void updateCarModellist();
     void updateOrderList();
     void updateAvailablecarList();
@@ -54,8 +55,8 @@ public interface DB_manager {
     boolean updateCar(long id, ContentValues values);
 
     //Cursor getAvailableCars();
-    //Cursor getCars();
 
+    List<Car>  getCars();
     List<Car> getAvailableCars();
 
 /*

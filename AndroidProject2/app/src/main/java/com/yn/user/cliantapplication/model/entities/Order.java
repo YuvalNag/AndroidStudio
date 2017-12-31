@@ -4,7 +4,7 @@ package com.yn.user.cliantapplication.model.entities;
  * Created by nissy34 on 07/11/2017.
  */
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Order implements Serializable{
 
@@ -14,9 +14,9 @@ public class Order implements Serializable{
 
     private  long carNumber;
 
-    private Date rentDate;
+    private Timestamp rentDate;
 
-    private Date returnDate;
+    private Timestamp returnDate;
 
     private  long kilometersAtRent;
 
@@ -38,7 +38,7 @@ public class Order implements Serializable{
 
     private  long finalAmount;
 
-    public Order(long idOrderNum, long clientId, long carNumber, Date rentDate, Date returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, Boolean status, long amountOfFoul, long finalAmount) {
+    public Order(long idOrderNum, long clientId, long carNumber, Timestamp rentDate, Timestamp returnDate, long kilometersAtRent, long kilometersAtReturn, Boolean fouled, Boolean status, long amountOfFoul, long finalAmount) {
         this.idOrderNum = idOrderNum;
         this.clientId = clientId;
         this.carNumber = carNumber;
@@ -77,19 +77,19 @@ public class Order implements Serializable{
         this.carNumber = carNumber;
     }
 
-    public Date getRentDate() {
+    public Timestamp getRentDate() {
         return rentDate;
     }
 
-    public void setRentDate(Date rentDate) {
+    public void setRentDate(Timestamp rentDate) {
         this.rentDate = rentDate;
     }
 
-    public Date getReturnDate() {
+    public Timestamp getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(Timestamp returnDate) {
         this.returnDate = returnDate;
     }
 

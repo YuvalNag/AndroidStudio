@@ -128,6 +128,12 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         else if (id == R.id.nav_car_models) {
         }
         else if (id == R.id.nav_open_orders) {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            Fragment closeOrder =new CloseOrder();
+
+            fragmentTransaction.replace(R.id.f, closeOrder);
+
+            fragmentTransaction.commit();
         }
         else if (id == R.id.nav_edit_profile) {
 

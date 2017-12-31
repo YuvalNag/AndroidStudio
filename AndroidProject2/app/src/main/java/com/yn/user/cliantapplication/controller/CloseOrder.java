@@ -2,7 +2,7 @@ package com.yn.user.cliantapplication.controller;
 
 import android.app.Fragment;
 import android.content.SharedPreferences;
-import android.opengl.Visibility;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -10,11 +10,13 @@ import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 
 /**
  * Created by nissy34 on 31/12/2017.
@@ -25,7 +27,7 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
 
     private ListView carGridView;
     private TextView textView2;
-    private Button buttonCloseorder;
+    private Button button_closeorder;
     private TextInputLayout textInputLayoutKilo;
     private TextInputLayout textInputLayoutFouled;
 
@@ -39,10 +41,31 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=     inflater.inflate(R.layout.activity_register_client,container,false);
+        View view=     inflater.inflate(R.layout.open_orders_fragment,container,false);
         findViews(view);
-       // populatView();
+         populatView();
         return view;
+    }
+
+    private void populatView() {
+        new AsyncTask<Void,Void,ArrayAdapter>(){
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(ArrayAdapter arrayAdapter) {
+                super.onPostExecute(arrayAdapter);
+                carGridView.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            protected ArrayAdapter doInBackground(Void... voids) {
+              return new OrderAdapter(CloseOrder.this.getActivity(), DBManagerFactory.getManager().getCars(),DBManagerFactory.getManager().getOpenOrders(mSharedPreferences.getLong(getString(R.string.login_user_id),-1)),DBManagerFactory.getManager().getCarModels());
+
+            }
+        }.execute();
     }
 
     /**
@@ -54,16 +77,16 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
     private void findViews(View view) {
         carGridView = (ListView)view.findViewById( R.id.car_grid_view );
 
-        buttonCloseorder = (Button)view.findViewById( R.id.button_closeorder );
+        button_closeorder = (Button)view.findViewById( R.id.button_closeorder );
         textInputLayoutKilo = (TextInputLayout)view.findViewById( R.id.textInputLayout_kilo );
         textInputLayoutFouled = (TextInputLayout)view.findViewById( R.id.textInputLayout_fouled );
 
-        buttonCloseorder.setOnClickListener( this );
+        button_closeorder.setOnClickListener( this );
     }
 
     private void visibiltyopenOrders(int visibility)
     {
-        buttonCloseorder.setVisibility(visibility);
+        button_closeorder.setVisibility(visibility);
         textInputLayoutKilo.setVisibility(visibility);
         textInputLayoutFouled.setVisibility(visibility);
     }
@@ -75,8 +98,8 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
      */
     @Override
     public void onClick(View v) {
-        if ( v == buttonCloseorder ) {
-            // Handle clicks for buttonCloseorder
+        if ( v == button_closeorder) {
+            // Handle clicks for button_closeorder
         }
     }
 

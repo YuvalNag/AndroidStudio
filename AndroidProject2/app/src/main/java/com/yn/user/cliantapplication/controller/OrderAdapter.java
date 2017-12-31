@@ -11,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
-import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 import com.yn.user.cliantapplication.model.entities.Car;
 import com.yn.user.cliantapplication.model.entities.CarModel;
+import com.yn.user.cliantapplication.model.entities.Order;
 
 import java.util.List;
 
@@ -21,28 +21,52 @@ import java.util.List;
  * Created by nissy34 on 31/12/2017.
  */
 
-public class CarAdapter extends ArrayAdapter {
+public class OrderAdapter extends ArrayAdapter {
 
+private List<Car> carList;
+private List<CarModel> listModels;
 
-    public CarAdapter(@NonNull Context context, @NonNull List objects) {
-        super(context, 0, objects);
+    public OrderAdapter(@NonNull Context context, @NonNull List<Car> cars, List<Order> Orders, List<CarModel> carModels) {
+        super(context, 0, Orders);
+        carList=cars;
+        listModels=carModels;
     }
 
     @Override
     public long getItemId(int position) {
-        return ((Car)getItem(position)).getIdCarNumber();
+        return ((Order)getItem(position)).getIdOrderNum();
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Car car = ((Car)getItem(position));
+
+        Order order=(Order)getItem(position);
+
+        Car car = null;
+        for(Car carItem:carList)
+        {
+            if(carItem.getIdCarNumber()==order.getCarNumber()) {
+                car = carItem;
+                break;
+            }
+        }
+
+        CarModel carModel=null;
+
+        if(car!=null)
+        for (CarModel carModelItem:listModels)
+            if(carModelItem.getIdCarModel()==car.getCarModelID()) {
+                carModel = carModelItem;
+                 break;
+        }
+
+
         if(convertView==null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.car_item_card, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.car_item_card_order, parent, false);
 
-        long modelid = car.getCarModelID();
 
-        CarModel carModel = DBManagerFactory.getManager().getCarModel(modelid);
+
 
         if (carModel != null) {
 
@@ -67,13 +91,19 @@ public class CarAdapter extends ArrayAdapter {
                     .into(imageView);
         }
 
-        TextView carid = (TextView) convertView.findViewById(R.id.car_id);
-        TextView carkilo = (TextView) convertView.findViewById(R.id.car_kilo);
-        TextView branch = (TextView) convertView.findViewById(R.id.car_branch);
+        if(car!=null) {
+            TextView carid = (TextView) convertView.findViewById(R.id.car_id);
+            TextView carkilo = (TextView) convertView.findViewById(R.id.car_kilo);
+            TextView branch = (TextView) convertView.findViewById(R.id.car_branch);
 
-        carid.setText(String.valueOf(car.getIdCarNumber()));
-        carkilo.setText(String.valueOf(car.getKilometers()));
-        branch.setText(String.valueOf(car.getBranchNum()));
+            carid.setText(String.valueOf(car.getIdCarNumber()));
+            carkilo.setText(String.valueOf(car.getKilometers()));
+            branch.setText(String.valueOf(car.getBranchNum()));
+        }
+
+        TextView date = (TextView) convertView.findViewById(R.id.textView_date);
+        date.setText(order.getRentDate().toString());
+
 
         return convertView;
 

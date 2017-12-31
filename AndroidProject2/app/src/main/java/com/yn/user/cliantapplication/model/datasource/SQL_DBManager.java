@@ -42,6 +42,7 @@ public class SQL_DBManager implements DB_manager {
 
 
     static List<Car> availableCars;
+    static List<Car> cars;
     static List<CarModel> carModels;
     static List<Client> clients;
     static List<Order> orders;
@@ -56,6 +57,7 @@ public class SQL_DBManager implements DB_manager {
     static {
 
         availableCars = new ArrayList<>();
+        cars = new ArrayList<>();
         carModels = new ArrayList<>();
         clients = new ArrayList<>();
         orders = new ArrayList<>();
@@ -75,6 +77,7 @@ public class SQL_DBManager implements DB_manager {
 
     public SQL_DBManager() {
          updateCarModellist();
+         updateCarlist();
          updateOrderList();
          updateAvailablecarList();
          updateBranchesList();
@@ -125,6 +128,28 @@ public class SQL_DBManager implements DB_manager {
             isUpdatedOrder=true;
            orders=temp;
         }
+    }
+    @Override
+    public void updateCarlist() {
+        List<Car> temp=cars;
+        cars = new ArrayList<>();
+
+        try {
+
+            String str = PHPtools.GET(WEB_URL + "cars.php");
+            JSONArray array = new JSONObject(str).getJSONArray("cars");
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+
+                ContentValues contentValues = PHPtools.JsonToContentValues(jsonObject);
+                cars.add(Tools.ContentValuesToCar(contentValues));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            isUpdatedCar=true;
+            cars=temp;}
+
     }
     @Override
     public void updateAvailablecarList() {
@@ -275,6 +300,11 @@ public class SQL_DBManager implements DB_manager {
             printLog("updateCar Exception:\n" + e);
             return false;
         }
+    }
+
+    @Override
+    public List<Car> getCars() {
+        return  cars;
     }
 
     @Override
@@ -486,4 +516,6 @@ public class SQL_DBManager implements DB_manager {
 
 
     }
+
+
 }
