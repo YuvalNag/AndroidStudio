@@ -44,11 +44,11 @@ public class BranchesExpandableListAdapter extends BaseExpandableListAdapter {
     private List<Branch> branches;
     private Map<Long,List<Car>> carMap;
 
-    public BranchesExpandableListAdapter(Context context) {
+    public BranchesExpandableListAdapter(Context context,List<Branch> branches,Map<Long,List<Car>> carMap) {
 
         this.context = context;
-        this.branches = DBManagerFactory.getManager().getBranches();
-        this.carMap = DBManagerFactory.getManager().mapCarsByBranch();
+        this.branches = branches;
+        this.carMap = carMap;
     }
 
     @Override

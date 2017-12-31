@@ -47,9 +47,9 @@ public class SQL_DBManager implements DB_manager {
     static List<Order> orders;
     static List<Branch> branches;
 
-    private boolean isUpdatedClient;
-    private boolean isUpdatedOrder;
-    private boolean isUpdatedCar;
+    private boolean isUpdatedClient=false;
+    private boolean isUpdatedOrder=false;
+    private boolean isUpdatedCar=false;
 
     static  final int  TIMEINTERVAL=10;
 
@@ -228,6 +228,7 @@ public class SQL_DBManager implements DB_manager {
             long id = Long.parseLong(result);
             printLog("addOrder:\n" + result);
             isUpdatedOrder=true;
+            isUpdatedCar=true;
             return id;
         } catch (Exception e) {
             printLog("addOrder Exception:\n" + e);
@@ -278,6 +279,10 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Car> getAvailableCars() {
+        if(isUpdatedCar) {
+            updateAvailablecarList();
+            isUpdatedCar=false;
+        }
         return availableCars;
     }
 
