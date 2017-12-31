@@ -31,7 +31,7 @@ import java.util.Date;
  * Created by USER on 30/12/2017.
  */
 
-public class BranchesFragment extends Fragment {
+public class  BranchesFragment extends Fragment {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     FloatingActionButton fab;
@@ -59,7 +59,8 @@ public class BranchesFragment extends Fragment {
         new AsyncTask<Void, Void, ExpandableListAdapter>() {
             @Override
             protected ExpandableListAdapter doInBackground(Void... voids) {
-                return  new BranchesExpandableListAdapter(getActivity(),DBManagerFactory.getManager().getBranches(),DBManagerFactory.getManager().mapCarsByBranch());
+
+                return new BranchesExpandableListAdapter(getActivity(), DBManagerFactory.getManager().getBranches(), DBManagerFactory.getManager().mapCarsByBranch());
             }
 
             @Override
@@ -67,8 +68,8 @@ public class BranchesFragment extends Fragment {
                 // setting list adapter
                 super.onPostExecute(expandableListAdapter);
                 listAdapter=expandableListAdapter;
-                
                 expListView.setAdapter(expandableListAdapter);
+
             }
         }.execute();
 

@@ -152,11 +152,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         else if (id == R.id.nav_about) {
           }
         else if (id == R.id.nav_email) {
+
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                     "mailto","yuval.nag.91@gmail.com", null));
             //emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
             //emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
             startActivity(Intent.createChooser(emailIntent, "Send email..."));
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

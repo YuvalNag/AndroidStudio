@@ -317,7 +317,7 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public List<Car> getAvailableCarsByBranche(long branch_id) {
         List<Car> availableCarsByBranche  = new ArrayList<>();
-        for (Car car:availableCars) {
+        for (Car car:getAvailableCars()) {
             if(car.getBranchNum()==branch_id)
                 availableCarsByBranche.add(car);
         }
@@ -465,10 +465,10 @@ public class SQL_DBManager implements DB_manager {
 
 
     @Override
-    public List<Order> getOpenOrders() {
+    public List<Order> getOpenOrders(long client_id) {
         List<Order> openOrders = new ArrayList<>();
         for (Order order : orders) {
-            if (order.getStatus() == true)
+            if (order.getStatus() == true && order.getClientId()==client_id)
                 openOrders.add(order);
         }
         return openOrders;
