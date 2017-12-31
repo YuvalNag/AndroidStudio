@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             navigationView.getMenu().findItem(id).setChecked(false);
         }
         else if (id == R.id.nav_email) {
+            startActivity(new Intent(this,client_list.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
