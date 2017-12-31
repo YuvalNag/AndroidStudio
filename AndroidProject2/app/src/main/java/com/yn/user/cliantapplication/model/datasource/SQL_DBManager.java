@@ -29,8 +29,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static java.lang.System.out;
 
@@ -370,12 +372,14 @@ public class SQL_DBManager implements DB_manager {
             if(car.getCarModelID() == carModel_id)
                 branchesIdByModel.add(car.getBranchNum());
         }
-        for (long id: branchesIdByModel) {
+
+        Set<Long> uniqueValues = new HashSet(branchesIdByModel); //now unique
+
+        for (long id: uniqueValues) {
             for (Branch branch:branches) {
                 if(id == branch.getBranchID())
                     branchesByModel.add(branch);
             }
-
         }
         return branchesByModel;
 
