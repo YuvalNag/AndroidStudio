@@ -29,10 +29,15 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         //Remove title bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-       // smoothProgressBar = (SmoothProgressBar)findViewById(R.id.pb_start);
+        // smoothProgressBar = (SmoothProgressBar)findViewById(R.id.pb_start);
 
 //Remove notification bar
         // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -84,11 +89,6 @@ public class StartActivity extends AppCompatActivity {
 
         }
 
-
-
-
     }
-
-
 }
 

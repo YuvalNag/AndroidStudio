@@ -37,7 +37,7 @@ public interface DB_manager {
 
     //Cursor getClient(long id);
     Client getClient(long id);
-
+    CarModel getCarModel(long id);
 
     //order
     long addOrder(ContentValues contentValues);
@@ -48,7 +48,7 @@ public interface DB_manager {
     //Cursor getOpenOrders();
    Order getOrder(long id);
    List<Order> getOrders();
-   List<Order> getOpenOrders();
+   List<Order> getOpenOrders(long client_id);
 
     //car
     boolean updateCar(long id, ContentValues values);

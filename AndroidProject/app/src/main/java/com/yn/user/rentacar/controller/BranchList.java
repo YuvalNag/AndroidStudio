@@ -62,7 +62,7 @@ public class BranchList extends AppCompatActivity {
 
                                         if (result > 0) {
                                             //Toast.makeText(getBaseContext(), "insert car   id: " + id, Toast.LENGTH_LONG).show();
-                                            Snackbar.make(findViewById(android.R.id.content), "delete barnch  num: " + branch_num, Snackbar.LENGTH_LONG).show();
+                                            Snackbar.make(findViewById(android.R.id.content), "Delete barnch  num: " + branch_num, Snackbar.LENGTH_LONG).show();
                                             showBranches();
                                             fab.setVisibility(View.INVISIBLE);
 

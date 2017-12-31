@@ -29,6 +29,7 @@ public class CarCursorAdapter extends CursorAdapter {
         this.carModelMap=carModelMap;
     }
 
+
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return LayoutInflater.from(context).inflate(R.layout.car_item_card, parent, false);

@@ -22,10 +22,14 @@
             android:label="Sign in"/>
         <activity
             android:name=".controller.RegisterClient"
+
             android:label="Register"/>
-        <activity
-            android:name=".controller.client_list"
-            android:label="Register"/>
+
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity
 
             android:name=".controller.StartActivity"
