@@ -126,6 +126,10 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             fragmentTransaction.commit();
         }
         else if (id == R.id.nav_car_models) {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            Fragment carModelFragment = new CarModelFragment();
+            fragmentTransaction.replace(R.id.f, carModelFragment);
+            fragmentTransaction.commit();
         }
         else if (id == R.id.nav_open_orders) {
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
