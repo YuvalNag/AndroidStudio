@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
@@ -53,7 +54,8 @@ public class BlankFragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.fragbar,menu);
         Toast.makeText(getActivity(), "onCreateOptionsMenu", Toast.LENGTH_SHORT).show();
-       final MyAdapter arrayAdapter= (MyAdapter)((ListView)(getView().findViewById(R.id.conslistview))).getAdapter();
+       Snackbar.make(getView(),"asdasd",Snackbar.LENGTH_SHORT).show();
+        final MyAdapter arrayAdapter= (MyAdapter)((ListView)(getView().findViewById(R.id.conslistview))).getAdapter();
         MenuItem searchViewItem = menu.findItem(R.id.search);
         final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
         searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

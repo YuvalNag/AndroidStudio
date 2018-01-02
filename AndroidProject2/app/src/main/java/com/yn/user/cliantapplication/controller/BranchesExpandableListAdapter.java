@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +32,9 @@ import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 import com.yn.user.cliantapplication.model.entities.Branch;
 import com.yn.user.cliantapplication.model.entities.Car;
 import com.yn.user.cliantapplication.model.entities.CarModel;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -39,9 +44,13 @@ import java.util.Map;
  * Created by USER on 30/12/2017.
  */
 
-public class BranchesExpandableListAdapter extends BaseExpandableListAdapter  {
+
+public class BranchesExpandableListAdapter extends BaseExpandableListAdapter implements Filterable {
+
     private Context context;
     private List<Branch> branches;
+    private List<Branch> originalBranches;
+
     private Map<Long,List<Car>> carMap;
 
     public BranchesExpandableListAdapter(Context context,List<Branch> branches,Map<Long,List<Car>> carMap) {
@@ -49,6 +58,7 @@ public class BranchesExpandableListAdapter extends BaseExpandableListAdapter  {
         this.context = context;
         this.branches = branches;
         this.carMap = carMap;
+        this.originalBranches=branches;
     }
 
     @Override
@@ -177,6 +187,53 @@ public class BranchesExpandableListAdapter extends BaseExpandableListAdapter  {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter()
+        {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence)
+            {
+                FilterResults results = new FilterResults();
+
+                //If there's nothing to filter on, return the original data for your list
+                if(charSequence == null || charSequence.length() == 0)
+                {
+                    results.values = originalBranches;
+                    results.count = originalBranches.size();
+                }
+                else
+                {
+                    List filterResultsData = new ArrayList<Branch>();
+
+                    for(Branch data : originalBranches
+                            )
+                    {
+                        //In this loop, you'll filter through originalData and compare each item to charSequence.
+                        //If you find a match, add it to your new ArrayList
+                        //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
+                        if(data.getBranchAddress().getCity().trim().toLowerCase().startsWith(charSequence.toString().toLowerCase()))
+                        {
+                            filterResultsData.add(data);
+                        }
+                    }
+
+                    results.values = filterResultsData;
+                    results.count = filterResultsData.size();
+                }
+
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults)
+            {
+                branches = (ArrayList<Branch>)filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }
 

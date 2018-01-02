@@ -159,15 +159,15 @@ int i=0;
             }
         } else if (id == R.id.nav_slideshow) {
 
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+           /* AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             alertDialogBuilder.setTitle("dialog title"); //alertDialogBuilder.setMessage("dialog message ....");
             alertDialogBuilder.setNeutralButton("Remind me later", onClickListener);
             alertDialogBuilder.setPositiveButton("Ok", onClickListener);
             alertDialogBuilder.setNegativeButton("Cancel ", onClickListener);
-            /*alertDialogBuilder.setAdapter(new ListAdapter() {
+           */ /*alertDialogBuilder.setAdapter(new ListAdapter() {
             })*/
 
-            alertDialogBuilder.setAdapter(new ArrayAdapter<String>(this,
+            /*alertDialogBuilder.setAdapter(new ArrayAdapter<String>(this,
                     R.layout.item, Arrays.asList(strings.CHEESES)), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -178,7 +178,7 @@ int i=0;
             // alertDialogBuilder.setView(R.layout.checkcons);
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-
+*/
         } else if (id == R.id.nav_manage) {
 
             main_order blankFragment = (main_order) getSupportFragmentManager().findFragmentByTag("main");
