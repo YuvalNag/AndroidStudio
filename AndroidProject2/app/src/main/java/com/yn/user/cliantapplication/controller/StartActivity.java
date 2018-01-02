@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.yn.user.cliantapplication.R;
@@ -22,7 +23,7 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
 public class StartActivity extends AppCompatActivity {
 
-
+    ProgressBar progressBar;
     SharedPreferences mSharedPreferences;
 
     @SuppressLint("StaticFieldLeak")
@@ -34,6 +35,9 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        setContentView(R.layout.activity_start);
+        progressBar =findViewById(R.id.progressBar2);
+
         //Remove title bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -41,7 +45,7 @@ public class StartActivity extends AppCompatActivity {
 
 //Remove notification bar
         // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_start);
+
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -54,6 +58,15 @@ public class StartActivity extends AppCompatActivity {
             new AsyncTask<Void, Void, Void>() {
 
                 @Override
+                protected void onProgressUpdate(Void... values) {
+                    super.onProgressUpdate(values);
+                    for (float i=progressBar.getProgress();i<16.66;++i){
+                        progressBar.setProgress((int) i);
+                    }
+
+                }
+
+                @Override
                 protected void onPreExecute() {
                     // smoothProgressBar.setVisibility(View.VISIBLE);
                     super.onPreExecute();
@@ -63,6 +76,19 @@ public class StartActivity extends AppCompatActivity {
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
                     if (mSharedPreferences.getBoolean(getString(R.string.is_login), false)) {
+                        DBManagerFactory.getManager().updateCarModellist();
+                        publishProgress();
+                        DBManagerFactory.getManager().updateCarlist();
+                        publishProgress();
+                        DBManagerFactory.getManager().updateOrderList();
+                        publishProgress();
+                        DBManagerFactory.getManager().updateAvailablecarList();
+                        publishProgress();
+                        DBManagerFactory.getManager().updateBranchesList();
+                        publishProgress();
+                        DBManagerFactory.getManager().updateClientList();
+                        publishProgress();
+
                         Intent mainIntent = new Intent(StartActivity.this, MainActivity.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

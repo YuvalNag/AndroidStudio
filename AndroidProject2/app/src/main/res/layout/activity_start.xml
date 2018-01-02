@@ -16,10 +16,12 @@
         android:layout_gravity="top"
         android:adjustViewBounds="true"
         android:src="@drawable/logo" />
-    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-        android:id="@+id/pb_start"
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
-        />
+        android:progress="0"/>
+
 </LinearLayout>

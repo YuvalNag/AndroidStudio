@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         setContentView(R.layout.activity_main);
         findViews();
        // populateUser();
-
-
     }
 
     private void populateUser() {
@@ -55,7 +53,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
        // SharedPreferences.Editor editor = sharedPreferences.edit();
         headerName.setText(sharedPreferences.getString(getString(R.string.login_user_name),"unknown"));
         headerEmail.setText(sharedPreferences.getString(getString(R.string.login_user_email),"unknown"));
-
     }
 
     private void findViews() {

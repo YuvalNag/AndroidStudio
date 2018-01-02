@@ -77,14 +77,7 @@ public class SQL_DBManager implements DB_manager {
         Log.d(this.getClass().getName(),"Exception-->\n"+message);
     }
 
-    public SQL_DBManager() {
-         updateCarModellist();
-         updateCarlist();
-         updateOrderList();
-         updateAvailablecarList();
-         updateBranchesList();
-         updateClientList();
-    }
+
 
     @Override
     public void updateCarModellist() {
