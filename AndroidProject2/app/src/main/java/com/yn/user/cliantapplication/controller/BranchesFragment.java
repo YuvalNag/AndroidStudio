@@ -33,6 +33,7 @@ import java.util.Date;
  */
 
 public class  BranchesFragment extends Fragment {
+
     public static final String BRANCH_ID ="1" ;
     BranchesExpandableListAdapter listAdapter;
     ExpandableListView expListView;
@@ -42,10 +43,14 @@ public class  BranchesFragment extends Fragment {
 
     @Nullable
     @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.branches_fragment, container, false);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
         findView(view);
+
         return view;
     }
 
@@ -55,7 +60,7 @@ public class  BranchesFragment extends Fragment {
         fab = (FloatingActionButton) view.findViewById(R.id.open_order_floatingActionButton);
         fab.setVisibility(View.INVISIBLE);
         buildAdapter();
-     //   expListView.expandGroup(listAdapter.getGroupPositionById(getArguments().getLong(BRANCH_ID)));
+
     }
 
     private void buildAdapter() {
@@ -82,7 +87,7 @@ public class  BranchesFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        // Listview on child click listener
+        // Listview - on child click listener
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
@@ -104,6 +109,7 @@ public class  BranchesFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
+
     }
     private  void openOrder(final View viewChild, int groupPosition, int childPosition) {
         fab.setVisibility(View.VISIBLE);
@@ -112,13 +118,13 @@ public class  BranchesFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, String.valueOf(sharedPreferences.getLong(String.valueOf(R.string.login_user_id),23))+" Order car?", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, String.valueOf(sharedPreferences.getLong(String.valueOf(R.string.login_user_id),23))+" Order car "+String.valueOf(car.getIdCarNumber())+" ?", Snackbar.LENGTH_LONG)
                         .setAction("Yes", new View.OnClickListener() {
 
                             @SuppressLint("StaticFieldLeak")
                             @Override
                             public void onClick(final View view) {
-                                Snackbar.make(view, "Client id: " + String.valueOf(sharedPreferences.getLong(getString(R.string.login_user_id),0)), Snackbar.LENGTH_LONG).show();
+                                //Snackbar.make(view, String.valueOf(sharedPreferences.getLong(getString(R.string.login_user_id),0)), Snackbar.LENGTH_LONG).show();
 
                                 Calendar c = Calendar.getInstance();
                                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
