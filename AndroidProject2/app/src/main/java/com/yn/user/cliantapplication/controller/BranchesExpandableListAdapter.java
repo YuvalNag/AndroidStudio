@@ -39,7 +39,7 @@ import java.util.Map;
  * Created by USER on 30/12/2017.
  */
 
-public class BranchesExpandableListAdapter extends BaseExpandableListAdapter {
+public class BranchesExpandableListAdapter extends BaseExpandableListAdapter  {
     private Context context;
     private List<Branch> branches;
     private Map<Long,List<Car>> carMap;
