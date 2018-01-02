@@ -17,6 +17,8 @@ public class AppContract {
      */
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
 
+    public static  final int  TIMEINTERVAL=10;
+
     public static class Branch {
 
         public static final String BRANCH_ID = "_id";

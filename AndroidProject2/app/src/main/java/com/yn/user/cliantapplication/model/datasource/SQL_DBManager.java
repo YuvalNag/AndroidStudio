@@ -54,7 +54,7 @@ public class SQL_DBManager implements DB_manager {
     private boolean isUpdatedOrder=false;
     private boolean isUpdatedCar=false;
 
-    static  final int  TIMEINTERVAL=10;
+
 
     static {
 
@@ -454,7 +454,7 @@ public class SQL_DBManager implements DB_manager {
 
         try {
             ContentValues where=new ContentValues();
-            where.put("interval",TIMEINTERVAL);
+            where.put("interval",AppContract.TIMEINTERVAL);
             String str = PHPtools.POST(WEB_URL + "orderChangedStatus.php",where);
             return (Integer.valueOf(str)) > 0;
         } catch (Exception e) {
