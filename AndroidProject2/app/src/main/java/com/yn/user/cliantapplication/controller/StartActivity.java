@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.yn.user.cliantapplication.R;
 import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
+import com.yn.user.cliantapplication.model.backend.updateService;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 
@@ -60,9 +61,10 @@ public class StartActivity extends AppCompatActivity {
                 @Override
                 protected void onProgressUpdate(Void... values) {
                     super.onProgressUpdate(values);
-                    for (float i=progressBar.getProgress();i<16.66;++i){
-                        progressBar.setProgress((int) i);
-                    }
+                    int d=progressBar.getProgress();
+                   // for (int i=progressBar.getProgress();i<i+17;++i){
+                        progressBar.setProgress( d+16);
+                    //}
 
                 }
 
@@ -75,20 +77,8 @@ public class StartActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(Void aVoid) {
                     super.onPostExecute(aVoid);
+                   startService(new Intent(StartActivity.this, updateService.class));
                     if (mSharedPreferences.getBoolean(getString(R.string.is_login), false)) {
-                        DBManagerFactory.getManager().updateCarModellist();
-                        publishProgress();
-                        DBManagerFactory.getManager().updateCarlist();
-                        publishProgress();
-                        DBManagerFactory.getManager().updateOrderList();
-                        publishProgress();
-                        DBManagerFactory.getManager().updateAvailablecarList();
-                        publishProgress();
-                        DBManagerFactory.getManager().updateBranchesList();
-                        publishProgress();
-                        DBManagerFactory.getManager().updateClientList();
-                        publishProgress();
-
                         Intent mainIntent = new Intent(StartActivity.this, MainActivity.class);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -103,7 +93,19 @@ public class StartActivity extends AppCompatActivity {
 
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    DBManagerFactory.getManager();
+                    DBManagerFactory.getManager().updateCarModellist();
+                    publishProgress();
+                    DBManagerFactory.getManager().updateCarlist();
+                    publishProgress();
+                    DBManagerFactory.getManager().updateOrderList();
+                    publishProgress();
+                    DBManagerFactory.getManager().updateAvailablecarList();
+                    publishProgress();
+                    DBManagerFactory.getManager().updateBranchesList();
+                    publishProgress();
+                    DBManagerFactory.getManager().updateClientList();
+                    publishProgress();
+
                     return null;
                 }
             }.execute();

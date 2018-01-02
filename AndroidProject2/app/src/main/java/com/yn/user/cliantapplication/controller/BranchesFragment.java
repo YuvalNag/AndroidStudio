@@ -10,13 +10,19 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.yn.user.cliantapplication.R;
@@ -50,7 +56,6 @@ public class  BranchesFragment extends Fragment {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         findView(view);
-
         return view;
     }
 
@@ -77,6 +82,7 @@ public class  BranchesFragment extends Fragment {
                 super.onPostExecute(branchesExpandableListAdapter);
                 listAdapter=branchesExpandableListAdapter;
                 expListView.setAdapter(branchesExpandableListAdapter);
+                setHasOptionsMenu(true);
 
             }
         }.execute();
@@ -167,6 +173,33 @@ public class  BranchesFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.fragbar,menu);
+        Toast.makeText(getActivity(), "onCreateOptionsMenu", Toast.LENGTH_SHORT).show();
+        final BranchesExpandableListAdapter arrayAdapter= listAdapter;
+        MenuItem searchViewItem = menu.findItem(R.id.search2);
+        final SearchView searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
+        searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //searchViewAndroidActionBar.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Toast.makeText(getActivity(), "onQueryTextChange", Toast.LENGTH_SHORT).show();
+
+                arrayAdapter.getFilter().filter(newText);
+                arrayAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
 }

@@ -3,6 +3,7 @@ package com.yn.user.cliantapplication.model.datasource;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import com.yn.user.cliantapplication.model.backend.AppContract;
 import com.yn.user.cliantapplication.model.backend.DB_manager;
 import com.yn.user.cliantapplication.model.backend.SimpleLocation;
+import com.yn.user.cliantapplication.model.backend.updateService;
 import com.yn.user.cliantapplication.model.entities.Branch;
 import com.yn.user.cliantapplication.model.entities.Car;
 import com.yn.user.cliantapplication.model.entities.CarModel;
@@ -50,9 +52,9 @@ public class SQL_DBManager implements DB_manager {
     static List<Order> orders;
     static List<Branch> branches;
 
-    private boolean isUpdatedClient=false;
-    private boolean isUpdatedOrder=false;
-    private boolean isUpdatedCar=false;
+    private boolean isUpdatedClient;
+    private boolean isUpdatedOrder;
+    private boolean isUpdatedCar;
 
 
 
@@ -67,6 +69,11 @@ public class SQL_DBManager implements DB_manager {
     }
     private final String WEB_URL="http://nheifetz.vlab.jct.ac.il/TakeAndGo/";
 
+    public SQL_DBManager() {
+        this.isUpdatedClient =false;
+        this.isUpdatedOrder =false;
+        this.isUpdatedCar = false;
+        }
 
     public void printLog(String message)
     {
