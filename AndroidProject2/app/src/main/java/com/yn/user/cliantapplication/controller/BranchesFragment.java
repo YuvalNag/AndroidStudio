@@ -128,8 +128,8 @@ public class  BranchesFragment extends Fragment {
                                 final ContentValues orderContentValues= new ContentValues();
                                 orderContentValues.put(AppContract.Order.CAR_NUM,String.valueOf(car.getIdCarNumber()));
                                 orderContentValues.put(AppContract.Order.KILOMETERS_AT_RENT,String.valueOf(car.getKilometers()));
-                                orderContentValues.put(AppContract.Order.CLIENT_ID,String.valueOf(sharedPreferences.getLong(String.valueOf(R.string.login_user_id),1)));
-                                orderContentValues.put(AppContract.Order.RENT_DATE,String.valueOf(datetime));
+                                orderContentValues.put(AppContract.Order.CLIENT_ID,String.valueOf(sharedPreferences.getLong(getString(R.string.login_user_id),1)));
+                                orderContentValues.put(AppContract.Order.RENT_DATE,datetime);
                                 orderContentValues.put(AppContract.Order.ORDER_STATUS,String.valueOf(0));
 
 
