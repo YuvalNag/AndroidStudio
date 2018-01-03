@@ -16,6 +16,15 @@
         android:theme="@style/AppTheme">
 
 
+        <receiver
+            android:name=".model.backend.updateReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+                <action android:name="com.model.backend.UPDATE" />
+            </intent-filter>
+        </receiver>
+
+
     <activity android:name=".controller.MainActivity"
         android:theme="@style/AppTheme.NoActionBar">
         </activity>
@@ -36,15 +45,9 @@
 
 
 
-        <receiver
-        android:name=".model.backend.updateReceiver"
-        android:enabled="true"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.BATTERY_LOW" />
-            <action android:name="com.oshri.academy.UPDATE" />
-        </intent-filter>
-    </receiver>
+
+
+
         <activity
             android:name=".controller.StartActivity"
             android:label="RentACar client">

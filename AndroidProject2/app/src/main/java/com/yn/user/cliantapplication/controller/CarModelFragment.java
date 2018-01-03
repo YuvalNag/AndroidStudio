@@ -19,6 +19,7 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.controller.adapters.CarModelExpandableListAdapter;
 import com.yn.user.cliantapplication.model.backend.AppContract;
 import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 import com.yn.user.cliantapplication.model.entities.Branch;

@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
 import com.yn.user.cliantapplication.model.backend.SHA_256_Helper;
+import com.yn.user.cliantapplication.model.backend.updateReceiver;
 
 import java.util.Arrays;
 
@@ -38,12 +41,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     TextView headerName;
     TextView headerEmail;
     SharedPreferences sharedPreferences;
+    private updateReceiver reMyreceive;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        reMyreceive=new updateReceiver();
+
         findViews();
        // populateUser();
     }
@@ -188,5 +194,19 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             return false;
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        unregisterReceiver(reMyreceive);
+    }
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+
+        registerReceiver(reMyreceive, new IntentFilter("com.model.backend.UPDATE"));
     }
 }

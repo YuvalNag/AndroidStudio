@@ -1,5 +1,6 @@
 package com.yn.user.cliantapplication.model.backend;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +14,10 @@ import android.widget.Toast;
 
 public class updateReceiver extends BroadcastReceiver {
     public updateReceiver() {
+        //Log.d("my service" , "updateReceiver");
+
     }
+
 
     @Override
     public void onReceive(final Context context, Intent intent) {
@@ -23,9 +27,10 @@ public class updateReceiver extends BroadcastReceiver {
 
         Log.d("my service" , "onReceive");
 
-        Toast.makeText(context,intent.getAction(),Toast.LENGTH_LONG).show();
+        Toast.makeText(context,"update database",Toast.LENGTH_LONG).show();
 
         final PendingResult pendingResult = goAsync();
+        @SuppressLint("StaticFieldLeak")
         AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {

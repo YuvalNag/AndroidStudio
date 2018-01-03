@@ -42,12 +42,13 @@ public class updateService extends Service {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    if (DBManagerFactory.getManager().orderClosedIn10sec()) {
+                   if (DBManagerFactory.getManager().orderClosedIn10sec()) {
                         Log.d(TAG, "isUpdatet run ..");
-                        Intent intent1 = new Intent("com.oshri.academy.UPDATE");
+                        Intent intent1 = new Intent("com.model.backend.UPDATE");
                         updateService.this.sendBroadcast(intent1);
-                        //sendBroadcast(intent);
-                    }
+
+                    //sendBroadcast(intent);
+                   }
 
                 }
             }

@@ -1,4 +1,4 @@
-package com.yn.user.cliantapplication.controller;
+package com.yn.user.cliantapplication.controller.adapters;
 
 
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.controller.GlideApp;
+import com.yn.user.cliantapplication.controller.MapDialogFragment;
 import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 import com.yn.user.cliantapplication.model.entities.Branch;
 import com.yn.user.cliantapplication.model.entities.Car;

@@ -17,22 +17,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.controller.adapters.BranchesExpandableListAdapter;
 import com.yn.user.cliantapplication.model.backend.AppContract;
 import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 import com.yn.user.cliantapplication.model.entities.Car;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by USER on 30/12/2017.
@@ -118,13 +114,13 @@ public class  BranchesFragment extends Fragment {
 
     }
     private  void openOrder(final View viewChild, int groupPosition, int childPosition) {
-        fab.setVisibility(View.VISIBLE);
-        final Car car = (Car) listAdapter.getChild(groupPosition,childPosition);
 
+        final Car car = (Car) listAdapter.getChild(groupPosition,childPosition);
+/* fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, String.valueOf(sharedPreferences.getLong(String.valueOf(R.string.login_user_id),23))+" Order car "+String.valueOf(car.getIdCarNumber())+" ?", Snackbar.LENGTH_LONG)
+            public void onClick(View view) {*/
+                Snackbar.make(viewChild, String.valueOf(sharedPreferences.getLong(String.valueOf(R.string.login_user_id),23))+" Order car "+String.valueOf(car.getIdCarNumber())+" ?", Snackbar.LENGTH_LONG)
                         .setAction("Yes", new View.OnClickListener() {
 
                             @SuppressLint("StaticFieldLeak")
@@ -170,8 +166,8 @@ public class  BranchesFragment extends Fragment {
                                 }.execute();
                             }
                         }).show();
-            }
-        });
+        /*    }
+        });*/
 
     }
 

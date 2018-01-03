@@ -1,4 +1,4 @@
-package com.yn.user.cliantapplication.controller;
+package com.yn.user.cliantapplication.controller.adapters;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -28,6 +28,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.controller.GlideApp;
+import com.yn.user.cliantapplication.controller.MapDialogFragment;
 import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 import com.yn.user.cliantapplication.model.entities.Branch;
 import com.yn.user.cliantapplication.model.entities.Car;
@@ -47,6 +49,7 @@ import java.util.Map;
 
 public class BranchesExpandableListAdapter extends BaseExpandableListAdapter implements Filterable {
 
+    private Filter filter;
     private Context context;
     private List<Branch> branches;
     private List<Branch> originalBranches;
@@ -191,49 +194,50 @@ public class BranchesExpandableListAdapter extends BaseExpandableListAdapter imp
 
     @Override
     public Filter getFilter() {
-        return new Filter()
-        {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence)
-            {
-                FilterResults results = new FilterResults();
 
-                //If there's nothing to filter on, return the original data for your list
-                if(charSequence == null || charSequence.length() == 0)
-                {
-                    results.values = originalBranches;
-                    results.count = originalBranches.size();
-                }
-                else
-                {
-                    List filterResultsData = new ArrayList<Branch>();
+        if (filter == null)
+            filter = new Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence charSequence) {
+                    FilterResults results = new FilterResults();
 
-                    for(Branch data : originalBranches
-                            )
-                    {
-                        //In this loop, you'll filter through originalData and compare each item to charSequence.
-                        //If you find a match, add it to your new ArrayList
-                        //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
-                        if(data.getBranchAddress().getCity().trim().toLowerCase().startsWith(charSequence.toString().toLowerCase()))
-                        {
-                            filterResultsData.add(data);
+                    //If there's nothing to filter on, return the original data for your list
+                    if (charSequence == null || charSequence.length() == 0) {
+                        results.values = originalBranches;
+                        results.count = originalBranches.size();
+                    } else {
+                        List filterResultsData = new ArrayList<Branch>();
+
+                        for (Branch data : originalBranches
+                                ) {
+                            //In this loop, you'll filter through originalData and compare each item to charSequence.
+                            //If you find a match, add it to your new ArrayList
+                            //I'm not sure how you're going to do comparison, so you'll need to fill out this conditional
+                            if (data.getBranchAddress().getCity().trim().toLowerCase().startsWith(charSequence.toString().toLowerCase())) {
+                                filterResultsData.add(data);
+                            }
                         }
+
+                        results.values = filterResultsData;
+                        results.count = filterResultsData.size();
                     }
 
-                    results.values = filterResultsData;
-                    results.count = filterResultsData.size();
+                    return results;
                 }
 
-                return results;
-            }
+                @Override
+                protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                    branches = (ArrayList<Branch>) filterResults.values;
+                    notifyDataSetChanged();
+                }
+            };
 
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults)
-            {
-                branches = (ArrayList<Branch>)filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
+        return filter;
+
+
     }
+
+
+
 }
 
