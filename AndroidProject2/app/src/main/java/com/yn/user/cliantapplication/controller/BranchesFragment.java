@@ -58,8 +58,8 @@ public class  BranchesFragment extends Fragment {
     private void findView(View view) {
         // get the listview
         expListView = (ExpandableListView) view.findViewById(R.id.branch_expandable_list_view);
-        fab = (FloatingActionButton) view.findViewById(R.id.open_order_floatingActionButton);
-        fab.setVisibility(View.INVISIBLE);
+        /*fab = (FloatingActionButton) view.findViewById(R.id.open_order_floatingActionButton);
+        fab.setVisibility(View.INVISIBLE);*/
         buildAdapter();
 
     }
@@ -120,7 +120,7 @@ public class  BranchesFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {*/
-                Snackbar.make(viewChild, String.valueOf(sharedPreferences.getLong(String.valueOf(R.string.login_user_id),23))+" Order car "+String.valueOf(car.getIdCarNumber())+" ?", Snackbar.LENGTH_LONG)
+                Snackbar.make(viewChild,"order car number "+ String.valueOf(car.getIdCarNumber())+" ?", Snackbar.LENGTH_LONG)
                         .setAction("Yes", new View.OnClickListener() {
 
                             @SuppressLint("StaticFieldLeak")
@@ -156,7 +156,7 @@ public class  BranchesFragment extends Fragment {
 
                                         if (result > 0) {
                                             Snackbar.make(viewChild, "Car ordered: " + car.getIdCarNumber(), Snackbar.LENGTH_LONG).show();
-                                            fab.setVisibility(View.INVISIBLE);
+                                           // fab.setVisibility(View.INVISIBLE);
                                             buildAdapter();
                                         } else {
                                             Snackbar.make(viewChild, "ERROR ordering car.", Snackbar.LENGTH_LONG).show();

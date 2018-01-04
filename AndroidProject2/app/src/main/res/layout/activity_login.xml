@@ -104,18 +104,26 @@
                 android:background="@drawable/ic_login"
                 android:layoutDirection="ltr"
                 android:textStyle="bold" />
-            <Button
-                android:id="@+id/register_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="16dp"
-                android:text="Register"
-                android:background="@drawable/ic_login"
-                android:layoutDirection="ltr"
-                android:textStyle="bold" />
+                android:orientation="horizontal" >
 
+                <Button
+                    android:id="@+id/register_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="16dip"
+                    android:background="@drawable/rounded_corners"
+                    android:backgroundTint="@color/colorAccent"
+                    android:drawableLeft="@drawable/ic_login"
+                    android:layoutDirection="ltr"
+                    android:text="dont have an account?\n Register Here"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

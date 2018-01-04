@@ -42,23 +42,37 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     TextView headerEmail;
     SharedPreferences sharedPreferences;
     private updateReceiver reMyreceive;
+    NavigationView navigationView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        reMyreceive=new updateReceiver();
+        reMyreceive = new updateReceiver();
 
         findViews();
-       // populateUser();
+        if (savedInstanceState == null) {
+            navigationView.setCheckedItem(R.id.nav_branches);
+            onNavigationItemSelected(navigationView.getMenu().findItem((R.id.nav_branches)));
+        }
+
+        // populateUser();
+    }
+
+    @Override public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putBoolean("weak",true);
+         super.onSaveInstanceState(savedInstanceState);
     }
 
     private void populateUser() {
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-       // SharedPreferences.Editor editor = sharedPreferences.edit();
-        headerName.setText(sharedPreferences.getString(getString(R.string.login_user_name),"unknown"));
-        headerEmail.setText(sharedPreferences.getString(getString(R.string.login_user_email),"unknown"));
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        // SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (headerName != null)
+            headerName.setText(sharedPreferences.getString(getString(R.string.login_user_name), "unknown"));
+        if (headerEmail != null)
+            headerEmail.setText(sharedPreferences.getString(getString(R.string.login_user_email), "unknown"));
     }
 
     private void findViews() {
@@ -70,10 +84,9 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //navigationView.setCheckedItem(R.id.nav_branches);
-       // onNavigationItemSelected(navigationView.getMenu().findItem((R.id.nav_branches)));
+
 
     }
 
@@ -163,12 +176,15 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
             startActivity(mainIntent);
         }
         else if (id == R.id.nav_about) {
-          }
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:0587158843"));
+            startActivity(intent);
+        }
         else if (id == R.id.nav_email) {
 
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                     "mailto","yuval.nag.91@gmail.com", null));
-            //emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Report A Bug");
             //emailIntent.putExtra(Intent.EXTRA_TEXT, "Body");
             startActivity(Intent.createChooser(emailIntent, "Send email..."));
 

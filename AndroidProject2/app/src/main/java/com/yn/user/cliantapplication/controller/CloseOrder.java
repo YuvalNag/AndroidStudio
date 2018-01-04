@@ -1,5 +1,6 @@
 package com.yn.user.cliantapplication.controller;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -152,6 +153,7 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
      * Auto-created on 2017-12-31 19:44:43 by Android Layout Finder
      * (http://www.buzzingandroid.com/tools/android-layout-finder)
      */
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onClick(final View v) {
         if ( v == button_closeorder) {
@@ -163,6 +165,7 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
 
 
             final ContentValues orderContentValues= new ContentValues();
+            orderContentValues.put(AppContract.Order.CAR_NUM,order.getCarNumber());
             orderContentValues.put(AppContract.Order.ORDER_ID,order.getIdOrderNum());
             orderContentValues.put(AppContract.Order.KILOMETERS_AT_RETURN,Long.valueOf(textInputLayoutKilo.getEditText().getText().toString())+order.getKilometersAtRent());
             orderContentValues.put(AppContract.Order.RETURN_DATE,datetime);

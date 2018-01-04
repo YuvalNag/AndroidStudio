@@ -16,8 +16,8 @@
         android:layout_marginStart="8dp"
 
 
-        android:background="@drawable/rounded_corners"
-        android:backgroundTint="@android:color/darker_gray"
+        android:background="@android:drawable/screen_background_light_transparent"
+        android:backgroundTint="@android:color/transparent"
         android:choiceMode="singleChoice"
         android:drawSelectorOnTop="false"
         android:listSelector="@drawable/rounded_list_selector"

@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +87,8 @@ public class BranchesExpandableListAdapter extends BaseExpandableListAdapter imp
 
         long modelid = car.getCarModelID();
 
+
+        //((CardView)convertView.findViewById(R.id.card_view)).setCardBackgroundColor(context.getResources().getColor(R.color.child_item_color));
         CarModel carModel = DBManagerFactory.getManager().getCarModel(modelid);
 
         if (carModel != null) {
@@ -150,6 +153,7 @@ public class BranchesExpandableListAdapter extends BaseExpandableListAdapter imp
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.branch_item, parent, false);
         }
+
         TextView address = (TextView) convertView.findViewById(R.id.branch_address);
         TextView parking_spaces = (TextView) convertView.findViewById(R.id.branch_parking_spaces);
         final ImageButton map_button = (ImageButton) convertView.findViewById(R.id.branch_button);
@@ -189,6 +193,7 @@ public class BranchesExpandableListAdapter extends BaseExpandableListAdapter imp
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
+
         return true;
     }
 

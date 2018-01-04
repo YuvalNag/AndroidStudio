@@ -54,8 +54,8 @@ public class CarModelFragment extends Fragment {
     private void findView(View view) {
         // get the listview
         expListView = (ExpandableListView) view.findViewById(R.id.branch_expandable_list_view);
-        fab = (FloatingActionButton) view.findViewById(R.id.open_order_floatingActionButton);
-        fab.setVisibility(View.INVISIBLE);
+      /*  fab = (FloatingActionButton) view.findViewById(R.id.open_order_floatingActionButton);
+        fab.setVisibility(View.INVISIBLE);*/
         buildAdapter();
     }
 
@@ -107,13 +107,15 @@ public class CarModelFragment extends Fragment {
     }
 
     private void openOrder(final View viewChild, final int groupPosition, int childPosition) {
-        fab.setVisibility(View.VISIBLE);
+
         final Branch branch = (Branch) listAdapter.getChild(groupPosition, childPosition);
 
+      /*  fab.setVisibility(View.VISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, String.valueOf(sharedPreferences.getLong(getString(R.string.login_user_id), -1)) + " Order car?", Snackbar.LENGTH_LONG)
+            */
+                Snackbar.make(viewChild,"Order a car from branch number " +listAdapter.getChildId(groupPosition,childPosition) +" ?" , Snackbar.LENGTH_LONG)
                         .setAction("Yes", new View.OnClickListener() {
 
                             @SuppressLint("StaticFieldLeak")
@@ -128,22 +130,27 @@ public class CarModelFragment extends Fragment {
                                 getActivity().getFragmentManager().beginTransaction()
                                         .replace(container.getId(), branchesFragment,"findThisFragment")
                                         .addToBackStack(null)
-                                        .commit();*/
-                                Snackbar.make(view, "Client id: " + String.valueOf(sharedPreferences.getLong(getString(R.string.login_user_id), 0)), Snackbar.LENGTH_LONG).show();
-
+                                        .commit();
+                                Snackbar.make(viewChild, "Client id: " + String.valueOf(sharedPreferences.getLong(getString(R.string.login_user_id), 0)), Snackbar.LENGTH_LONG).show();
+*/
                                 Calendar c = Calendar.getInstance();
                                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
                                 final String datetime = dateformat.format(c.getTime());
 
 
-                                new AsyncTask<Void, Void, Long>() {
+                                new AsyncTask<Void, Void, Long[]>() {
                                     @Override
-                                    protected Long doInBackground(Void... params) {
+                                    protected Long[] doInBackground(Void... params) {
                                         Car car = null;
+                                        Long[] results=new Long[2];
                                         for (Car availableCar : DBManagerFactory.getManager().getAvailableCarsByBranche(branch.getBranchID())) {
-                                            if (availableCar.getCarModelID() == ((CarModel) listAdapter.getGroup(groupPosition)).getIdCarModel())
+                                            if (availableCar.getCarModelID() == ((CarModel) listAdapter.getGroup(groupPosition)).getIdCarModel()){
                                                 car = availableCar;
+                                                results[0]=car.getIdCarNumber();
+                                                break;
+                                            }
+
                                         }
                                         if (car != null) {
                                             ContentValues orderContentValues = new ContentValues();
@@ -152,21 +159,24 @@ public class CarModelFragment extends Fragment {
                                             orderContentValues.put(AppContract.Order.CLIENT_ID, String.valueOf(sharedPreferences.getLong(getString(R.string.login_user_id), 1)));
                                             orderContentValues.put(AppContract.Order.RENT_DATE, datetime);
                                             orderContentValues.put(AppContract.Order.ORDER_STATUS, String.valueOf(0));
-                                            return DBManagerFactory.getManager().addOrder(orderContentValues);
+                                            results[1]= DBManagerFactory.getManager().addOrder(orderContentValues);
 
                                         }
-                                        return Long.valueOf(-1);
+                                        else
+                                            results[1]= (long)-1;
+
+                                        return results;
 
                                     }
 
                                     @Override
-                                    protected void onPostExecute(Long result) {
-                                        super.onPostExecute(result);
+                                    protected void onPostExecute(Long[] results) {
+                                        super.onPostExecute(results);
 
 
-                                        if (result > 0) {
-                                            Snackbar.make(viewChild, "Car ordered: " + result, Snackbar.LENGTH_LONG).show();
-                                            fab.setVisibility(View.INVISIBLE);
+                                        if (results[1] > 0) {
+                                            Snackbar.make(viewChild, "order #: " + results[1]+", car number "+results[0], Snackbar.LENGTH_LONG).show();
+                                            //fab.setVisibility(View.INVISIBLE);
                                             buildAdapter();
                                         } else {
                                             Snackbar.make(viewChild, "ERROR ordering car.", Snackbar.LENGTH_LONG).show();
@@ -177,8 +187,8 @@ public class CarModelFragment extends Fragment {
                             }
                         }).show();
             }
-        });
+        /*});
 
 
-    }
+    }*/
 }
