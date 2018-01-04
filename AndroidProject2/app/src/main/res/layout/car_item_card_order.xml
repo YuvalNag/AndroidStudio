@@ -14,9 +14,9 @@
         android:layout_centerInParent="true"
 
         android:layout_margin="7dip"
-        card_view:cardBackgroundColor="@color/cardview_dark_background"
+        card_view:cardBackgroundColor="@android:color/transparent"
         card_view:cardCornerRadius="20dip"
-        card_view:cardElevation="10dp">
+        card_view:cardElevation="2dip">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
