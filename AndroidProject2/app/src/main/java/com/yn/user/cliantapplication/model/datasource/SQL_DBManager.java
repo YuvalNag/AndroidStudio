@@ -1,42 +1,30 @@
 package com.yn.user.cliantapplication.model.datasource;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.util.Log;
-import android.widget.ImageButton;
 
 import com.yn.user.cliantapplication.model.backend.AppContract;
 import com.yn.user.cliantapplication.model.backend.DB_manager;
 import com.yn.user.cliantapplication.model.backend.SimpleLocation;
-import com.yn.user.cliantapplication.model.backend.updateService;
 import com.yn.user.cliantapplication.model.entities.Branch;
 import com.yn.user.cliantapplication.model.entities.Car;
 import com.yn.user.cliantapplication.model.entities.CarModel;
 import com.yn.user.cliantapplication.model.entities.Client;
-import com.yn.user.cliantapplication.model.entities.Manager;
 import com.yn.user.cliantapplication.model.entities.Order;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static java.lang.System.out;
 
 /**
  * Created by nissy34 on 10/12/2017.
@@ -67,7 +55,6 @@ public class SQL_DBManager implements DB_manager {
         orders = new ArrayList<>();
         branches = new ArrayList<>();
     }
-    private final String WEB_URL="http://nheifetz.vlab.jct.ac.il/TakeAndGo/";
 
     public SQL_DBManager() {
         this.isUpdatedClient =false;
@@ -93,7 +80,7 @@ public class SQL_DBManager implements DB_manager {
         carModels = new ArrayList<>();
         try {
             ContentValues where=new ContentValues();
-            String str = PHPtools.POST(WEB_URL + "carModels.php",where);
+            String str = PHPtools.POST(AppContract.WEB_URL + "carModels.php",where);
             JSONArray array = new JSONObject(str).getJSONArray("car_models");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
@@ -115,7 +102,7 @@ public class SQL_DBManager implements DB_manager {
         orders = new ArrayList<>();
 
         try {
-            String str = PHPtools.GET(WEB_URL + "orders.php");
+            String str = PHPtools.GET(AppContract.WEB_URL + "orders.php");
             JSONArray array = new JSONObject(str).getJSONArray("orders");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
@@ -138,7 +125,7 @@ public class SQL_DBManager implements DB_manager {
 
         try {
 
-            String str = PHPtools.GET(WEB_URL + "cars.php");
+            String str = PHPtools.GET(AppContract.WEB_URL + "cars.php");
             JSONArray array = new JSONObject(str).getJSONArray("cars");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
@@ -160,7 +147,7 @@ public class SQL_DBManager implements DB_manager {
 
         try {
 
-            String str = PHPtools.GET(WEB_URL + "availableCars.php");
+            String str = PHPtools.GET(AppContract.WEB_URL + "availableCars.php");
             JSONArray array = new JSONObject(str).getJSONArray("cars");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
@@ -183,7 +170,7 @@ public class SQL_DBManager implements DB_manager {
 
         try {
 
-            String str = PHPtools.GET(WEB_URL + "branches.php");
+            String str = PHPtools.GET(AppContract.WEB_URL + "branches.php");
             JSONArray array = new JSONObject(str).getJSONArray("branches");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
@@ -206,7 +193,7 @@ public class SQL_DBManager implements DB_manager {
 
         try {
 
-            String str = PHPtools.GET(WEB_URL + "clients.php");
+            String str = PHPtools.GET(AppContract.WEB_URL + "clients.php");
             JSONArray array = new JSONObject(str).getJSONArray("clients");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
@@ -237,7 +224,7 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public long addClient(ContentValues values) {
         try {
-            String result = PHPtools.POST(WEB_URL + "addClient.php", values);
+            String result = PHPtools.POST(AppContract.WEB_URL + "addClient.php", values);
             long id = Long.parseLong(result);
             printLog("addClient:\n" + result);
             isUpdatedClient=true;
@@ -251,7 +238,7 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public long addOrder(ContentValues values) {
         try {
-            String result = PHPtools.POST(WEB_URL + "addOrder.php", values);
+            String result = PHPtools.POST(AppContract.WEB_URL + "addOrder.php", values);
             long id = Long.parseLong(result);
             printLog("addOrder:\n" + result);
             isUpdatedOrder=true;
@@ -268,7 +255,7 @@ public class SQL_DBManager implements DB_manager {
         try {
             ContentValues contentValues=new ContentValues();
             contentValues.put(AppContract.Client.ID,id);
-            String result=PHPtools.POST(WEB_URL + "deleteclient.php", contentValues);
+            String result=PHPtools.POST(AppContract.WEB_URL + "deleteclient.php", contentValues);
             isUpdatedClient=true;
             printLog("removeClient:\n" + result);
             return true;
@@ -281,7 +268,7 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public boolean updateClient(long id, ContentValues values) {
         try {
-            String result=PHPtools.POST(WEB_URL + "updateClient.php", values);
+            String result=PHPtools.POST(AppContract.WEB_URL + "updateClient.php", values);
             printLog("updateClient:\n" + result);
             isUpdatedClient=true;
             return true;
@@ -294,7 +281,7 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public boolean updateCar(long id, ContentValues values) {
         try {
-            String result=PHPtools.POST(WEB_URL + "updateCar.php", values);
+            String result=PHPtools.POST(AppContract.WEB_URL + "updateCar.php", values);
             printLog("updateCar:\n" + result);
             isUpdatedCar=true;
             return true;
@@ -446,7 +433,7 @@ public class SQL_DBManager implements DB_manager {
     public double closeOrder(long id, ContentValues values) {
         try {
             values.put(AppContract.Order.FINAL_AMOUNT,100);
-            String result=PHPtools.POST(WEB_URL + "CloseOrder.php", values);
+            String result=PHPtools.POST(AppContract.WEB_URL + "CloseOrder.php", values);
             printLog("closeOrder:\n" + result);
             isUpdatedOrder=true;
             return 100;
@@ -462,7 +449,7 @@ public class SQL_DBManager implements DB_manager {
         try {
             ContentValues where=new ContentValues();
             where.put("interval",AppContract.TIMEINTERVAL);
-            String str = PHPtools.POST(WEB_URL + "orderChangedStatus.php",where);
+            String str = PHPtools.POST(AppContract.WEB_URL + "orderChangedStatus.php",where);
             return (Integer.valueOf(str)) > 0;
         } catch (Exception e) {
             e.printStackTrace();     }

@@ -19,6 +19,8 @@ public class AppContract {
 
     public static  final int  TIMEINTERVAL=10;
 
+    public static final String WEB_URL="http://nheifetz.vlab.jct.ac.il/TakeAndGo/";
+
     public static class Branch {
 
         public static final String BRANCH_ID = "_id";
