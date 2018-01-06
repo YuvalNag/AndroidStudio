@@ -45,7 +45,6 @@ public class SQL_DBManager implements DB_manager {
     private boolean isUpdatedCar;
 
 
-
     static {
 
         availableCars = new ArrayList<>();
@@ -57,30 +56,28 @@ public class SQL_DBManager implements DB_manager {
     }
 
     public SQL_DBManager() {
-        this.isUpdatedClient =false;
-        this.isUpdatedOrder =false;
+        this.isUpdatedClient = false;
+        this.isUpdatedOrder = false;
         this.isUpdatedCar = false;
-        }
-
-    public void printLog(String message)
-    {
-        Log.d(this.getClass().getName(),"\n"+message);
-    }
-    public void printLog(Exception message)
-    {
-        Log.d(this.getClass().getName(),"Exception-->\n"+message);
     }
 
+    public void printLog(String message) {
+        Log.d(this.getClass().getName(), "\n" + message);
+    }
+
+    public void printLog(Exception message) {
+        Log.d(this.getClass().getName(), "Exception-->\n" + message);
+    }
 
 
     @Override
     public void updateCarModellist() {
 
-        List<CarModel> temp=carModels;
+        List<CarModel> temp = carModels;
         carModels = new ArrayList<>();
         try {
-            ContentValues where=new ContentValues();
-            String str = PHPtools.POST(AppContract.WEB_URL + "carModels.php",where);
+            ContentValues where = new ContentValues();
+            String str = PHPtools.POST(AppContract.WEB_URL + "carModels.php", where);
             JSONArray array = new JSONObject(str).getJSONArray("car_models");
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
@@ -92,13 +89,14 @@ public class SQL_DBManager implements DB_manager {
 
         } catch (Exception e) {
             e.printStackTrace();
-           carModels=temp;
+            carModels = temp;
         }
     }
+
     @Override
     public void updateOrderList() {
 
-        List<Order> temp=orders;
+        List<Order> temp = orders;
         orders = new ArrayList<>();
 
         try {
@@ -114,13 +112,14 @@ public class SQL_DBManager implements DB_manager {
 
         } catch (Exception e) {
             e.printStackTrace();
-            isUpdatedOrder=true;
-           orders=temp;
+            isUpdatedOrder = true;
+            orders = temp;
         }
     }
+
     @Override
     public void updateCarlist() {
-        List<Car> temp=cars;
+        List<Car> temp = cars;
         cars = new ArrayList<>();
 
         try {
@@ -136,13 +135,15 @@ public class SQL_DBManager implements DB_manager {
 
         } catch (Exception e) {
             e.printStackTrace();
-            isUpdatedCar=true;
-            cars=temp;}
+            isUpdatedCar = true;
+            cars = temp;
+        }
 
     }
+
     @Override
     public void updateAvailablecarList() {
-         List<Car> temp=availableCars;
+        List<Car> temp = availableCars;
         availableCars = new ArrayList<>();
 
         try {
@@ -158,14 +159,16 @@ public class SQL_DBManager implements DB_manager {
 
         } catch (Exception e) {
             e.printStackTrace();
-            isUpdatedCar=true;
-            availableCars=temp;}
+            isUpdatedCar = true;
+            availableCars = temp;
+        }
 
     }
+
     @Override
     public void updateBranchesList() {
 
-        List<Branch> temp=branches;
+        List<Branch> temp = branches;
         branches = new ArrayList<>();
 
         try {
@@ -181,13 +184,14 @@ public class SQL_DBManager implements DB_manager {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            branches=temp;
+            branches = temp;
         }
-   }
+    }
+
     @Override
     public void updateClientList() {
 
-        List<Client> temp=clients;
+        List<Client> temp = clients;
 
         clients = new ArrayList<>();
 
@@ -202,12 +206,12 @@ public class SQL_DBManager implements DB_manager {
                 clients.add(Tools.ContentValuesToClient(contentValues));
 
             }
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            clients=temp;
-            isUpdatedClient=true;
+            clients = temp;
+            isUpdatedClient = true;
         }
-        }
+    }
 
 
     @Override
@@ -227,7 +231,7 @@ public class SQL_DBManager implements DB_manager {
             String result = PHPtools.POST(AppContract.WEB_URL + "addClient.php", values);
             long id = Long.parseLong(result);
             printLog("addClient:\n" + result);
-            isUpdatedClient=true;
+            isUpdatedClient = true;
             return id;
         } catch (Exception e) {
             printLog("addClient Exception:\n" + e);
@@ -241,8 +245,8 @@ public class SQL_DBManager implements DB_manager {
             String result = PHPtools.POST(AppContract.WEB_URL + "addOrder.php", values);
             long id = Long.parseLong(result);
             printLog("addOrder:\n" + result);
-            isUpdatedOrder=true;
-            isUpdatedCar=true;
+            isUpdatedOrder = true;
+            isUpdatedCar = true;
             return id;
         } catch (Exception e) {
             printLog("addOrder Exception:\n" + e);
@@ -253,10 +257,10 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public boolean removeClient(long id) {
         try {
-            ContentValues contentValues=new ContentValues();
-            contentValues.put(AppContract.Client.ID,id);
-            String result=PHPtools.POST(AppContract.WEB_URL + "deleteclient.php", contentValues);
-            isUpdatedClient=true;
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(AppContract.Client.ID, id);
+            String result = PHPtools.POST(AppContract.WEB_URL + "deleteclient.php", contentValues);
+            isUpdatedClient = true;
             printLog("removeClient:\n" + result);
             return true;
         } catch (Exception e) {
@@ -268,9 +272,9 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public boolean updateClient(long id, ContentValues values) {
         try {
-            String result=PHPtools.POST(AppContract.WEB_URL + "updateClient.php", values);
+            String result = PHPtools.POST(AppContract.WEB_URL + "updateClient.php", values);
             printLog("updateClient:\n" + result);
-            isUpdatedClient=true;
+            isUpdatedClient = true;
             return true;
         } catch (Exception e) {
             printLog("updateClient Exception:\n" + e);
@@ -281,9 +285,9 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public boolean updateCar(long id, ContentValues values) {
         try {
-            String result=PHPtools.POST(AppContract.WEB_URL + "updateCar.php", values);
+            String result = PHPtools.POST(AppContract.WEB_URL + "updateCar.php", values);
             printLog("updateCar:\n" + result);
-            isUpdatedCar=true;
+            isUpdatedCar = true;
             return true;
         } catch (Exception e) {
             printLog("updateCar Exception:\n" + e);
@@ -293,23 +297,23 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Car> getCars() {
-        return  cars;
+        return cars;
     }
 
     @Override
     public List<Car> getAvailableCars() {
-        if(isUpdatedCar) {
+        if (isUpdatedCar) {
             updateAvailablecarList();
-            isUpdatedCar=false;
+            isUpdatedCar = false;
         }
         return availableCars;
     }
 
     @Override
     public List<Order> getOrders() {
-        if(isUpdatedOrder) {
+        if (isUpdatedOrder) {
             updateOrderList();
-            isUpdatedOrder=false;
+            isUpdatedOrder = false;
         }
         return orders;
     }
@@ -321,9 +325,9 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Client> getClients() {
-        if(isUpdatedClient) {
+        if (isUpdatedClient) {
             updateClientList();
-            isUpdatedClient=false;
+            isUpdatedClient = false;
         }
         return clients;
     }
@@ -335,17 +339,17 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public List<Car> getAvailableCarsByBranche(long branch_id) {
-        List<Car> availableCarsByBranche  = new ArrayList<>();
-        for (Car car:getAvailableCars()) {
-            if(car.getBranchNum()==branch_id)
+        List<Car> availableCarsByBranche = new ArrayList<>();
+        for (Car car : getAvailableCars()) {
+            if (car.getBranchNum() == branch_id)
                 availableCarsByBranche.add(car);
         }
         return availableCarsByBranche;
     }
 
     @Override
-    public List<Car> getAvailableCarsFromPlace(Context context,long distance) {
-        List<Branch> branchesInDiastance=new ArrayList<>();
+    public List<Car> getAvailableCarsFromPlace(Context context, long distance) {
+        List<Branch> branchesInDiastance = new ArrayList<>();
 
         // construct a new instance of SimpleLocation
         SimpleLocation location = new SimpleLocation(context);
@@ -361,11 +365,10 @@ public class SQL_DBManager implements DB_manager {
 
         Geocoder geocoder = new Geocoder(context);
         Address addresses;
-        for (Branch branch:branches)
-        {
+        for (Branch branch : branches) {
             try {
-                addresses = geocoder.getFromLocationName(branch.getBranchAddress().getCity()+" "+branch.getBranchAddress().getStreet()+" "+branch.getBranchAddress().getNumber(), 1).get(0);
-                if(((int)(SimpleLocation.calculateDistance(startLatitude,startLongitude,addresses.getLatitude(),addresses.getLongitude())/1000))<=distance)
+                addresses = geocoder.getFromLocationName(branch.getBranchAddress().getCity() + " " + branch.getBranchAddress().getStreet() + " " + branch.getBranchAddress().getNumber(), 1).get(0);
+                if (((int) (SimpleLocation.calculateDistance(startLatitude, startLongitude, addresses.getLatitude(), addresses.getLongitude()) / 1000)) <= distance)
                     branchesInDiastance.add(branch);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -375,26 +378,24 @@ public class SQL_DBManager implements DB_manager {
         }
 
 
-
-
-       return null;
+        return null;
     }
 
     @Override
     public List<Branch> getBrancheOfAvailableCarsByCarModel(long carModel_id) {
 
         List<Long> branchesIdByModel = new ArrayList<>();
-        List<Branch> branchesByModel  = new ArrayList<>();
-        for (Car car:availableCars) {
-            if(car.getCarModelID() == carModel_id)
+        List<Branch> branchesByModel = new ArrayList<>();
+        for (Car car : availableCars) {
+            if (car.getCarModelID() == carModel_id)
                 branchesIdByModel.add(car.getBranchNum());
         }
 
         Set<Long> uniqueValues = new HashSet(branchesIdByModel); //now unique
 
-        for (long id: uniqueValues) {
-            for (Branch branch:branches) {
-                if(id == branch.getBranchID())
+        for (long id : uniqueValues) {
+            for (Branch branch : branches) {
+                if (id == branch.getBranchID())
                     branchesByModel.add(branch);
             }
         }
@@ -432,10 +433,10 @@ public class SQL_DBManager implements DB_manager {
     @Override
     public double closeOrder(long id, ContentValues values) {
         try {
-            values.put(AppContract.Order.FINAL_AMOUNT,100);
-            String result=PHPtools.POST(AppContract.WEB_URL + "CloseOpenOrders.php", values);
+            values.put(AppContract.Order.FINAL_AMOUNT, 100);
+            String result = PHPtools.POST(AppContract.WEB_URL + "CloseOrder.php", values);
             printLog("closeOrder:\n" + result);
-            isUpdatedOrder=true;
+            isUpdatedOrder = true;
             return 100;
         } catch (Exception e) {
             printLog("closeOrder Exception:\n" + e);
@@ -447,19 +448,20 @@ public class SQL_DBManager implements DB_manager {
     public boolean orderClosedIn10sec() {
 
         try {
-            ContentValues where=new ContentValues();
-            where.put("interval",AppContract.TIMEINTERVAL);
-            String str = PHPtools.POST(AppContract.WEB_URL + "orderChangedStatus.php",where);
+            ContentValues where = new ContentValues();
+            where.put("interval", AppContract.TIMEINTERVAL);
+            String str = PHPtools.POST(AppContract.WEB_URL + "orderChangedStatus.php", where);
             return (Integer.valueOf(str)) > 0;
         } catch (Exception e) {
-            e.printStackTrace();     }
+            e.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public Client getClient(long id) {
-        for (Client client:clients) {
-            if(client.getId()==id)
+        for (Client client : clients) {
+            if (client.getId() == id)
                 return client;
         }
         return null;
@@ -467,8 +469,8 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public CarModel getCarModel(long id) {
-        for (CarModel carModel:carModels) {
-            if(carModel.getIdCarModel()==id)
+        for (CarModel carModel : carModels) {
+            if (carModel.getIdCarModel() == id)
                 return carModel;
         }
         return null;
@@ -477,20 +479,19 @@ public class SQL_DBManager implements DB_manager {
 
     @Override
     public Order getOrder(long id) {
-        for (Order order:orders) {
-            if(order.getIdOrderNum()==id)
+        for (Order order : orders) {
+            if (order.getIdOrderNum() == id)
                 return order;
         }
         return null;
     }
 
 
-
     @Override
     public List<Order> getOpenOrders(long client_id) {
         List<Order> openOrders = new ArrayList<>();
         for (Order order : getOrders()) {
-            if (!order.getStatus() && order.getClientId()==client_id)
+            if (!order.getStatus() && order.getClientId() == client_id)
                 openOrders.add(order);
         }
         return openOrders;
@@ -500,24 +501,10 @@ public class SQL_DBManager implements DB_manager {
     public List<Order> getClosedOrders(long client_id) {
         List<Order> closedOrders = new ArrayList<>();
         for (Order order : getOrders()) {
-            if (order.getStatus() && order.getClientId()==client_id)
+            if (order.getStatus() && order.getClientId() == client_id)
                 closedOrders.add(order);
         }
         return closedOrders;
-    }
-
-    @Override
-    public boolean isUpdated(boolean  update) {
-
-        if(update)
-        {
-            update = false;
-            return  true;
-        }
-
-        return  false;
-
-
     }
 
 

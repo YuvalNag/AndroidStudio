@@ -170,7 +170,7 @@ public class CloseOpenOrders extends Fragment implements View.OnClickListener {
             orderContentValues.put(AppContract.Order.ORDER_ID,order.getIdOrderNum());
             orderContentValues.put(AppContract.Order.KILOMETERS_AT_RETURN,Long.valueOf(textInputLayoutKilo.getEditText().getText().toString())+order.getKilometersAtRent());
             orderContentValues.put(AppContract.Order.RETURN_DATE,datetime);
-            orderContentValues.put(AppContract.Order.FOULED,textInputLayoutFouled.getEditText().getText().toString().trim().length()==0);
+            orderContentValues.put(AppContract.Order.FOULED,textInputLayoutFouled.getEditText().getText().toString().trim().length()!=0);
             orderContentValues.put(AppContract.Order.ORDER_STATUS,String.valueOf(1));
             orderContentValues.put(AppContract.Order.AMOUNT_OF_FOUL,textInputLayoutFouled.getEditText().getText().toString());
 

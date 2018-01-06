@@ -21,8 +21,6 @@ public interface DB_manager {
 
     //update lists
 
-    boolean isUpdated(boolean update);
-
     void updateCarlist();
     void updateCarModellist();
     void updateOrderList();
@@ -44,9 +42,7 @@ public interface DB_manager {
     long addOrder(ContentValues contentValues);
     double closeOrder(long id, ContentValues values);
     boolean orderClosedIn10sec();
-    //Cursor getOrder(long id);
-    //Cursor getOrders();
-    //Cursor getOpenOrders();
+
    Order getOrder(long id);
    List<Order> getOrders();
    List<Order> getOpenOrders(long client_id);
@@ -54,24 +50,9 @@ public interface DB_manager {
 
     //car
     boolean updateCar(long id, ContentValues values);
-
-    //Cursor getAvailableCars();
-
     List<Car>  getCars();
     List<Car> getAvailableCars();
 
-/*
-
-    Cursor getCarModels();
-    Cursor getClients();
-    Cursor getBranches();
-
-    Cursor getAvailableCarsByBranche(long branch_id);
-    Cursor getAvailableCarsFromPlace(long distance);
-
-    //should we return map?
-    Cursor getBrancheOfAvailableCarsByCarModel();
-*/
 
     List<CarModel> getCarModels();
     List<Client> getClients();
