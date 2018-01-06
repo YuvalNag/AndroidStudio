@@ -22,11 +22,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.controller.adapters.OpenOrderAdapter;
 import com.yn.user.cliantapplication.model.backend.AppContract;
 import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
 import com.yn.user.cliantapplication.model.entities.Order;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -34,7 +34,7 @@ import java.util.Calendar;
  * Created by nissy34 on 31/12/2017.
  */
 
-public class CloseOrder extends Fragment implements View.OnClickListener {
+public class CloseOpenOrders extends Fragment implements View.OnClickListener {
     private SharedPreferences mSharedPreferences;
 
     private ListView carGridView;
@@ -71,7 +71,7 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
 
             @Override
             protected ArrayAdapter doInBackground(Void... voids) {
-                return new OrderAdapter(CloseOrder.this.getActivity(), DBManagerFactory.getManager().getCars(),DBManagerFactory.getManager().getOpenOrders(mSharedPreferences.getLong(getString(R.string.login_user_id),-1)),DBManagerFactory.getManager().getCarModels());
+                return new OpenOrderAdapter(CloseOpenOrders.this.getActivity(), DBManagerFactory.getManager().getCars(),DBManagerFactory.getManager().getOpenOrders(mSharedPreferences.getLong(getString(R.string.login_user_id),-1)),DBManagerFactory.getManager().getCarModels());
 
             }
 
@@ -158,6 +158,7 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
     public void onClick(final View v) {
         if ( v == button_closeorder) {
 
+            button_closeorder.setEnabled(false);
             Calendar c = Calendar.getInstance();
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -186,11 +187,15 @@ public class CloseOrder extends Fragment implements View.OnClickListener {
                     if(aDouble>0) {
                         Snackbar.make(v, "Total Amount: " + aDouble, Snackbar.LENGTH_LONG).show();
                         populatView();
+                        button_closeorder.setEnabled(true);
+
+
                     }
-                    else
-                        Snackbar.make(v, "error closing order: "+order.getIdOrderNum() , Snackbar.LENGTH_LONG).show();
+                    else {
+                        Snackbar.make(v, "error closing order: " + order.getIdOrderNum(), Snackbar.LENGTH_LONG).show();
+                        button_closeorder.setEnabled(true);
 
-
+                    }
                 }
 
                 @Override

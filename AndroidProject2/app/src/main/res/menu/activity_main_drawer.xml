@@ -27,6 +27,10 @@
                 android:icon="@drawable/ic_order_open"
                 android:title="Open orders" />
             <item
+                 android:id="@+id/nav_closed_orders"
+                 android:icon="@drawable/ic_order_history"
+                 android:title="closed orders" />
+            <item
                 android:id="@+id/nav_edit_profile"
                 android:icon="@drawable/ic_edit"
                 android:title="Edit profile" />

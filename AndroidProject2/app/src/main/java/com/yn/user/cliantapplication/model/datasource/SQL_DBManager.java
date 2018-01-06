@@ -433,7 +433,7 @@ public class SQL_DBManager implements DB_manager {
     public double closeOrder(long id, ContentValues values) {
         try {
             values.put(AppContract.Order.FINAL_AMOUNT,100);
-            String result=PHPtools.POST(AppContract.WEB_URL + "CloseOrder.php", values);
+            String result=PHPtools.POST(AppContract.WEB_URL + "CloseOpenOrders.php", values);
             printLog("closeOrder:\n" + result);
             isUpdatedOrder=true;
             return 100;
@@ -490,11 +490,22 @@ public class SQL_DBManager implements DB_manager {
     public List<Order> getOpenOrders(long client_id) {
         List<Order> openOrders = new ArrayList<>();
         for (Order order : getOrders()) {
-            if (order.getStatus() == false && order.getClientId()==client_id)
+            if (!order.getStatus() && order.getClientId()==client_id)
                 openOrders.add(order);
         }
         return openOrders;
     }
+
+    @Override
+    public List<Order> getClosedOrders(long client_id) {
+        List<Order> closedOrders = new ArrayList<>();
+        for (Order order : getOrders()) {
+            if (order.getStatus() && order.getClientId()==client_id)
+                closedOrders.add(order);
+        }
+        return closedOrders;
+    }
+
     @Override
     public boolean isUpdated(boolean  update) {
 

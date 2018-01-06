@@ -50,6 +50,7 @@ public interface DB_manager {
    Order getOrder(long id);
    List<Order> getOrders();
    List<Order> getOpenOrders(long client_id);
+   List<Order> getClosedOrders(long client_id);
 
     //car
     boolean updateCar(long id, ContentValues values);

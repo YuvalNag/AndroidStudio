@@ -1,4 +1,4 @@
-package com.yn.user.cliantapplication.controller;
+package com.yn.user.cliantapplication.controller.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.controller.GlideApp;
 import com.yn.user.cliantapplication.model.entities.Car;
 import com.yn.user.cliantapplication.model.entities.CarModel;
 import com.yn.user.cliantapplication.model.entities.Order;
@@ -21,12 +22,12 @@ import java.util.List;
  * Created by nissy34 on 31/12/2017.
  */
 
-public class OrderAdapter extends ArrayAdapter {
+public class OpenOrderAdapter extends ArrayAdapter {
 
 private List<Car> carList;
 private List<CarModel> listModels;
 
-    public OrderAdapter(@NonNull Context context, @NonNull List<Car> cars, List<Order> Orders, List<CarModel> carModels) {
+    public OpenOrderAdapter(@NonNull Context context, @NonNull List<Car> cars, List<Order> Orders, List<CarModel> carModels) {
         super(context, 0, Orders);
         carList=cars;
         listModels=carModels;
@@ -101,7 +102,7 @@ private List<CarModel> listModels;
             branch.setText(String.valueOf(car.getBranchNum()));
         }
 
-        TextView date = (TextView) convertView.findViewById(R.id.textView_date);
+        TextView date = (TextView) convertView.findViewById(R.id.textView_order_date);
         date.setText(order.getRentDate().toString());
 
 

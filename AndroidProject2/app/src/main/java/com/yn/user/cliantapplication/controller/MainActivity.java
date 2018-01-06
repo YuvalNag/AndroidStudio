@@ -1,16 +1,10 @@
 package com.yn.user.cliantapplication.controller;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.BroadcastReceiver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
@@ -18,22 +12,16 @@ import android.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
 import com.yn.user.cliantapplication.model.backend.SHA_256_Helper;
 import com.yn.user.cliantapplication.model.backend.updateReceiver;
-
-import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -149,9 +137,17 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         }
         else if (id == R.id.nav_open_orders) {
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            Fragment closeOrder =new CloseOrder();
+            Fragment closeOrder =new CloseOpenOrders();
 
             fragmentTransaction.replace(R.id.f, closeOrder);
+
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.nav_closed_orders) {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            Fragment closedOrders =new ClosedOrders();
+
+            fragmentTransaction.replace(R.id.f, closedOrders);
 
             fragmentTransaction.commit();
         }
