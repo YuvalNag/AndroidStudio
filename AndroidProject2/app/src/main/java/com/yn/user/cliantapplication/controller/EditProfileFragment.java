@@ -196,29 +196,7 @@ public class EditProfileFragment extends Fragment {
 
         textInputLayoutuserId = (TextInputLayout) view.findViewById(R.id.textInputLayout_user_id);
         userId = (EditText) view.findViewById(R.id.user_id);
-        userId.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().trim().isEmpty()||charSequence.toString().trim().contentEquals("0")) {
-                    textInputLayoutuserId.setErrorEnabled(true);
-                    textInputLayoutuserId.setError("This Field Is Mandatory");
-
-                } else
-                    textInputLayoutuserId.setErrorEnabled(false);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
+        textInputLayoutuserId.setEnabled(false);
 
         updateClient = (Button) view.findViewById(R.id.add_manager);
         updateClient.setText("update");
