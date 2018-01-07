@@ -1,9 +1,14 @@
 package com.yn.user.cliantapplication.controller;
 
+import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.app.Fragment;
 import android.text.Editable;
@@ -16,12 +21,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.yn.user.cliantapplication.R;
+import com.yn.user.cliantapplication.model.backend.AppContract;
+import com.yn.user.cliantapplication.model.backend.DBManagerFactory;
+import com.yn.user.cliantapplication.model.backend.SHA_256_Helper;
 
 /**
  * Created by USER on 28/12/2017.
  */
 
-public class EditProfileFragment extends Fragment {
+public class EditProfileFragment extends Fragment implements View.OnClickListener {
 
     SharedPreferences mSharedPreferences;
     private TextInputLayout textInputLayout;
@@ -39,6 +47,8 @@ public class EditProfileFragment extends Fragment {
     private TextInputLayout textInputLayoutuserPassword;
     private TextInputLayout textInputLayoutuserConfrimPassword;
     private Button updateClient;
+    private String password;
+    private long salt;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +61,7 @@ public class EditProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    View view=     inflater.inflate(R.layout.activity_register_client,container,false);
+    View view=inflater.inflate(R.layout.activity_register_client,container,false);
     findView(view);
     populatView();
     return view;
@@ -64,10 +74,16 @@ public class EditProfileFragment extends Fragment {
         userId.setText(String.valueOf(mSharedPreferences.getLong(getString(R.string.login_user_id),0)));
         userPhone.setText(mSharedPreferences.getString(getString(R.string.login_user_phone_number),""));
         textInputLayoutuserCrediCard.getEditText().setText(String.valueOf(mSharedPreferences.getLong(getString(R.string.login_user_credit_card),0)));
+        password=mSharedPreferences.getString(getString(R.string.login_user_password),"");
+        salt=mSharedPreferences.getLong(getString(R.string.login_user_salt),0);
+
 
     }
 
     private void findView(View view){
+
+        updateClient=view.findViewById(R.id.add_manager);
+        updateClient.setOnClickListener(this);
         textInputLayoutuserPassword = (TextInputLayout) view.findViewById(R.id.user_password);
         textInputLayoutuserConfrimPassword= (TextInputLayout) view.findViewById(R.id.user_password_confrim);
         textInputLayoutuserConfrimPassword.getEditText().addTextChangedListener(new TextWatcher() {
@@ -103,6 +119,12 @@ public class EditProfileFragment extends Fragment {
                                                                                   {
                                                                                       textInputLayoutuserCrediCard.setErrorEnabled(true);
                                                                                       textInputLayoutuserCrediCard.setError("min length is 8 numbers");
+
+                                                                                  }
+                                                                                  else
+                                                                                  {
+                                                                                      textInputLayoutuserCrediCard.setErrorEnabled(false);
+
 
                                                                                   }
                                                                               }
@@ -202,6 +224,66 @@ public class EditProfileFragment extends Fragment {
         updateClient.setText("update");
     }
 
+    @SuppressLint("StaticFieldLeak")
+    public void onClick(final View view)  {
+        if (view ==updateClient) {
+            final ContentValues managerValues = new ContentValues();
+
+            managerValues.put(AppContract.Client.ID, userId.getText().toString());
+            managerValues.put(AppContract.Client.CRADIT_NUMBER, textInputLayoutuserCrediCard.getEditText().getText().toString());
+            managerValues.put(AppContract.Client.PHONE_NUMBER, userPhone.getText().toString());
+            managerValues.put(AppContract.Client.EMAIL_ADDR, userEmail.getText().toString());
+            managerValues.put(AppContract.Client.FIRST_NAME, userFirstname.getText().toString());
+            managerValues.put(AppContract.Client.LAST_NAME, userLastname.getText().toString());
+            if(textInputLayoutuserPassword.getEditText().getText().toString().trim().length()==0) {
+                managerValues.put(AppContract.Client.PASSWORD, password);
+                managerValues.put(AppContract.Client.SALT, salt);
+            }
+            else
+            {
+                long newSalt = SHA_256_Helper.generateSalt();
+
+                try {
+                    managerValues.put(AppContract.Client.PASSWORD, SHA_256_Helper.getHash256String(textInputLayoutuserPassword.getEditText().getText().toString().trim(),newSalt));
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+
+                managerValues.put(AppContract.Client.SALT, newSalt);
+            }
+
+
+
+
+            new AsyncTask<Void, Void, Boolean>() {
+                @Override
+                protected Boolean doInBackground(Void... params) {
+                    return DBManagerFactory.getManager().updateClient(Long.valueOf(userId.getText().toString()),managerValues);
+                }
+
+                @Override
+                protected void onPostExecute(Boolean b) {
+                    super.onPostExecute(b);
+
+
+                    if (b) {
+                        // Toast.makeText(getBaseContext(), "insert id: " + id, Toast.LENGTH_LONG).show();
+
+                        Snackbar.make(view, "Updated  successfully", Snackbar.LENGTH_LONG).show();
+
+
+                    } else {
+
+                        //Toast.makeText(getBaseContext(), "error insert id: " + id, Toast.LENGTH_LONG).show();
+                        Snackbar.make(view, "ERROR while updating  ", Snackbar.LENGTH_LONG).show();
+
+                    }
+                }
+            }.execute();
+        }
+
+    }
 
 
 }

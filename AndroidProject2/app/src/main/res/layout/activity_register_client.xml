@@ -12,7 +12,7 @@
     android:background="@drawable/car_start_trans1"
 
     android:layoutDirection="ltr"
-    tools:context="com.yn.user.cliantapplication.controller.RegisterClient">
+   >
 
     <TextView
         android:id="@+id/editText"
