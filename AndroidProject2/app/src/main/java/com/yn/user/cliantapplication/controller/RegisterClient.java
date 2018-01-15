@@ -2,6 +2,7 @@ package com.yn.user.cliantapplication.controller;
 
 import android.annotation.SuppressLint;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 
@@ -44,6 +45,7 @@ public class RegisterClient extends AppCompatActivity {
     private TextInputLayout textInputLayoutuserPassword;
     private TextInputLayout textInputLayoutuserConfrimPassword;
     private Button addManager;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -59,6 +61,9 @@ public class RegisterClient extends AppCompatActivity {
      * find views and check all input text
      */
     private void findViews() {
+
+
+        progressDialog=new ProgressDialog(this);
         textInputLayoutuserPassword = (TextInputLayout) findViewById(R.id.user_password);
         textInputLayoutuserConfrimPassword= (TextInputLayout) findViewById(R.id.user_password_confrim);
         textInputLayoutuserConfrimPassword.getEditText().addTextChangedListener(new TextWatcher() {
@@ -96,6 +101,8 @@ public class RegisterClient extends AppCompatActivity {
                     textInputLayoutuserCrediCard.setError("min length is 8 numbers");
 
                 }
+                else
+                    textInputLayoutuserCrediCard.setErrorEnabled(false);
             }
 
             @Override
@@ -242,6 +249,17 @@ public class RegisterClient extends AppCompatActivity {
 
             new AsyncTask<Void, Void, Long>() {
                 @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+
+                    progressDialog.setMessage("contacting the server...");
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.show();
+
+
+                }
+
+                @Override
                 protected Long doInBackground(Void... params) {
                     return DBManagerFactory.getManager().addClient(managerValues);
                 }
@@ -263,6 +281,8 @@ public class RegisterClient extends AppCompatActivity {
                         Snackbar.make(findViewById(android.R.id.content), "ERROR registering user " + id, Snackbar.LENGTH_LONG).show();
 
                     }
+                    if(progressDialog.isShowing())
+                        progressDialog.dismiss();
                 }
             }.execute();
         }

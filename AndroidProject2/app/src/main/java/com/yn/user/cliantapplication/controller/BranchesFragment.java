@@ -2,6 +2,7 @@ package com.yn.user.cliantapplication.controller;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -41,6 +42,8 @@ public class  BranchesFragment extends Fragment {
     ExpandableListView expListView;
     FloatingActionButton fab;
     SharedPreferences sharedPreferences;
+    private ProgressDialog progressDialog;
+
 
 
     @Nullable
@@ -60,12 +63,21 @@ public class  BranchesFragment extends Fragment {
         expListView = (ExpandableListView) view.findViewById(R.id.branch_expandable_list_view);
         /*fab = (FloatingActionButton) view.findViewById(R.id.open_order_floatingActionButton);
         fab.setVisibility(View.INVISIBLE);*/
+        progressDialog=new ProgressDialog(getActivity());
+
+
         buildAdapter();
 
     }
 
     private void buildAdapter() {
         new AsyncTask<Void, Void, BranchesExpandableListAdapter>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                showprogress();
+            }
+
             @Override
             protected BranchesExpandableListAdapter doInBackground(Void... voids) {
 
@@ -79,11 +91,13 @@ public class  BranchesFragment extends Fragment {
                 listAdapter=branchesExpandableListAdapter;
                 expListView.setAdapter(branchesExpandableListAdapter);
                 setHasOptionsMenu(true);
+                closeProgress();
 
             }
         }.execute();
 
     }
+
 
     @Override
     public void onStart() {
@@ -145,6 +159,12 @@ public class  BranchesFragment extends Fragment {
 
                                 new AsyncTask<Void, Void, Long>() {
                                     @Override
+                                    protected void onPreExecute() {
+                                        super.onPreExecute();
+                                        showprogress();
+                                    }
+
+                                    @Override
                                     protected Long doInBackground(Void... params) {
                                         return DBManagerFactory.getManager().addOrder(orderContentValues);
                                     }
@@ -160,8 +180,9 @@ public class  BranchesFragment extends Fragment {
                                             buildAdapter();
                                         } else {
                                             Snackbar.make(viewChild, "ERROR ordering car.", Snackbar.LENGTH_LONG).show();
-
+                                            closeProgress();
                                         }
+
                                     }
                                 }.execute();
                             }
@@ -169,6 +190,19 @@ public class  BranchesFragment extends Fragment {
         /*    }
         });*/
 
+    }
+
+    private void showprogress() {
+        if(!progressDialog.isShowing()) {
+            progressDialog.setMessage("contacting the server...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
+    }
+
+    private void closeProgress() {
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 
     @Override

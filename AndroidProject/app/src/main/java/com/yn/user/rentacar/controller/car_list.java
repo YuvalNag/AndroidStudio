@@ -140,6 +140,12 @@ public class car_list extends AppCompatActivity implements View.OnClickListener{
                                 final Uri uri=ContentUris.withAppendedId(AppContract.Car.CAR_URI,car_id);
                                 new AsyncTask<Void, Void, Integer>() {
                                     @Override
+                                    protected void onPreExecute() {
+                                        super.onPreExecute();
+                                        carProgressBar.setVisibility(View.VISIBLE);
+                                    }
+
+                                    @Override
                                     protected Integer doInBackground(Void... params) {
                                         return getContentResolver().delete(uri, null,null);
                                     }
@@ -160,7 +166,7 @@ public class car_list extends AppCompatActivity implements View.OnClickListener{
                                         else {
                                             //Toast.makeText(getBaseContext(), "error insert car  id: " + id, Toast.LENGTH_LONG).show();
                                             Snackbar.make(findViewById(android.R.id.content), "ERROR deleting car" , Snackbar.LENGTH_LONG).show();
-
+                                            carProgressBar.setVisibility(View.VISIBLE);
                                         }
                                     }
                                 }.execute();

@@ -29,6 +29,7 @@
         android:layout_height="57dp"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
+        android:hint="Car Number"
         app:layout_constraintBottom_toTopOf="@id/textInputLayout_kilo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +39,7 @@
             android:id="@+id/car_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Car Number"
+
             android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 
@@ -48,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
+        android:hint="Persent kilometers"
         app:layout_constraintBottom_toTopOf="@id/branch_listview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +59,7 @@
             android:id="@+id/car_kilo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Persent kilometers"
+
             android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 

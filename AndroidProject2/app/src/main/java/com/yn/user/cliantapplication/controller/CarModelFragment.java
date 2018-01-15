@@ -3,6 +3,7 @@ package com.yn.user.cliantapplication.controller;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -39,6 +40,7 @@ public class CarModelFragment extends Fragment {
     FloatingActionButton fab;
     SharedPreferences sharedPreferences;
     ViewGroup container;
+    private ProgressDialog progressDialog;
 
 
     @Nullable
@@ -52,17 +54,23 @@ public class CarModelFragment extends Fragment {
     }
 
     private void findView(View view) {
-        // get the listview
+
         expListView = (ExpandableListView) view.findViewById(R.id.branch_expandable_list_view);
-      /*  fab = (FloatingActionButton) view.findViewById(R.id.open_order_floatingActionButton);
-        fab.setVisibility(View.INVISIBLE);*/
+        progressDialog=new ProgressDialog(getActivity());
+
         buildAdapter();
     }
 
     private void buildAdapter() {
         new AsyncTask<Void, Void, ExpandableListAdapter>() {
             @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                showprogress();
+            }
+            @Override
             protected ExpandableListAdapter doInBackground(Void... voids) {
+
 
                 return new CarModelExpandableListAdapter(getActivity(), DBManagerFactory.getManager().getCarModels(), DBManagerFactory.getManager().mapBranchsByCarModel());
             }
@@ -73,7 +81,7 @@ public class CarModelFragment extends Fragment {
                 super.onPostExecute(expandableListAdapter);
                 listAdapter = expandableListAdapter;
                 expListView.setAdapter(expandableListAdapter);
-
+              closeProgress();
             }
         }.execute();
     }
@@ -110,29 +118,14 @@ public class CarModelFragment extends Fragment {
 
         final Branch branch = (Branch) listAdapter.getChild(groupPosition, childPosition);
 
-      /*  fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            */
+
                 Snackbar.make(viewChild,"Order a car from branch number " +listAdapter.getChildId(groupPosition,childPosition) +" ?" , Snackbar.LENGTH_LONG)
                         .setAction("Yes", new View.OnClickListener() {
 
                             @SuppressLint("StaticFieldLeak")
                             @Override
                             public void onClick(final View view) {
-                                // Create fragment and give it an argument for the selected article
 
-                              /*  BranchesFragment branchesFragment= new BranchesFragment();
-                                Bundle args = new Bundle();
-                                args.putLong(BranchesFragment.BRANCH_ID,branch.getBranchID());
-                                branchesFragment.setArguments(args);
-                                getActivity().getFragmentManager().beginTransaction()
-                                        .replace(container.getId(), branchesFragment,"findThisFragment")
-                                        .addToBackStack(null)
-                                        .commit();
-                                Snackbar.make(viewChild, "Client id: " + String.valueOf(sharedPreferences.getLong(getString(R.string.login_user_id), 0)), Snackbar.LENGTH_LONG).show();
-*/
                                 Calendar c = Calendar.getInstance();
                                 SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -140,10 +133,18 @@ public class CarModelFragment extends Fragment {
 
 
                                 new AsyncTask<Void, Void, Long[]>() {
+
+                                    @Override
+                                    protected void onPreExecute() {
+                                        super.onPreExecute();
+                                        showprogress();
+                                    }
+
                                     @Override
                                     protected Long[] doInBackground(Void... params) {
                                         Car car = null;
                                         Long[] results=new Long[2];
+                                        //get the first car in this branch
                                         for (Car availableCar : DBManagerFactory.getManager().getAvailableCarsByBranche(branch.getBranchID())) {
                                             if (availableCar.getCarModelID() == ((CarModel) listAdapter.getGroup(groupPosition)).getIdCarModel()){
                                                 car = availableCar;
@@ -163,7 +164,7 @@ public class CarModelFragment extends Fragment {
 
                                         }
                                         else
-                                            results[1]= (long)-1;
+                                            results[1]= (long)-1;//if there is an error
 
                                         return results;
 
@@ -180,15 +181,26 @@ public class CarModelFragment extends Fragment {
                                             buildAdapter();
                                         } else {
                                             Snackbar.make(viewChild, "ERROR ordering car.", Snackbar.LENGTH_LONG).show();
-
+                                             closeProgress();
                                         }
+
+
                                     }
                                 }.execute();
                             }
                         }).show();
             }
-        /*});
+    private void showprogress() {
+        if(!progressDialog.isShowing()) {
+            progressDialog.setMessage("contacting the server...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
 
+    }
 
-    }*/
+    private void closeProgress() {
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
 }

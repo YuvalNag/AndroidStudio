@@ -30,6 +30,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.tuyenmonkey.mkloader.MKLoader;
 import com.yn.user.rentacar.R;
 import com.yn.user.rentacar.model.backend.AppContract;
 import com.yn.user.rentacar.model.datasource.Tools;
@@ -51,6 +52,7 @@ public class UpdateCarModel extends AppCompatActivity {
     private Spinner modelSpinClass;
     private Button modelAdd;
     private long carModel_id;
+
 
 
     @Override
@@ -89,6 +91,12 @@ public class UpdateCarModel extends AppCompatActivity {
          //TODO check if -1
         new AsyncTask<Long, Void, Cursor>() {
             @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                ((ProgressBar)findViewById(R.id.updteModelcar_pb)).setVisibility(View.VISIBLE);
+            }
+
+            @Override
             protected Cursor doInBackground(Long... longs) {
 
                 return getContentResolver().query(ContentUris.withAppendedId(AppContract.CarModel.CAR_MODEL_URI,longs[0]), null,null,null,null);
@@ -121,7 +129,7 @@ public class UpdateCarModel extends AppCompatActivity {
                           .into(modelImage);
                   modelId.setText(String.valueOf(carModel_id));
 
-                  ((ProgressBar)findViewById(R.id.updtecar_pb)).setVisibility(View.GONE);
+                  ((ProgressBar)findViewById(R.id.updteModelcar_pb)).setVisibility(View.GONE);
               }
             }
         }.execute(carModel_id);
@@ -142,6 +150,7 @@ public class UpdateCarModel extends AppCompatActivity {
         modelSpinTrans = (Spinner)findViewById( R.id.model_spin_trans );
         modelSpinClass = (Spinner)findViewById( R.id.model_spin_class );
         modelAdd = (Button)findViewById( R.id.model_add );
+
 
 
     }
@@ -205,6 +214,13 @@ public class UpdateCarModel extends AppCompatActivity {
         modelcontentValues.put(AppContract.CarModel.TRANSMISSION_TYPE, ((Spinner) findViewById(R.id.model_spin_trans)).getSelectedItem().toString());
 
         new AsyncTask<Bitmap,Void , Integer>() {
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                ((ProgressBar)findViewById(R.id.updteModelcar_pb)).setVisibility(View.VISIBLE);
+            }
+
             @Override
             protected Integer doInBackground(Bitmap... bitmaps) {
 
@@ -225,6 +241,7 @@ public class UpdateCarModel extends AppCompatActivity {
                    finish();
 
                 } else {
+                    ((ProgressBar)findViewById(R.id.updteModelcar_pb)).setVisibility(View.GONE);
                     Snackbar.make(findViewById(android.R.id.content), "ERROR updating car model  ", Snackbar.LENGTH_LONG).show();
                     //toast.show();
                 }

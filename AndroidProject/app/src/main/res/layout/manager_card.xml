@@ -41,7 +41,7 @@
                     android:adjustViewBounds="true"
                     android:cropToPadding="true"
                     android:scaleType="centerCrop"
-                    card_view:srcCompat="@drawable/avatar_flat" />
+                    card_view:srcCompat="@drawable/avatar1" />
 
                 <TableLayout
                     android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.yn.user.cliantapplication.controller;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -44,6 +45,7 @@ public class ClosedOrders extends Fragment  {
 //    private TextInputLayout textInputLayoutKilo;
 //    private TextInputLayout textInputLayoutFouled;
     private Order order;
+    private ProgressDialog progressDialog;
     //private boolean fouled;
 
     @Override
@@ -64,9 +66,11 @@ public class ClosedOrders extends Fragment  {
 
     private void populatView() {
         new AsyncTask<Void,Void,ArrayAdapter>(){
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                showprogress();
             }
 
             @Override
@@ -79,6 +83,7 @@ public class ClosedOrders extends Fragment  {
             protected void onPostExecute(ArrayAdapter arrayAdapter) {
                 super.onPostExecute(arrayAdapter);
                 carGridView.setAdapter(arrayAdapter);
+                closeProgress();
             }
 
 
@@ -93,15 +98,23 @@ public class ClosedOrders extends Fragment  {
      */
     private void findViews(View view) {
         carGridView = (ListView)view.findViewById( R.id.car_grid_view );
+        progressDialog=new ProgressDialog(getActivity());
         title=view.findViewById( R.id.textView_orders_title );
         title.setText("closed orders");
         }
 
-   /* private void visibiltyopenOrders(int visibility)
-    {
-        button_closeorder.setVisibility(visibility);
-        textInputLayoutKilo.setVisibility(visibility);
-        textInputLayoutFouled.setVisibility(visibility);
-    }*/
+    private void showprogress() {
+        if(!progressDialog.isShowing()) {
+            progressDialog.setMessage("contacting the server...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
+    }
+
+    private void closeProgress() {
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
+    }
+
 
 }

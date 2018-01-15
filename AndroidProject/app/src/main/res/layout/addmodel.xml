@@ -51,6 +51,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:orientation="vertical"
+        android:hint="ID"
         app:layout_constraintBottom_toTopOf="@+id/model_spin_trans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +61,7 @@
             android:id="@+id/model_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="ID"
+
             android:inputType="number" />
 
     </android.support.design.widget.TextInputLayout>
@@ -71,6 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:hint="Compeny Name"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +82,7 @@
             android:id="@+id/model_comname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Compeny Name"
+
             android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
@@ -90,6 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:hint="Model Name"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +102,7 @@
             android:id="@+id/model_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Model Name"
+
             android:inputType="text" />
     </android.support.design.widget.TextInputLayout>
 
@@ -109,6 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:hint="Engine Volume"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout10"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +123,7 @@
             android:id="@+id/model_engine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Engine Volume"
+
             android:inputType="number"
             android:maxLength="4" />
     </android.support.design.widget.TextInputLayout>
@@ -131,6 +135,7 @@
         android:layout_marginBottom="2dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:hint="Number Of Seats"
         app:layout_constraintBottom_toTopOf="@+id/textView22"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -141,7 +146,7 @@
             android:id="@+id/model_numofseats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Number Of Seats"
+
             android:inputType="number"
             android:maxLength="2" />
     </android.support.design.widget.TextInputLayout>

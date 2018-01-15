@@ -1,6 +1,7 @@
 package com.yn.user.cliantapplication.controller;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.yn.user.cliantapplication.R;
 import com.yn.user.cliantapplication.model.backend.AppContract;
@@ -49,6 +51,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
     private Button updateClient;
     private String password;
     private long salt;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,6 +87,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
         updateClient=view.findViewById(R.id.add_manager);
         updateClient.setOnClickListener(this);
+        progressDialog=new ProgressDialog(getActivity());
         textInputLayoutuserPassword = (TextInputLayout) view.findViewById(R.id.user_password);
         textInputLayoutuserConfrimPassword= (TextInputLayout) view.findViewById(R.id.user_password_confrim);
         textInputLayoutuserConfrimPassword.getEditText().addTextChangedListener(new TextWatcher() {
@@ -221,6 +225,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
         textInputLayoutuserId.setEnabled(false);
 
         updateClient = (Button) view.findViewById(R.id.add_manager);
+        updateClient.setOnClickListener(this);
         updateClient.setText("update");
     }
 
@@ -258,6 +263,12 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
             new AsyncTask<Void, Void, Boolean>() {
                 @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    showprogress();
+                }
+
+                @Override
                 protected Boolean doInBackground(Void... params) {
                     return DBManagerFactory.getManager().updateClient(Long.valueOf(userId.getText().toString()),managerValues);
                 }
@@ -271,6 +282,26 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                         // Toast.makeText(getBaseContext(), "insert id: " + id, Toast.LENGTH_LONG).show();
 
                         Snackbar.make(view, "Updated  successfully", Snackbar.LENGTH_LONG).show();
+                        SharedPreferences.Editor editor=mSharedPreferences.edit();
+
+                        editor.putString(getString(R.string.login_user_email),managerValues.getAsString(AppContract.Client.EMAIL_ADDR));
+                        editor.putString(getString(R.string.login_user_name),managerValues.getAsString(AppContract.Client.FIRST_NAME)+" "+ managerValues.getAsString(AppContract.Client.LAST_NAME));
+                        editor.putString(getString(R.string.login_user_first_name),managerValues.getAsString(AppContract.Client.EMAIL_ADDR));
+                        editor.putString(getString(R.string.login_user_last_name), managerValues.getAsString(AppContract.Client.EMAIL_ADDR));
+                        editor.putString(getString(R.string.login_user_password), managerValues.getAsString(AppContract.Client.PASSWORD));
+                        editor.putString(getString(R.string.login_user_phone_number), managerValues.getAsString(AppContract.Client.PHONE_NUMBER));
+                        editor.putLong(getString(R.string.login_user_salt), managerValues.getAsLong(AppContract.Client.SALT));
+                        editor.putLong(getString(R.string.login_user_credit_card), managerValues.getAsLong(AppContract.Client.CRADIT_NUMBER));
+                        editor.commit();
+
+                        TextView headerName= getActivity().findViewById(R.id.header_name);
+                        TextView headerEmail= getActivity().findViewById(R.id.header_email);
+
+                        if (headerName != null)
+                            headerName.setText(mSharedPreferences.getString(getString(R.string.login_user_name), "unknown"));
+                        if (headerEmail != null)
+                            headerEmail.setText(mSharedPreferences.getString(getString(R.string.login_user_email), "unknown"));
+
 
 
                     } else {
@@ -279,10 +310,25 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                         Snackbar.make(view, "ERROR while updating  ", Snackbar.LENGTH_LONG).show();
 
                     }
+
+                    closeProgress();
                 }
             }.execute();
         }
 
+    }
+
+    private void showprogress() {
+        if(!progressDialog.isShowing()) {
+            progressDialog.setMessage("contacting the server...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
+    }
+
+    private void closeProgress() {
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 
 

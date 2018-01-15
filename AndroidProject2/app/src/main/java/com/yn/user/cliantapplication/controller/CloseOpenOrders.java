@@ -2,6 +2,7 @@ package com.yn.user.cliantapplication.controller;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -44,6 +45,7 @@ public class CloseOpenOrders extends Fragment implements View.OnClickListener {
     private TextInputLayout textInputLayoutFouled;
     private Order order;
     private boolean fouled;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class CloseOpenOrders extends Fragment implements View.OnClickListener {
             protected void onPreExecute() {
                 super.onPreExecute();
                 visibiltyopenOrders(View.GONE);
+                showprogress();
             }
 
             @Override
@@ -79,6 +82,7 @@ public class CloseOpenOrders extends Fragment implements View.OnClickListener {
             protected void onPostExecute(ArrayAdapter arrayAdapter) {
                 super.onPostExecute(arrayAdapter);
                 carGridView.setAdapter(arrayAdapter);
+                closeProgress();
             }
 
 
@@ -93,6 +97,8 @@ public class CloseOpenOrders extends Fragment implements View.OnClickListener {
      */
     private void findViews(View view) {
         carGridView = (ListView)view.findViewById( R.id.car_grid_view );
+
+        progressDialog=new ProgressDialog(getActivity());
 
         carGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -179,6 +185,7 @@ public class CloseOpenOrders extends Fragment implements View.OnClickListener {
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
+                    showprogress();
                 }
 
                 @Override
@@ -194,6 +201,7 @@ public class CloseOpenOrders extends Fragment implements View.OnClickListener {
                     else {
                         Snackbar.make(v, "error closing order: " + order.getIdOrderNum(), Snackbar.LENGTH_LONG).show();
                         button_closeorder.setEnabled(true);
+                        closeProgress();
 
                     }
                 }
@@ -208,6 +216,19 @@ public class CloseOpenOrders extends Fragment implements View.OnClickListener {
 
 
         }
+    }
+
+    private void showprogress() {
+        if(!progressDialog.isShowing()) {
+            progressDialog.setMessage("contacting the server...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
+        }
+    }
+
+    private void closeProgress() {
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
     }
 
 }
